@@ -1,8 +1,17 @@
 package com.arthur.apiCTEP.entities;
 
-import com.arthur.apiCTEP.entities.enums.Permissao;
+import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.arthur.apiCTEP.entities.enums.Permissao;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQuery(
         name = "Usuario.recuperaUsuarioPeloLogin",
@@ -11,8 +20,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USUARIO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Usuario implements Serializable{
 
-public class Usuario {
+	private static final long serialVersionUID = 1L;
+	
     private Integer id;
     private String nome;
     private String login;

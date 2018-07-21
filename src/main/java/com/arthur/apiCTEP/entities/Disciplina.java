@@ -1,5 +1,7 @@
 package com.arthur.apiCTEP.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @NamedQueries({
@@ -15,12 +17,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "DISCIPLINA")
-public class Disciplina {
-    private Integer id;
+public class Disciplina implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	private Integer id;
     private String nome;
     private Curso curso;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
     public Integer getId() {
         return id;
@@ -48,7 +54,7 @@ public class Disciplina {
     }
 
     // ********* M�todos para Associa��es *********
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CURSO_ID")
     public Curso getCurso() {
         return curso;

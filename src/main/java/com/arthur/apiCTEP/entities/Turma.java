@@ -1,10 +1,26 @@
 package com.arthur.apiCTEP.entities;
 
-import com.arthur.apiCTEP.entities.enums.StatusTurma;
-
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.arthur.apiCTEP.entities.enums.StatusTurma;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
@@ -36,7 +52,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "TURMA")
-public class Turma {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Turma implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
     private String codigo;
     private String diasDaSemana;
     private String horaInicio;
@@ -143,7 +163,7 @@ public class Turma {
 
 
     // ********* M�todos para Associa��es *********
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CURSO_ID")
     public Curso getCurso() {
         return curso;
@@ -155,6 +175,7 @@ public class Turma {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "PROFESSOR_TURMA", joinColumns = {@JoinColumn(name = "TURMA_CODIGO")}, inverseJoinColumns = {@JoinColumn(name = "PROFESSOR_ID")})
+    @JsonIgnore
     public List<Professor> getProfessores() {
         return professores;
     }
@@ -165,6 +186,7 @@ public class Turma {
 
     @OneToMany(mappedBy = "turma")
     @OrderBy
+    @JsonIgnore
     public List<ObservacaoTurma> getObservacoes() {
         return observacoes;
     }
@@ -175,6 +197,7 @@ public class Turma {
 
     @OneToMany(mappedBy = "turma")
     @OrderBy
+    @JsonIgnore
     public List<Aluno> getAlunos() {
         return alunos;
     }

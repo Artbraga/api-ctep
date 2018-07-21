@@ -1,9 +1,24 @@
 package com.arthur.apiCTEP.entities;
 
-import javax.persistence.*;
-
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
@@ -22,6 +37,7 @@ import java.util.List;
 })
 @Entity
 @Table(name = "CURSO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Curso implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -39,7 +55,7 @@ public class Curso implements Serializable{
     private List<Curso> especializacoes;
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "ID")
     public Integer getId() {
         return id;
@@ -114,6 +130,7 @@ public class Curso implements Serializable{
     // ********* M�todos para Associa��es *********
     @OneToMany(mappedBy = "curso")
     @OrderBy
+    @JsonIgnore
     public List<Disciplina> getDisciplinas() {
         return disciplinas;
     }
@@ -124,6 +141,7 @@ public class Curso implements Serializable{
 
     @OneToMany(mappedBy= "curso")
     @OrderBy
+    @JsonIgnore
     public List<Turma> getTurmas() {
         return turmas;
     }
@@ -134,6 +152,7 @@ public class Curso implements Serializable{
 
     @OneToMany(mappedBy= "curso")
     @OrderBy
+    @JsonIgnore
     public List<Aluno> getAlunos() {
         return alunos;
     }
@@ -143,6 +162,7 @@ public class Curso implements Serializable{
     }
 
     @OneToMany(mappedBy = "id")
+    @JsonIgnore
     public List<Curso> getEspecializacoes() {
         return especializacoes;
     }

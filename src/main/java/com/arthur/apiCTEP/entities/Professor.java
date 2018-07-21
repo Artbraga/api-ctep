@@ -1,8 +1,23 @@
 package com.arthur.apiCTEP.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
@@ -25,7 +40,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "PROFESSOR")
-public class Professor {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Professor implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
     private String nome;
     private Long id;
     private String cpf;
@@ -152,6 +171,7 @@ public class Professor {
      */
     @OneToMany(mappedBy = "professor")
     @OrderBy
+    @JsonIgnore
     public List<ReciboProfessor> getRecibos() {
         return recibos;
     }
@@ -161,6 +181,7 @@ public class Professor {
     }
 
     @ManyToMany(mappedBy = "professores")
+    @JsonIgnore
     public List<Turma> getTurmas() {
         return turmas;
     }

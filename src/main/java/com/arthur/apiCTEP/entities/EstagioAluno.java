@@ -1,11 +1,27 @@
 package com.arthur.apiCTEP.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "ESTAGIO_ALUNO")
-public class EstagioAluno {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class EstagioAluno implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
     private Long id;
     private Date data;
     private String horaEntrada;
@@ -17,7 +33,7 @@ public class EstagioAluno {
     private Aluno aluno;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     public Long getId() {
         return id;
@@ -78,7 +94,7 @@ public class EstagioAluno {
 
 // ********* M�todos para Associa��es *********
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "HOSPITAL_ID")
     public Hospital getHospital() {
         return hospital;
@@ -88,7 +104,7 @@ public class EstagioAluno {
         this.hospital = hospital;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "MODALIDADE_ESTAGIO_ID")
     public ModalidadeEstagio getModalidadeEstagio() {
         return modalidadeEstagio;
@@ -98,7 +114,7 @@ public class EstagioAluno {
         this.modalidadeEstagio = modalidadeEstagio;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ALUNO_MATRICULA")
     public Aluno getAluno() {
         return aluno;

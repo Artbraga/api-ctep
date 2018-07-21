@@ -1,7 +1,24 @@
 package com.arthur.apiCTEP.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
@@ -17,7 +34,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "MODALIDADE_ESTAGIO")
-public class ModalidadeEstagio {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class ModalidadeEstagio implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
     private Integer id;
     private String modalidade;
 
@@ -26,7 +47,7 @@ public class ModalidadeEstagio {
     private List<EstagioAluno> estagioAlunos;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     public Integer getId() {
         return id;
@@ -68,6 +89,7 @@ public class ModalidadeEstagio {
 
     @OneToMany(mappedBy = "modalidadeEstagio")
     @OrderBy
+    @JsonIgnore
     public List<EstagioAluno> getEstagioAlunos() {
         return estagioAlunos;
     }

@@ -1,10 +1,24 @@
 package com.arthur.apiCTEP.entities;
 
-import com.arthur.apiCTEP.entities.enums.StatusAluno;
-
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.arthur.apiCTEP.entities.enums.StatusAluno;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
@@ -40,8 +54,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "ALUNO")
-public class Aluno {
-    private String matricula;
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Aluno implements Serializable{
+	private static final long serialVersionUID = 1L;
+	
+	private String matricula;
     private String nome;
     private String cpf;
     private String rg;
@@ -74,6 +91,7 @@ public class Aluno {
     private Curso curso;
 
     private List<ObservacaoAluno> observacoes;
+    private List<EstagioAluno> estagios;
 
     @Id
     @Column(name = "MATRICULA")
@@ -297,7 +315,7 @@ public class Aluno {
     }
 
     // ********* M�todos para Associa��es *********
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TURMA_ID")
     public Turma getTurma() {
         return turma;
@@ -307,7 +325,7 @@ public class Aluno {
         this.turma = turma;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TURMA_ESPECIALIZACAO_ID")
     public Turma getTurmaEspecializacao() {
         return turmaEspecializacao;
@@ -317,7 +335,7 @@ public class Aluno {
         this.turmaEspecializacao = turmaEspecializacao;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CURSO_ID")
     public Curso getCurso() {
         return curso;
@@ -329,6 +347,7 @@ public class Aluno {
 
     @OneToMany(mappedBy = "aluno")
     @OrderBy
+    @JsonIgnore
     public List<ObservacaoAluno> getObservacoes() {
         return observacoes;
     }

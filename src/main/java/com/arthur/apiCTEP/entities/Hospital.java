@@ -1,7 +1,21 @@
 package com.arthur.apiCTEP.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
@@ -12,7 +26,11 @@ import java.util.List;
 
 @Entity
 @Table(name = "HOSPITAL")
-public class Hospital {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class Hospital implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
     private Integer id;
     private String nome;
 
@@ -20,7 +38,7 @@ public class Hospital {
 
     @Column(name = "ID")
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public Integer getId() {
         return id;
     }
@@ -52,6 +70,7 @@ public class Hospital {
     // ********* M�todos para Associa��es *********
     @OneToMany(mappedBy= "hospital")
     @OrderBy
+    @JsonIgnore	
     public List<EstagioAluno> getEstagios() {
         return estagios;
     }

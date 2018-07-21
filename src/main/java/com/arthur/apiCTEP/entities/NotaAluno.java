@@ -1,6 +1,20 @@
 package com.arthur.apiCTEP.entities;
 
-import javax.persistence.*;
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
     @NamedQuery(
@@ -11,14 +25,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "NOTA_ALUNO")
-public class NotaAluno {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+public class NotaAluno implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
     private Long id;
     private Aluno aluno;
     private Disciplina disciplina;
     private Float nota;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     public Long getId() {
         return id;
