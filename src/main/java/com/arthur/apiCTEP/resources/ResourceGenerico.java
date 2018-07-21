@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.arthur.apiCTEP.services.ServiceGenerico;
 
-public class ResourceGenerico<T, K> {
+public abstract class ResourceGenerico<T, K> {
 	
 	ServiceGenerico<T, K> service;
 	public ResourceGenerico(ServiceGenerico<T, K> service) {
