@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public abstract class ServiceGenerico<T, K> {
 
-	private JpaRepository<T, K> repository;
+	JpaRepository<T, K> repository;
 	private Class<T> tipo;
 
 	@SuppressWarnings("unchecked")

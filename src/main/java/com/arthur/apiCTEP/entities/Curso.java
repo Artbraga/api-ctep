@@ -22,15 +22,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
-                name = "Curso.recuperaCursos",
-                query = "select c from Curso c order by c.nome"
-        ),
-        @NamedQuery(
-                name = "Curso.recuperaCursosDeEspecializacao",
+                name = "Curso.listarCursosDeEspecializacao",
                 query = "select c from Curso c where c.especializacao=TRUE and c.cursoVinculado.id=?1"
         ),
         @NamedQuery(
-                name = "Curso.recuperaCursosTecnicos",
+                name = "Curso.listarCursosTecnicos",
                 query = "select c from Curso c where c.especializacao=FALSE order by c.nome"
         )
 
@@ -66,6 +62,7 @@ public class Curso implements Serializable{
     }
 
     @Column(name = "NOME")
+    @OrderBy
     public String getNome() {
         return nome;
     }

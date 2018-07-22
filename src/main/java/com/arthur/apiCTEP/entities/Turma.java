@@ -46,7 +46,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @NamedQuery(
                 name = "Turma.recuperaTurmaComProfessores",
                 query = "select t from Turma t left join fetch t.professores where t.id = ?1"
-
+        ),
+        @NamedQuery(
+                name="Turma.listarTurmasAtivas",
+                query = "select t from Turma t where t.status <> 4"
         )
 })
 
