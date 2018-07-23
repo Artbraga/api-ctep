@@ -24,4 +24,8 @@ public class CursoService extends ServiceGenerico<Curso, Integer> {
     public List<Curso> listarCursosTecnicos(){
         return cursoRepository.listarCursosTecnicos();
     }
+
+    public List<Curso> filtrar(String nome) {
+        return cursoRepository.filtrar(nome);
+    }
 }

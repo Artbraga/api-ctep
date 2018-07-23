@@ -12,4 +12,6 @@ public interface CursoRepository extends JpaRepository<Curso, Integer> {
     List<Curso> listarCursosDeEspecializacao(int id);
 
     List<Curso> listarCursosTecnicos();
+
+    List<Curso> filtrar(String nome);
 }

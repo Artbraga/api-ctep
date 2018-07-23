@@ -28,8 +28,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @NamedQuery(
                 name = "Curso.listarCursosTecnicos",
                 query = "select c from Curso c where c.especializacao=FALSE order by c.nome"
+        ),
+        @NamedQuery(
+                name = "Curso.filtrar",
+                query = "select c from Curso c where lower(c.nome) like lower(concat('%', ?1,'%'))"
         )
-
 })
 @Entity
 @Table(name = "CURSO")
