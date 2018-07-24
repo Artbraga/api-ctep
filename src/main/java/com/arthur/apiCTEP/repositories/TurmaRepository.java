@@ -10,4 +10,8 @@ import java.util.List;
 public interface TurmaRepository extends JpaRepository<Turma, String> {
 
     public List<Turma> listarTurmasAtivas();
+
+    List<Turma> filtrarPeloCodigo(String codigo);
+
+    List<Turma> filtrarTurmasAtivas(String codigo);
 }

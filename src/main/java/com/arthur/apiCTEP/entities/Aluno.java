@@ -42,11 +42,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
                 query = "select a.matricula from Aluno a where (a.anoMatricula=?1 and a.curso.id=?2) order by a.matricula"
         ),
         @NamedQuery(
-                name = "Aluno.recuperaAlunosPelaMatricula",
+                name = "Aluno.filtrarPelaMatricula",
                 query = "select a from Aluno a where lower(a.matricula) like lower(concat('%', ?1,'%'))"
         ),
         @NamedQuery(
-                name = "Aluno.recuperaAlunosPeloNome",
+                name = "Aluno.filtrarPeloNome",
                 query = "select a from Aluno a where lower(a.nome) like lower(concat('%', ?1,'%'))"
         )
 })

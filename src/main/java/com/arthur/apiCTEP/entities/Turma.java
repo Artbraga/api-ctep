@@ -50,6 +50,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @NamedQuery(
                 name="Turma.listarTurmasAtivas",
                 query = "select t from Turma t where t.status <> 4"
+        ),
+        @NamedQuery(
+                name = "Turma.filtrarPeloCodigo",
+                query = "select t from Turma t where lower(t.codigo) like lower(concat('%', ?1,'%'))"
+        ),
+        @NamedQuery(
+                name = "Turma.filtrarTurmasAtivas",
+                query = "select t from Turma t where lower(t.codigo) like lower(concat('%', ?1,'%')) and t.status <> 4"
         )
 })
 

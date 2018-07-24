@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.arthur.apiCTEP.entities.Turma;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/turmas")
@@ -23,9 +24,10 @@ public class TurmaResource extends ResourceGenerico<Turma, String>{
         this.turmaService = (TurmaService) this.service;
     }
 
-    @RequestMapping(value="/listarTurmasDropdown", method= RequestMethod.GET)
-    public ResponseEntity<?> listarTurmasDropdown() {
-        List<Turma> turmas = turmaService.listarTurmasAtivas();
+    @RequestMapping(value= { "/filtrarTurmasDropdown/", "/filtrarTurmasDropdown/{codigo}" }, method= RequestMethod.GET)
+    public ResponseEntity<?> listarTurmasDropdown(@PathVariable Optional<String> codigo) {
+        String c = codigo.orElse("");
+        List<Turma> turmas = turmaService.filtrarTurmasAtivas(c);
         return ResponseEntity.ok(turmas);
     }
 

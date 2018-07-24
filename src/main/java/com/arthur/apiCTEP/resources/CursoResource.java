@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/cursos")
@@ -35,9 +36,10 @@ public class CursoResource extends ResourceGenerico<Curso, Integer>{
 		return ResponseEntity.ok(cursos);
 	}
 
-    @RequestMapping(value="/filtrarCursos/{nome}", method= RequestMethod.GET)
-    public ResponseEntity<?> listarCursosTecnicos(@PathVariable String nome) {
-        List<Curso> cursos = cursoService.filtrar(nome);
+    @RequestMapping(value= {"/filtrar/{nome}", "/filtrar/"}, method= RequestMethod.GET)
+    public ResponseEntity<?> listarCursosTecnicos(@PathVariable Optional<String> nome) {
+		String n = nome.orElse("");
+        List<Curso> cursos = cursoService.filtrar(n);
         return ResponseEntity.ok(cursos);
     }
 }

@@ -22,4 +22,10 @@ public class TurmaService extends ServiceGenerico<Turma,String>{
         return this.turmaRepository.listarTurmasAtivas();
     }
 
+
+    public List<Turma> filtrarTurmasAtivas(String codigo){
+        return this.turmaRepository.filtrarTurmasAtivas(codigo);
+    }
+
+
 }
