@@ -14,4 +14,8 @@ public interface TurmaRepository extends JpaRepository<Turma, String> {
     List<Turma> filtrarPeloCodigo(String codigo);
 
     List<Turma> filtrarTurmasAtivas(String codigo);
+
+    int recuperaNumeroDeTurmasNoAno(int ano, int cursoId);
+
+    List<Turma> filtrarTurmasAtivasDeUmCurso(String codigo, int cursoId);
 }

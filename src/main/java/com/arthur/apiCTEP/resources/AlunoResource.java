@@ -34,4 +34,15 @@ public class AlunoResource extends ResourceGenerico<Aluno, String>{
         return ResponseEntity.ok(json);
 	}
 
+//	@RequestMapping(value="/salvar", method = RequestMethod.POST)
+//	public ResponseEntity<?> salvarAluno(Aluno aluno) {
+//		try{
+//			alunoService.salvarAluno(aluno);
+//			ResponseEntity.ok(true);
+//		}
+//		catch (Exception e){
+//			ResponseEntity.ok(false);
+//		}
+//
+//	}
 }

@@ -28,12 +28,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
                 query = "select t from Turma t order by t.codigo desc"
         ),
         @NamedQuery(
-                name = "Turma.recuperaTurmasDeUmCurso",
+                name = "Turma.filtrarTurmasDeUmCurso",
                 query = "select t from Turma t where t.curso.id = ?1 order by t.codigo desc"
         ),
         @NamedQuery(
                 name = "Turma.recuperaNumeroDeTurmasNoAno",
-                query = "select t.codigo from Turma t where (t.anoInicio=?1 and t.curso.id=?2) order by t.codigo"
+                query = "select count(t) from Turma t where (t.anoInicio=?1 and t.curso.id=?2) order by t.codigo"
         ),
         @NamedQuery(
                 name = "Turma.recuperaTurmasPeloCodigo",
@@ -58,6 +58,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         @NamedQuery(
                 name = "Turma.filtrarTurmasAtivas",
                 query = "select t from Turma t where lower(t.codigo) like lower(concat('%', ?1,'%')) and t.status <> 4"
+        ),
+        @NamedQuery(
+                name = "Turma.filtrarTurmasAtivasDeUmCurso",
+                query = "select t from Turma t where lower(t.codigo) like lower(concat('%', ?1,'%')) and t.curso.id = ?2 and t.status <> 4"
         )
 })
 

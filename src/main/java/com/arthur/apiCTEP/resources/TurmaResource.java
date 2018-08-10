@@ -1,6 +1,7 @@
 package com.arthur.apiCTEP.resources;
 
 import com.arthur.apiCTEP.services.TurmaService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,4 +32,20 @@ public class TurmaResource extends ResourceGenerico<Turma, String>{
         return ResponseEntity.ok(turmas);
     }
 
+    @RequestMapping(value="/gerarCodigo/{ano}&{cursoId}", method= RequestMethod.GET)
+    public ResponseEntity<?> listarCursosDeEspecializacao(@PathVariable int ano, @PathVariable int cursoId) {
+        String codigo = turmaService.gerarCodigo(cursoId, ano);
+        JSONObject json = new JSONObject();
+
+        json.put("data", codigo);
+
+        return ResponseEntity.ok(json);
+    }
+
+    @RequestMapping(value="/filtrarTurmasDeUmCurso/{codigo}&{cursoId}", method= RequestMethod.GET)
+    public ResponseEntity<?> filtrarTurmasDeUmCurso(@PathVariable String codigo, @PathVariable int cursoId) {
+        List<Turma> turmas = turmaService.filtrarTurmasAtivasDeUmCurso(codigo, cursoId);
+
+        return ResponseEntity.ok(turmas);
+    }
 }
