@@ -28,4 +28,7 @@ public abstract class ServiceGenerico<T, K> {
 		return this.repository.findAll();
 	}
 
+	public T save(T entity){
+	    return repository.save(entity);
+    }
 }

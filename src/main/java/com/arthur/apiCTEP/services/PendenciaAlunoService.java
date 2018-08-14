@@ -19,4 +19,5 @@ public class PendenciaAlunoService extends ServiceGenerico<PendenciaAluno, Integ
     public List<PendenciaAluno> recuperaPendenciasDeUmAluno(String matricula){
         return pendenciaAlunoRepository.recuperaPendenciasDeUmAluno(matricula);
     }
+
 }

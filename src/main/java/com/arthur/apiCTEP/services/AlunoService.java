@@ -36,8 +36,4 @@ public class AlunoService extends ServiceGenerico<Aluno,String>{
 
         return curso.getSigla() + anoMatricula + String.format("%03d", numero);
     }
-
-    public void salvarAluno(Aluno aluno){
-        alunoRepository.save(aluno);
-    }
 }

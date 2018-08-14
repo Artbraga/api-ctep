@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,4 +28,10 @@ public abstract class ResourceGenerico<T, K> {
 		List<T> entities = service.listar();
 		return ResponseEntity.ok(entities);
 	}
+
+	@RequestMapping(value="/salvar", method = RequestMethod.POST)
+	public ResponseEntity<?> save(@RequestBody T entity){
+	    entity = service.save(entity);
+	    return ResponseEntity.ok("true");
+    }
 }
