@@ -34,4 +34,9 @@ public abstract class ResourceGenerico<T, K> {
 	    entity = service.save(entity);
 	    return ResponseEntity.ok("true");
     }
+
+    @RequestMapping(value="/deletar/{key}", method = RequestMethod.GET)
+    public ResponseEntity<?> delete(@PathVariable K key){
+        return ResponseEntity.ok(service.delete(key));
+    }
 }

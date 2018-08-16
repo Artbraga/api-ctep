@@ -31,4 +31,14 @@ public abstract class ServiceGenerico<T, K> {
 	public T save(T entity){
 	    return repository.save(entity);
     }
+
+    public String delete(K key){
+	    try{
+            Optional<T> entity = this.repository.findById(key);
+            repository.delete(entity.orElseThrow(() -> new ObjetoNaoEncontradoException(tipo.getSimpleName() +" não encontrado!")));
+            return "true";
+        } catch (Exception e){
+	        return e.getMessage();
+        }
+    }
 }
