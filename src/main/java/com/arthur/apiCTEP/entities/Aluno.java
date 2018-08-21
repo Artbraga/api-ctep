@@ -22,20 +22,16 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @NamedQueries({
         @NamedQuery(
-                name = "Aluno.recuperaUmAlunoPeloNome",
-                query = "select a from Aluno a where a.nome = ?1"
-        ),
-        @NamedQuery(
                 name = "Aluno.recuperaAlunos",
                 query = "select a from Aluno a order by a.nome"
         ),
         @NamedQuery(
                 name = "Aluno.recuperaAlunosDeUmaTurma",
-                query = "select a from Aluno a where a.turma.codigo=?1  order by a.nome"
+                query = "select a from Aluno a where a.turma.codigo=?1 order by a.nome"
         ),
         @NamedQuery(
                 name = "Aluno.recuperaAlunosDeUmCurso",
-                query = "select a from Aluno a where a.curso.id=?1  order by a.nome"
+                query = "select a from Aluno a where a.curso.id=?1 order by a.nome"
         ),
         @NamedQuery(
                 name = "Aluno.recuperaNumeroDeAlunosParaMatricula",
@@ -43,11 +39,15 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
         ),
         @NamedQuery(
                 name = "Aluno.filtrarPelaMatricula",
-                query = "select a from Aluno a where lower(a.matricula) like lower(concat('%', ?1,'%'))"
+                query = "select a from Aluno a where (lower(a.matricula) like lower(concat('%', ?1,'%')) and a.status=1) order by a.nome"
         ),
         @NamedQuery(
                 name = "Aluno.filtrarPeloNome",
-                query = "select a from Aluno a where lower(a.nome) like lower(concat('%', ?1,'%'))"
+                query = "select a from Aluno a where (lower(a.nome) like lower(concat('%', ?1,'%')) and a.status=1) order by a.nome"
+        ),
+        @NamedQuery(
+                name = "Aluno.filtrarPelaTurma",
+                query = "select a from Aluno a where ((lower(a.turma.codigo) like lower(concat('%', ?1,'%')) or a.turmaEspecializacao.codigo like lower(concat('%', ?1,'%'))) and a.status=1) order by a.nome"
         )
 })
 
@@ -76,6 +76,7 @@ public class Aluno implements Serializable{
     private String nomeMae;
 
     private boolean notaFiscal;
+    private boolean transferencia;
 
     private Date dataMatricula;
     private Date dataNascimento;
@@ -220,6 +221,15 @@ public class Aluno implements Serializable{
         this.nomeMae = nomeMae;
     }
 
+    @Column(name = "TRANSFERENCIA")
+    public boolean getTransferencia() {
+        return transferencia;
+    }
+
+    public void setTransferencia(boolean transferencia) {
+        this.transferencia = transferencia;
+    }
+
     @Column(name = "NOTA_FISCAL")
     public boolean getNotaFiscal() {
         return notaFiscal;
@@ -288,7 +298,7 @@ public class Aluno implements Serializable{
     }
 
     @SuppressWarnings("deprecation")
-	public Aluno(String matricula, String nome, String cpf, String rg, String endereco, String cep, String complemento, String bairro, String cidade, String email, String telefone, String celular, String nomePai, String nomeMae, boolean notaFiscal, Date dataMatricula, Date dataNascimento, Date dataValidade, String cursoAnterior, StatusAluno status, Curso curso, Turma turma) {
+	public Aluno(String matricula, String nome, String cpf, String rg, String endereco, String cep, String complemento, String bairro, String cidade, String email, String telefone, String celular, String nomePai, String nomeMae, boolean notaFiscal, boolean transferencia, Date dataMatricula, Date dataNascimento, Date dataValidade, String cursoAnterior, StatusAluno status, Curso curso, Turma turma) {
         this.matricula = matricula;
         this.nome = nome;
         this.cpf = cpf;
@@ -304,6 +314,7 @@ public class Aluno implements Serializable{
         this.nomePai = nomePai;
         this.nomeMae = nomeMae;
         this.notaFiscal = notaFiscal;
+        this.transferencia = transferencia;
         this.dataMatricula = dataMatricula;
         this.dataNascimento = dataNascimento;
         this.dataValidade = dataValidade;

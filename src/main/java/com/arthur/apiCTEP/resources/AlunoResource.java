@@ -33,4 +33,22 @@ public class AlunoResource extends ResourceGenerico<Aluno, String>{
 
         return ResponseEntity.ok(json);
 	}
+
+	@RequestMapping(value="/filtrarPelaTurma/{codigoTurma}", method= RequestMethod.GET)
+	public ResponseEntity<?> filtrarPelaTurma(@PathVariable String codigoTurma) {
+		List<Aluno> alunos = alunoService.filtrarPelaTurma(codigoTurma);
+		return ResponseEntity.ok(alunos);
+	}
+
+    @RequestMapping(value="/filtrarPelaMatricula/{matricula}", method= RequestMethod.GET)
+    public ResponseEntity<?> filtrarPelaMatricula(@PathVariable String matricula) {
+        List<Aluno> alunos = alunoService.filtrarPelaMatricula(matricula);
+        return ResponseEntity.ok(alunos);
+    }
+
+    @RequestMapping(value="/filtrarPeloNome/{nome}", method= RequestMethod.GET)
+    public ResponseEntity<?> filtrarPeloNome(@PathVariable String nome) {
+        List<Aluno> alunos = alunoService.filtrarPeloNome(nome);
+        return ResponseEntity.ok(alunos);
+    }
 }

@@ -36,4 +36,16 @@ public class AlunoService extends ServiceGenerico<Aluno,String>{
 
         return curso.getSigla() + anoMatricula + String.format("%03d", numero);
     }
+
+    public List<Aluno> filtrarPelaMatricula(String matricula){
+        return alunoRepository.filtrarPelaMatricula(matricula);
+    }
+
+    public List<Aluno> filtrarPelaTurma(String codigoTurma){
+        return alunoRepository.filtrarPelaTurma(codigoTurma);
+    }
+
+    public List<Aluno> filtrarPeloNome(String nome){
+        return alunoRepository.filtrarPeloNome(nome);
+    }
 }

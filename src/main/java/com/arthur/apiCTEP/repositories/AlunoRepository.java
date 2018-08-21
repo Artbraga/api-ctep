@@ -14,5 +14,7 @@ public interface AlunoRepository extends JpaRepository<Aluno, String> {
 
     List<Aluno> filtrarPelaMatricula(String matricula);
 
+    List<Aluno> filtrarPelaTurma(String codigoTurma);
+
     List<String> recuperaNumeroDeAlunosParaMatricula(int ano, int cursoId);
 }
