@@ -48,4 +48,11 @@ public class TurmaResource extends ResourceGenerico<Turma, String>{
 
         return ResponseEntity.ok(turmas);
     }
+
+    @RequestMapping(value="/filtrarTurmasPeloNome/{codigo}", method= RequestMethod.GET)
+    public ResponseEntity<?> filtrarTurmasPeloNome(@PathVariable String codigo) {
+        List<Turma> turmas = turmaService.filtrarTurmasAtivas(codigo);
+
+        return ResponseEntity.ok(turmas);
+    }
 }
