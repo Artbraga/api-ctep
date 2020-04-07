@@ -1,0 +1,52 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.2",
+    "signature": "816d06fab1ae72720811c620f859af8128c008b8"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.2": {
+      "Repositories/1.0.0": {
+        "dependencies": {
+          "Entities": "1.0.0",
+          "LinqKit.Core": "1.1.16"
+        },
+        "runtime": {
+          "Repositories.dll": {}
+        }
+      },
+      "LinqKit.Core/1.1.16": {
+        "runtime": {
+          "lib/netstandard2.0/LinqKit.Core.dll": {
+            "assemblyVersion": "1.1.16.0",
+            "fileVersion": "1.1.16.0"
+          }
+        }
+      },
+      "Entities/1.0.0": {
+        "runtime": {
+          "Entities.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Repositories/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "LinqKit.Core/1.1.16": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-AVBdEpMFi94Bs+WzQWnFxuwxUCEnt2s4OiWw9xf/jC+fnMCXPkpRQP+uJMXuOpZIQYV91wj1JbEsU01m6sMDVA==",
+      "path": "linqkit.core/1.1.16",
+      "hashPath": "linqkit.core.1.1.16.nupkg.sha512"
+    },
+    "Entities/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

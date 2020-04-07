@@ -1,0 +1,14 @@
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Entities.dll
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Repositories.dll
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.csprojAssemblyReference.cache
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.csproj.CoreCompileInputs.cache
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.AssemblyInfoInputs.cache
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.AssemblyInfo.cs
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Repositories.Impl.deps.json
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Repositories.Impl.dll
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Repositories.Impl.pdb
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Entities.pdb
+C:\Sources\pessoal\ctep\Repositories.Impl\bin\Debug\netcoreapp2.2\Repositories.pdb
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.csproj.CopyComplete
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.dll
+C:\Sources\pessoal\ctep\Repositories.Impl\obj\Debug\netcoreapp2.2\Repositories.Impl.pdb
