@@ -10,33 +10,36 @@ namespace Repositories.Impl.Mapping
         {
             builder.HasKey(u => u.Id);
 
-            builder.ToTable("USUARIO");
+            builder.ToTable("tb_usuario");
 
             builder.Property(r => r.Id)
-                .HasColumnName("ID");
+                .HasColumnName("id_usuario");
 
             builder
                 .Property(u => u.Nome)
-                .HasColumnName("NOME")
+                .HasColumnName("nome")
                 .HasMaxLength(50);
 
             builder
                 .Property(u => u.Login)
-                .HasColumnName("LOGIN")
-                .HasMaxLength(10);
+                .HasColumnName("login")
+                .HasMaxLength(20);
 
             builder
                 .Property(u => u.Senha)
-                .HasColumnName("SENHA")
+                .HasColumnName("senha")
                 .HasMaxLength(32);
 
             builder
                 .Property(u => u.Telefone)
-                .HasColumnName("LOGIN")
+                .HasColumnName("telefone")
                 .HasMaxLength(10);
 
-            builder.Property(u => u.Permissao)
-                .HasColumnName("PERMISSAO");
+            builder.Property(r => r.AlunoId)
+                .HasColumnName("id_aluno");
+
+            builder.Property(r => r.ProfessorId)
+                .HasColumnName("id_professor");
 
         }
     }

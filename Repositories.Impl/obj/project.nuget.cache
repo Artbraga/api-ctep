@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "L+GHh+sbg4I8c0TPGX87+lXl+rbdU3m5/280TCKBAjSA+86B1mVJ3o9Qt2RD6uHb8NqpYpNx9Bu30N1U71kaiA==",
+  "dgSpecHash": "XjMJAIw5sxuqQj1Z3LabGU1h8cWLTDf3LB+2rYL0F6a9+EcAkAdYew5A7hvxV5Mq989UItlM6KpBG1hy8QxYDg==",
   "success": true,
   "projectFilePath": "B:\\GitHub\\api-ctep\\Repositories.Impl\\Repositories.Impl.csproj",
   "expectedPackageFiles": [
@@ -32,7 +32,7 @@
     "C:\\Users\\Arthur\\.nuget\\packages\\mysql.data\\8.0.18\\mysql.data.8.0.18.nupkg.sha512",
     "C:\\Users\\Arthur\\.nuget\\packages\\mysql.data.entityframeworkcore\\8.0.18\\mysql.data.entityframeworkcore.8.0.18.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
-    "C:\\Users\\Arthur\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\remotion.linq\\2.2.0\\remotion.linq.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.native.system\\4.0.0\\runtime.native.system.4.0.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\runtime.native.system.security.cryptography\\4.0.0\\runtime.native.system.security.cryptography.4.0.0.nupkg.sha512",

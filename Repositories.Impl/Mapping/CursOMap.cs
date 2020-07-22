@@ -1,6 +1,8 @@
 ﻿using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System;
 
 namespace Repositories.Impl.Mapping
 {
@@ -10,41 +12,41 @@ namespace Repositories.Impl.Mapping
         {
             builder.HasKey(u => u.Id);
 
-            builder.ToTable("CURSO");
+            builder.ToTable("tb_curso");
 
             builder.Property(r => r.Id)
-                .HasColumnName("ID");
+                .HasColumnName("id_curso");
 
             builder
                 .Property(u => u.Nome)
-                .HasColumnName("NOME")
+                .HasColumnName("nome")
                 .HasMaxLength(50)
                 .IsRequired();
 
             builder
                 .Property(u => u.Sigla)
-                .HasColumnName("SIGLA")
+                .HasColumnName("sigla")
                 .HasMaxLength(3)
                 .IsRequired();
 
             builder
                 .Property(u => u.SiglaTurma)
-                .HasColumnName("SIGLA_TURMA")
+                .HasColumnName("sigla_turma")
                 .HasMaxLength(4)
                 .IsRequired();
 
             builder
                 .Property(u => u.Especializacao)
-                .HasColumnName("ESPECIALIZACAO")
-                .HasDefaultValue(false);
+                .HasColumnName("flg_especializacao")
+                .HasDefaultValue(false)
+                .HasConversion(new BoolToZeroOneConverter<Int16>());
 
             builder.Property(u => u.CursoVinculadoId)
-                .HasColumnName("CURSO_VINCULADO");
+                .HasColumnName("id_curso_vinculado");
 
             builder.HasOne(r => r.CursoVinculado)
                .WithMany(a => a.CursosEspecializacao)
-               .HasForeignKey(a => a.CursoVinculadoId)
-               .HasConstraintName("FK_CURSO_VINCULADO");
+               .HasForeignKey(a => a.CursoVinculadoId);
 
         }
     }

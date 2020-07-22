@@ -23,7 +23,7 @@ namespace Services.Impl
 
         public IEnumerable<TurmaDTO> ListarTurmasDeUmCurso(int cursoId)
         {
-            return TurmaRepository.ListarTurmasDeUmCurso().Select(x => new TurmaDTO(x));
+            return TurmaRepository.ListarTurmasDeUmCurso(cursoId).Select(x => new TurmaDTO(x));
         }
     }
 }

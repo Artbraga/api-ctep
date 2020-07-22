@@ -9,7 +9,6 @@ namespace Entities.DTOs
 {
     public class TurmaDTO : BaseDTO<Turma>
     {
-        public string Nome { get; set; }
         public string Codigo { get; set; }
         public string DiasDaSemana { get; set; }
         public string HoraInicio { get; set; }
@@ -27,11 +26,10 @@ namespace Entities.DTOs
         public TurmaDTO(Turma entity) : base(entity)
         {
             this.Id = entity.Id;
-            this.Nome = entity.Nome;
             this.Codigo = entity.Codigo;
             this.DiasDaSemana = entity.DiasDaSemana;
-            this.HoraFim = entity.HoraFim;
-            this.HoraInicio = entity.HoraInicio;
+            this.HoraFim = entity.HoraFim.ToString();
+            this.HoraInicio = entity.HoraInicio.ToString();
             this.AnoInicio = entity.AnoInicio;
             this.DataInicio = entity.DataInicio;
             this.DataFim = entity.DataFim;
@@ -44,11 +42,10 @@ namespace Entities.DTOs
             return new Turma
             {
                 Id = this.Id,
-                Nome = this.Nome,
                 Codigo = this.Codigo,
                 DiasDaSemana = this.DiasDaSemana,
-                HoraFim = this.HoraFim,
-                HoraInicio = this.HoraInicio,
+                //HoraFim = this.HoraFim,
+                //HoraInicio = this.HoraInicio,
                 AnoInicio = this.AnoInicio,
                 DataInicio = this.DataInicio,
                 DataFim = this.DataFim,

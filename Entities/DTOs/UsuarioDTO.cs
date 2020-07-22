@@ -9,7 +9,6 @@ namespace Entities.DTOs
         public string Login { get; set; }
         public string Senha { get; set; }
         public string Telefone { get; set; }
-        public int Permissao { get; set; }
 
         public UsuarioDTO() { }
 
@@ -20,7 +19,6 @@ namespace Entities.DTOs
             this.Login = entity.Login;
             this.Senha = entity.Senha;
             this.Telefone = entity.Telefone;
-            this.Permissao = entity.Permissao;
         }
 
         public override Usuario ToEntity()
@@ -32,7 +30,6 @@ namespace Entities.DTOs
                 Login = this.Login,
                 Senha = this.Senha,
                 Telefone = this.Telefone,
-                Permissao = this.Permissao
             };
         }
     }

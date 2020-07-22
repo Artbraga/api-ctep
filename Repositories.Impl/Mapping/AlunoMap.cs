@@ -11,138 +11,127 @@ namespace Repositories.Impl.Mapping
         {
             builder.HasKey(u => u.Id);
 
-            builder.ToTable("ALUNO");
+            builder.ToTable("tb_aluno");
 
             builder.Property(r => r.Id)
-                .HasColumnName("ID");
-
-            builder
-                .Property(u => u.Matricula)
-                .HasColumnName("MATRICULA")
-                .HasColumnType("varchar")
-                .HasMaxLength(8)
-                .IsRequired();
+                .HasColumnName("id_aluno");
 
             builder
                 .Property(u => u.Nome)
-                .HasColumnName("NOME")
+                .HasColumnName("nome")
                 .HasColumnType("varchar")
                 .HasMaxLength(50)
                 .IsRequired();
 
             builder
                 .Property(u => u.CPF)
-                .HasColumnName("CPF")
+                .HasColumnName("cpf")
                 .HasColumnType("varchar")
-                .HasMaxLength(12)
+                .HasMaxLength(11)
                 .IsRequired();
 
             builder
-                .Property(u => u.CPF)
-                .HasColumnName("RG")
+                .Property(u => u.RG)
+                .HasColumnName("rg")
                 .HasColumnType("varchar")
-                .HasMaxLength(15);
+                .HasMaxLength(20);
 
             builder
                 .Property(u => u.Endereco)
-                .HasColumnName("ENDERECO")
+                .HasColumnName("endereco")
                 .HasColumnType("varchar")
                 .HasMaxLength(100)
                 .IsRequired();
 
             builder
                 .Property(u => u.CEP)
-                .HasColumnName("CEP")
+                .HasColumnName("cep")
                 .HasColumnType("varchar")
                 .HasMaxLength(8)
                 .IsRequired();
 
             builder
                 .Property(u => u.Complemento)
-                .HasColumnName("COMPLEMENTO")
+                .HasColumnName("complemento")
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
 
             builder
                 .Property(u => u.Bairro)
-                .HasColumnName("BAIRRO")
+                .HasColumnName("bairro")
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
 
             builder
                 .Property(u => u.Cidade)
-                .HasColumnName("CIDADE")
+                .HasColumnName("cidade")
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
 
             builder
                 .Property(u => u.Email)
-                .HasColumnName("EMAIL")
+                .HasColumnName("email")
                 .HasColumnType("varchar")
-                .HasMaxLength(40);
+                .HasMaxLength(20);
 
             builder
                 .Property(u => u.Telefone)
-                .HasColumnName("TELEFONE")
+                .HasColumnName("telefone")
                 .HasColumnType("varchar")
-                .HasMaxLength(10);
+                .HasMaxLength(12);
 
             builder
-                .Property(u => u.Bairro)
-                .HasColumnName("CELULAR")
+                .Property(u => u.Celular)
+                .HasColumnName("celular")
                 .HasColumnType("varchar")
-                .HasMaxLength(10);
+                .HasMaxLength(12);
+
+            builder
+                .Property(u => u.NomePai)
+                .HasColumnName("nome_pai")
+                .HasColumnType("varchar")
+                .HasMaxLength(50);
+
+            builder
+                .Property(u => u.NomeMae)
+                .HasColumnName("nome_mae")
+                .HasColumnType("varchar")
+                .HasMaxLength(50);
 
             builder
                 .Property(u => u.AnoMatricula)
                 .HasColumnName("ANO_MATRICULA")
-                .HasColumnType("int")
-                .IsRequired();
+                .HasColumnType("int");
 
             builder
-                .Property(u => u.AnoMatricula)
-                .HasColumnName("ANO_MATRICULA")
-                .HasColumnType("int")
-                .IsRequired();
+               .Property(u => u.DataMatricula)
+               .HasColumnName("data_matricula")
+               .HasColumnType("date")
+               .IsRequired();
+
+            builder
+               .Property(u => u.DataNascimento)
+               .HasColumnName("data_nascimento")
+               .HasColumnType("date")
+               .IsRequired();
+
+            builder
+               .Property(u => u.DataValidade)
+               .HasColumnName("data_validade")
+               .HasColumnType("date");
 
             builder
                 .Property(u => u.CursoAnterior)
-                .HasColumnName("CURSO_ANTERIOR")
+                .HasColumnName("curso_anterior")
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
+
+            builder.Property(r => r.TipoStatusAlunoId)
+                .HasColumnName("id_tpstatus_aluno");
+
+            builder.HasOne(r => r.TipoStatusAluno)
+                 .WithMany(t => t.Alunos)
+                 .HasForeignKey(r => r.TipoStatusAlunoId);
         }
     }
 }
-/*
-CREATE TABLE ALUNO(
-    MATRICULA               VARCHAR(8)      NOT NULL,
-    NOME                    VARCHAR(50)     NOT NULL,
-    CPF                     VARCHAR(12)     NOT NULL,
-    RG                      VARCHAR(15),
-    ENDERECO                VARCHAR(100)    NOT NULL,
-    CEP                     VARCHAR(8)      NOT NULL,
-    COMPLEMENTO             VARCHAR(20),
-    BAIRRO                  VARCHAR(20),
-    CIDADE                  VARCHAR(20),
-    EMAIL                   VARCHAR(40),
-    TELEFONE                VARCHAR(10),
-    CELULAR                 VARCHAR(10),
-    NOME_PAI                VARCHAR(50),
-    NOME_MAE                VARCHAR(50),
-    ANO_MATRICULA           INT(2)          NOT NULL,
-    DATA_MATRICULA          DATE            NOT NULL,
-    DATA_NASCIMENTO         DATE,
-    DATA_VALIDADE           DATE,
-    CURSO_ANTERIOR          VARCHAR(20),
-    CURSO_ID                INT(3)          NOT NULL,
-    NOTA_FISCAL             BOOLEAN,
-    TRANSFERENCIA           BOOLEAN,
-    STATUS                  INT(2)          NOT NULL,
-
-  CONSTRAINT PK_ALUNO_MATRICULA PRIMARY KEY(MATRICULA),
-  CONSTRAINT FK_ALUNO_TURMA_ID FOREIGN KEY(TURMA_ID) REFERENCES TURMA(CODIGO)
-    ON DELETE SET NULL,
-  CONSTRAINT FK_ALUNO_TURMA_ESPECIALIZACAO_ID FOREIGN KEY(TURMA_ESPECIALIZACAO_ID) REFERENCES TURMA(CODIGO)
-    ON DELETE SET NULL,
-  CONSTRAINT FK_ALUNO_CURSO_ID FOREIGN KEY(CURSO_ID) REFERENCES CURSO(ID)
-); */

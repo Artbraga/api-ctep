@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Entities.Entities
 {
     public class Aluno : BaseEntity
     {
         public string Nome { get; set; }
-        public string Matricula { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
         public string NomePai { get; set; }
@@ -20,9 +21,12 @@ namespace Entities.Entities
         public string Email { get; set; }
         public int AnoMatricula { get; set; }
         public string CursoAnterior { get; set; }
-        public 
         public DateTime DataMatricula { get; set; }
-        public DateTime DataValidade{ get; set; }
+        public DateTime? DataValidade{ get; set; }
         public DateTime DataNascimento{ get; set; }
+        public int TipoStatusAlunoId { get; set; }
+        public virtual TipoStatusAluno TipoStatusAluno { get; set; }
+        public virtual IEnumerable<TurmaAluno> TurmasAluno { get; set; }
+        public virtual IEnumerable<RegistroAluno> Registros { get; set; }
     }
 }

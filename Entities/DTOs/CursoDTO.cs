@@ -9,7 +9,7 @@ namespace Entities.DTOs
         public string Sigla { get; set; }
         public string SiglaTurma { get; set; }
         public bool Especializacao { get; set; }
-        public int CursoVinculadoId { get; set; }
+        public int? CursoVinculadoId { get; set; }
         public CursoDTO CursoVinculado { get; set; }
 
         public CursoDTO()
@@ -19,11 +19,11 @@ namespace Entities.DTOs
         public CursoDTO(Curso entity) : base(entity)
         {
             this.Id = entity.Id;
+            this.Nome = entity.Nome;
             this.Sigla = entity.Sigla;
             this.SiglaTurma = entity.SiglaTurma;
             this.Especializacao = entity.Especializacao;
             this.CursoVinculadoId = entity.CursoVinculadoId;
-            this.CursoVinculado = entity.CursoVinculado == null ? null : new CursoDTO(entity.CursoVinculado);
         }
 
         public override Curso ToEntity()
@@ -34,7 +34,7 @@ namespace Entities.DTOs
                 Sigla = this.Sigla,
                 SiglaTurma = this.SiglaTurma,
                 Especializacao = this.Especializacao,
-                CursoVinculadoId =this.CursoVinculadoId
+                CursoVinculadoId = this.CursoVinculadoId
             };
         }
     }

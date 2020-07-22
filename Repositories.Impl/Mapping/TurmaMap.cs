@@ -10,60 +10,58 @@ namespace Repositories.Impl.Mapping
         {
             builder.HasKey(u => u.Id);
 
-            builder.ToTable("TURMA");
+            builder.ToTable("tb_turma");
 
             builder.Property(r => r.Id)
-                .HasColumnName("ID");
-
-            builder
-                .Property(u => u.Nome)
-                .HasColumnName("NOME")
-                .HasMaxLength(50)
-                .IsRequired();
+                .HasColumnName("id_turma");
 
             builder
                 .Property(u => u.Codigo)
-                .HasColumnName("CODIGO")
+                .HasColumnName("codigo")
                 .HasMaxLength(8)
                 .IsRequired();
 
             builder
                 .Property(u => u.DiasDaSemana)
-                .HasColumnName("DIAS_DA_SEMANA")
-                .HasMaxLength(20)
+                .HasColumnName("dias_semana")
+                .HasMaxLength(30)
                 .IsRequired();
 
             builder
                 .Property(u => u.HoraInicio)
-                .HasColumnName("HORA_INICIO")
-                .HasMaxLength(5)
-                .IsRequired();
+                .HasColumnName("hora_inicio");
 
             builder
                 .Property(u => u.HoraFim)
-                .HasColumnName("HORA_FIM")
-                .HasMaxLength(5)
-                .IsRequired();
+                .HasColumnName("hora_fim");
 
             builder.Property(e => e.DataInicio)
-                .HasColumnName("DATA_INICIO")
+                .HasColumnName("data_inicio")
                 .HasColumnType("datetime")
                 .IsRequired();
 
             builder.Property(e => e.DataFim)
-                .HasColumnName("DATA_FIM")
+                .HasColumnName("data_fim")
                 .HasColumnType("datetime");
 
             builder.Property(r => r.AnoInicio)
-                .HasColumnName("ANO_INICIO");
+                .HasColumnName("ano_inicio")
+                .IsRequired();
 
             builder.Property(r => r.CursoId)
-                .HasColumnName("CURSO_ID");
+                .HasColumnName("id_curso");
+
+            builder.Property(r => r.TipoStatusTurmaId)
+                .HasColumnName("id_tpstatus_turma");
 
             builder.HasOne(t => t.Curso)
                 .WithMany(c => c.Turmas)
-                .HasForeignKey(t => t.CursoId)
-                .HasConstraintName("FK_TURMA_CURSO_ID");
+                .HasForeignKey(t => t.CursoId);
+
+
+            builder.HasOne(t => t.TipoStatusTurma)
+                .WithMany(c => c.Turmas)
+                .HasForeignKey(t => t.TipoStatusTurmaId);
         }
     }
 }

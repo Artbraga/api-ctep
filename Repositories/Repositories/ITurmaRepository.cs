@@ -6,6 +6,6 @@ namespace Repositories.Repositories
 {
     public interface ITurmaRepository : IBaseRepository<Turma>
     {
-        IEnumerable<Turma> ListarTurmasDeUmCurso(int cursoId)
+        IEnumerable<Turma> ListarTurmasDeUmCurso(int cursoId);
     }
 }

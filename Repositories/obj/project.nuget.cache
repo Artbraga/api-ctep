@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "61Sn1QdJ8/9htE2c5yEWSoYVpu8h6vwUDVmDZxXuUwQWQX5Xy4S+7HCKmS36EPu8Q/GIbFNHgQw2uo3TO3GmxQ==",
+  "dgSpecHash": "kKlWuW640CjV23OqE9dP5yY9OnR5YxRzs2Mz8Pt/iZ9fdzE3HRYNJg8Xlmp6SUaTsu0RLnhhL1o9kIDFnJe5Cg==",
   "success": true,
   "projectFilePath": "B:\\GitHub\\api-ctep\\Repositories\\Repositories.csproj",
   "expectedPackageFiles": [
@@ -11,7 +11,8 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.dotnethostresolver\\2.2.0\\microsoft.netcore.dotnethostresolver.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.2.0\\microsoft.netcore.platforms.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.targets\\2.0.0\\microsoft.netcore.targets.2.0.0.nupkg.sha512",
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",
+    "C:\\Users\\Arthur\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],
   "logs": []
 }
