@@ -99,7 +99,7 @@ namespace ctep
             {
                 var result = context.Result as ObjectResult;
                 const int AcceptedStatus = 202;
-                if ((result != null) && (result.StatusCode != AcceptedStatus) && (result.Value.GetType().ReflectedType == typeof(System.Linq.Enumerable)))
+                if ((result != null)  && (result.Value != null) && (result.StatusCode != AcceptedStatus) && (result.Value.GetType().ReflectedType == typeof(System.Linq.Enumerable)))
                 {
                     _log.LogInformation("Método {0} finalizado com o resultado {1}", new object[] { context.ActionDescriptor.DisplayName, JsonConvert.SerializeObject(context.Result.ToString()) });
                 }

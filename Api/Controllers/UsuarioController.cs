@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Entities.DTOs;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -23,6 +19,12 @@ namespace Api.Controllers
         public IEnumerable<UsuarioDTO> ListarUsuarios()
         {
             return usuarioService.ListarUsuarios();
+        }
+
+        [HttpPost]
+        public UsuarioDTO BuscarUsuarioPorLoginESenha(UsuarioDTO usuario)
+        {
+            return usuarioService.BuscarUsuarioPorLoginESenha(usuario);
         }
     }
 }

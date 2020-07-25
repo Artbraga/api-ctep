@@ -5,5 +5,6 @@ namespace Repositories.Repositories
 {
     public interface IUsuarioRepository : IBaseRepository<Usuario>
     {
+        Usuario BuscarUsuarioPorLoginESenha(string login, string senha);
     }
 }
