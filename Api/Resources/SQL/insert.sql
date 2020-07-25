@@ -1,5 +1,11 @@
 USE ctep;
 
+INSERT INTO tb_tpstatus_turma (nome) VALUES
+    ('Em Andamento'), ('Concluída');
+
+INSERT INTO tb_tpstatus_aluno (nome) VALUES
+    ('Ativo'), ('Concluído'), ('Trancado'), ('Abandono');
+
 INSERT INTO PROFESSOR (NOME, CPF, ENDERECO) VALUES
   ('Isabel Souza', '70835792021', 'Rua ABC'),
   ('Rosemary Moutinho', '46754158069', 'Rua 123'),
@@ -68,11 +74,11 @@ INSERT INTO ALUNO (MATRICULA, NOME, CPF, ENDERECO, CEP, ANO_MATRICULA, DATA_MATR
   ('ENF17026', 'Ruth Gomes Pereira', '83298834009', 'Praia de Marajós 999', '92874823', 17, '2017-03-24', 1, 0, 1),
   ('ENF17027', 'Gabrielli Moreira Cruz', '99212748058', 'Rua Amaral Peixoto 34', '23465320', 17, '2017-01-15', 1, 0, 1);
 
-INSERT INTO TURMA (CODIGO, DIAS_DA_SEMANA, HORA_INICIO, HORA_FIM, DATA_INICIO, DATA_FIM, ANO_INICIO, CURSO_ID, STATUS) VALUES
-  ('ETIC1701', 'Sábados', '08:00', '12:00', '2017-01-01', NULL, 17, 2, 1),
-  ('TENF1701', 'Terças e Quintas', '18:00', '21:00', '2017-03-12', '2019-05-21', 17, 1, 1),
-  ('ETIC1702', 'Quartas', '13:00', '17:00', '2017-02-23', '2017-11-01', 17, 2, 3),
-  ('ETIC1703', 'Quintas', '09:00', '13:00', '2017-04-21', NULL, 17, 2,2)
+INSERT INTO tb_turma (codigo, dias_semana, hora_inicio, hora_fim, data_inicio, data_fim, ano_inicio, id_curso, id_tpstatus_turma) VALUES
+  ('ETIC2001', 'Sábados', '08:00', '12:00', '2020-01-01', NULL, 17, 2, 1),
+  ('TENF2001', 'Terças e Quintas', '18:00', '21:00', '2020-03-12', '2022-05-21', 17, 1, 1),
+  ('ETIC2002', 'Quartas', '13:00', '17:00', '2020-02-23', '2020-11-01', 17, 2, 3),
+  ('ETIC2003', 'Quintas', '09:00', '13:00', '2020-04-21', NULL, 17, 2,2)
 ;
 
 INSERT INTO DISCIPLINA (NOME, CURSO_ID) VALUES

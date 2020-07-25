@@ -18,11 +18,11 @@ CREATE SCHEMA IF NOT EXISTS `ctep` DEFAULT CHARACTER SET utf8 ;
 USE `ctep` ;
 
 -- -----------------------------------------------------
--- Table `ctep`.`tb_tpstatusaluno`
+-- Table `ctep`.`tb_tpstatus_aluno`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ctep`.`tb_tpstatusaluno` ;
+DROP TABLE IF EXISTS `ctep`.`tb_tpstatus_aluno` ;
 
-CREATE TABLE IF NOT EXISTS `ctep`.`tb_tpstatusaluno` (
+CREATE TABLE IF NOT EXISTS `ctep`.`tb_tpstatus_aluno` (
   `id_tpstatus_aluno` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`id_tpstatus_aluno`))
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `ctep`.`tb_aluno` (
   INDEX `fk_ALUNO_TPSTATUS_ALUNO1_idx` (`id_tpstatus_aluno` ASC),
   CONSTRAINT `fk_ALUNO_TPSTATUS_ALUNO1`
     FOREIGN KEY (`id_tpstatus_aluno`)
-    REFERENCES `ctep`.`tb_tpstatusaluno` (`id_tpstatus_aluno`)
+    REFERENCES `ctep`.`tb_tpstatus_aluno` (`id_tpstatus_aluno`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

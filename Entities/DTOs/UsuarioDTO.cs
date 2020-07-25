@@ -25,7 +25,7 @@ namespace Entities.DTOs
         {
             return new Usuario
             {
-                Id = this.Id,
+                Id = this.Id.HasValue ? this.Id.Value : 0,
                 Nome = this.Nome,
                 Login = this.Login,
                 Senha = this.Senha,

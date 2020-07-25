@@ -10,9 +10,8 @@ namespace Entities.Entities
         public TimeSpan? HoraInicio { get; set; }
         public TimeSpan? HoraFim { get; set; }
         public int AnoInicio { get; set; }
-        public int Status { get; set; }
         public DateTime DataInicio { get; set; }
-        public DateTime DataFim { get; set; }
+        public DateTime? DataFim { get; set; }
         public int CursoId { get; set; }
         public virtual Curso Curso { get; set; }
         public int TipoStatusTurmaId { get; set; }

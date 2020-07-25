@@ -30,7 +30,7 @@ namespace Entities.DTOs
         {
             return new Curso
             {
-                Id = this.Id,
+                Id = this.Id.HasValue ? this.Id.Value : 0,
                 Sigla = this.Sigla,
                 SiglaTurma = this.SiglaTurma,
                 Especializacao = this.Especializacao,

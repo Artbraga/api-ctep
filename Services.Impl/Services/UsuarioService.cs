@@ -1,5 +1,6 @@
 ﻿using Entities.DTOs;
 using Entities.Entities;
+using Entities.Exceptions;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Impl.Util;
@@ -26,7 +27,10 @@ namespace Services.Impl
         {
             var senha = MD5Helper.GetMd5Hash(usuario.Senha);
             var usuarioSalvo = usuarioRepository.BuscarUsuarioPorLoginESenha(usuario.Login, senha);
-            return usuarioSalvo != null ? new UsuarioDTO(usuarioSalvo) : null;
+            if (usuarioSalvo == null) {
+                throw new BusinessException("Usuário ou senha incorretos.");
+            }
+            return new UsuarioDTO(usuarioSalvo);
         }
     }
 }

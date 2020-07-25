@@ -27,13 +27,6 @@ namespace ctep
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors(o => o.AddPolicy("CORS_POLICY", builder =>
-            {
-                builder.AllowAnyOrigin()
-                    .WithMethods("GET", "POST", "PUT", "DELETE")
-                    .AllowAnyHeader();
-            }));
-
             services.AddMvc(options =>
             {
                 options.Filters.Add<LoggingFilterAttribute>();
@@ -70,7 +63,12 @@ namespace ctep
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+            app.UseCors(option => {
+                option.AllowAnyOrigin();
+                option.AllowAnyHeader();
+                option.AllowAnyMethod();
+            });
+
             app.UseMvc();
         }
     }
