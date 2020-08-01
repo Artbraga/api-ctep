@@ -39,5 +39,11 @@ namespace Api.Controllers
         {
             return TurmaService.SalvarTurma(turma);
         }
+
+        [HttpDelete]
+        public bool Deletar(int id)
+        {
+            return TurmaService.Delete(id);
+        }
     }
 }

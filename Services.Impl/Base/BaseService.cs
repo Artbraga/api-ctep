@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Base;
 using Repositories.Base;
 using Services.Base;
 using System.Collections.Generic;
@@ -24,11 +25,6 @@ namespace Services.Impl.Base
             return repository.Delete(id);
         }
 
-        public TEntity GetById(int id)
-        {
-            return repository.GetById(id);
-        }
-
         public bool Update(TEntity entity)
         {
             return repository.Update(entity);
@@ -38,5 +34,7 @@ namespace Services.Impl.Base
         {
             return repository.All();
         }
+
+        public abstract BaseDTO<TEntity> GetById(int id);
     }
 }

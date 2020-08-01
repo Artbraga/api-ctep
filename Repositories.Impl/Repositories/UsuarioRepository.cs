@@ -16,6 +16,7 @@ namespace Repositories.Impl.Repositories
         public Usuario BuscarUsuarioPorLoginESenha(string login, string senha)
         {
             var query = Query();
+            
             return query.Where(x => x.Login == login && x.Senha == senha).FirstOrDefault();
         }
     }

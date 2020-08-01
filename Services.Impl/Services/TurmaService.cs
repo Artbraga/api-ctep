@@ -1,4 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.Base;
+using Entities.DTOs;
 using Entities.Entities;
 using Entities.Enums;
 using Repositories.Repositories;
@@ -79,6 +80,13 @@ namespace Services.Impl
         {
             var turmas = turmaRepository.ListarTurmasAtivas();
             return turmas.Select(x => new TurmaDTO(x));
+        }
+
+        public override BaseDTO<Turma> GetById(int id)
+        {
+            var turma = turmaRepository.GetById(id);
+
+            return new TurmaDTO(turma);
         }
     }
 }

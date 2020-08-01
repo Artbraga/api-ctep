@@ -59,6 +59,7 @@ namespace Repositories.Impl.Base
                 try
                 {
                     EntitySet.Remove(obj);
+                    SaveChanges();
                     return true;
                 }
                 catch (Exception e)
