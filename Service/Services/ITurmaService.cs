@@ -10,5 +10,11 @@ namespace Services.Services
         IEnumerable<TurmaDTO> ListarTurmas();
 
         IEnumerable<TurmaDTO> ListarTurmasDeUmCurso(int cursoId);
+
+        string GerarCodigoDaTurma(int cursoId, int anoTurma);
+
+        TurmaDTO SalvarTurma(TurmaDTO turma);
+
+        IEnumerable<TurmaDTO> ListarTurmasAtivas();
     }
 }

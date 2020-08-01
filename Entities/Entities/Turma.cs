@@ -9,7 +9,6 @@ namespace Entities.Entities
         public string DiasDaSemana { get; set; }
         public TimeSpan? HoraInicio { get; set; }
         public TimeSpan? HoraFim { get; set; }
-        public int AnoInicio { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
         public int CursoId { get; set; }
