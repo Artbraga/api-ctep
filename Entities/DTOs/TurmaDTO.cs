@@ -4,6 +4,7 @@ using Entities.Util;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Entities.DTOs
@@ -18,6 +19,7 @@ namespace Entities.DTOs
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
         public CursoDTO Curso { get; set; }
+        public IEnumerable<RegistroTurmaDTO> Registros { get; set; }
         
         public TurmaDTO()
         {
@@ -33,6 +35,7 @@ namespace Entities.DTOs
             this.DataInicio = entity.DataInicio;
             this.DataFim = entity.DataFim;
             this.Curso = entity.Curso == null ? null : new CursoDTO(entity.Curso);
+            this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroTurmaDTO(x));
         }
 
         public override Turma ToEntity()

@@ -39,5 +39,15 @@ namespace Repositories.Impl.Repositories
 
             return query.ToList();
         }
+
+        public Turma GetById(int id)
+        {
+            var query = Query()
+                .Include(x => x.Curso)
+                .Include(x => x.TipoStatusTurma)
+                .Include(x => x.Registros);
+
+            return query.First(x => x.Id == id);
+        }
     }
 }

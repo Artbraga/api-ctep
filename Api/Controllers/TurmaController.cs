@@ -34,6 +34,12 @@ namespace Api.Controllers
             return TurmaService.GerarCodigoDaTurma(cursoId, anoTurma);
         }
 
+        [HttpGet]
+        public TurmaDTO GetById(int id)
+        {
+            return (TurmaDTO)TurmaService.GetById(id);
+        }
+
         [HttpPost]
         public TurmaDTO Salvar(TurmaDTO turma)
         {
