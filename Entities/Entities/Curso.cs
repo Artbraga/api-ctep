@@ -12,6 +12,7 @@ namespace Entities.Entities
         public int? CursoVinculadoId { get; set; }
         [JsonIgnore] 
         public virtual Curso CursoVinculado { get; set; }
+        [JsonIgnore]
         public virtual IEnumerable<Curso> CursosEspecializacao { get; set; }
         public virtual IEnumerable<Turma> Turmas { get; set; }
         public virtual IEnumerable<Disciplina> Disciplinas { get; set; }

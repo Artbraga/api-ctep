@@ -1,4 +1,5 @@
-﻿using Entities.Entities;
+﻿using Entities.Base;
+using Entities.Entities;
 using Repositories.Base;
 using Repositories.Repositories;
 using Services.Impl.Base;
@@ -23,6 +24,11 @@ namespace Services.Impl.Services
             var trecho = $"{curso.Sigla}{anoMatricula % 100}";
             var numero = alunoRepository.BuscarCodigoParaMatricula(trecho);
             return $"{trecho}{(numero + 1).ToString("D3")}";
+        }
+
+        public override BaseDTO<Aluno> GetById(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

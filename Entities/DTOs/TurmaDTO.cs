@@ -3,6 +3,8 @@ using Entities.Entities;
 using Entities.Util;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace Entities.DTOs
@@ -13,11 +15,11 @@ namespace Entities.DTOs
         public string DiasDaSemana { get; set; }
         public string HoraInicio { get; set; }
         public string HoraFim { get; set; }
-        public int AnoInicio { get; set; }
         public string Status { get; set; }
         public DateTime DataInicio { get; set; }
         public DateTime? DataFim { get; set; }
         public CursoDTO Curso { get; set; }
+        public IEnumerable<RegistroTurmaDTO> Registros { get; set; }
         
         public TurmaDTO()
         {
@@ -30,10 +32,10 @@ namespace Entities.DTOs
             this.DiasDaSemana = entity.DiasDaSemana;
             this.HoraFim = entity.HoraFim.ToString();
             this.HoraInicio = entity.HoraInicio.ToString();
-            this.AnoInicio = entity.AnoInicio;
             this.DataInicio = entity.DataInicio;
             this.DataFim = entity.DataFim;
             this.Curso = entity.Curso == null ? null : new CursoDTO(entity.Curso);
+            this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroTurmaDTO(x));
         }
 
         public override Turma ToEntity()
@@ -43,12 +45,11 @@ namespace Entities.DTOs
                 Id = this.Id.HasValue ? this.Id.Value : 0,
                 Codigo = this.Codigo,
                 DiasDaSemana = this.DiasDaSemana,
-                //HoraFim = this.HoraFim,
-                //HoraInicio = this.HoraInicio,
-                AnoInicio = this.AnoInicio,
+                HoraInicio = TimeSpan.Parse(this.HoraInicio, CultureInfo.InvariantCulture),
+                HoraFim = TimeSpan.Parse(this.HoraFim, CultureInfo.InvariantCulture),
                 DataInicio = this.DataInicio,
                 DataFim = this.DataFim,
-                CursoId = this.Curso.Id.HasValue ? this.Curso.Id.Value : 0,
+                CursoId = this.Curso != null && this.Curso.Id.HasValue ? this.Curso.Id.Value : 0,
             };
         }
     }

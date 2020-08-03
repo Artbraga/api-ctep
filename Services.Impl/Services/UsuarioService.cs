@@ -1,4 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.Base;
+using Entities.DTOs;
 using Entities.Entities;
 using Entities.Exceptions;
 using Repositories.Repositories;
@@ -31,6 +32,11 @@ namespace Services.Impl
                 throw new BusinessException("Usuário ou senha incorretos.");
             }
             return new UsuarioDTO(usuarioSalvo);
+        }
+
+        public override BaseDTO<Usuario> GetById(int id)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

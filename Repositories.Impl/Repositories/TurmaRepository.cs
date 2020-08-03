@@ -1,4 +1,5 @@
 ﻿using Entities.Entities;
+using Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Repositories.Impl.Base;
@@ -19,6 +20,34 @@ namespace Repositories.Impl.Repositories
             var query = EntitySet.Where(x => x.CursoId == cursoId);
 
             return query.ToList();
+        }
+
+        public int BuscarCodigoDaTurma(string trechoCodigo)
+        {
+            var query = Query().Include(x => x.TurmasAluno).AsQueryable();
+            query = query.Where(x => x.Codigo.StartsWith(trechoCodigo));
+
+            return query.Count();
+        }
+
+        public IEnumerable<Turma> ListarTurmasAtivas()
+        {
+            var query = Query()
+                .Include(x => x.Curso)
+                .AsQueryable();
+            query = query.Where(x => x.TipoStatusTurmaId == (int)TipoStatusTurmaEnum.EmAndamento);
+
+            return query.ToList();
+        }
+
+        public Turma GetById(int id)
+        {
+            var query = Query()
+                .Include(x => x.Curso)
+                .Include(x => x.TipoStatusTurma)
+                .Include(x => x.Registros);
+
+            return query.First(x => x.Id == id);
         }
     }
 }

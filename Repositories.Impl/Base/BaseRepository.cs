@@ -1,6 +1,7 @@
 ﻿using CTEP.Repositories.Impl.Context;
 using Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Repositories.Base;
@@ -58,6 +59,7 @@ namespace Repositories.Impl.Base
                 try
                 {
                     EntitySet.Remove(obj);
+                    SaveChanges();
                     return true;
                 }
                 catch (Exception e)
@@ -77,6 +79,15 @@ namespace Repositories.Impl.Base
         public IEnumerable<TEntity> All()
         {
             return EntitySet.AsEnumerable();
+        }
+
+        public int SaveChanges()
+        {
+            return this._context.SaveChanges();
+        }
+        public IDbContextTransaction GetTransaction()
+        {
+            return this._context.Database.BeginTransaction();
         }
 
         protected IQueryable<TEntity> Query()

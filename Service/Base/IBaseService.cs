@@ -1,11 +1,12 @@
 ﻿using Entities;
+using Entities.Base;
 using System.Collections.Generic;
 
 namespace Services.Base
 {
     public interface IBaseService<TEntity> where TEntity : BaseEntity
     {
-        TEntity GetById(int id);
+        BaseDTO<TEntity> GetById(int id);
 
         bool Delete(int id);
 

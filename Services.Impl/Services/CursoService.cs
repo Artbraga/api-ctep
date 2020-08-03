@@ -1,4 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.Base;
+using Entities.DTOs;
 using Entities.Entities;
 using Repositories.Repositories;
 using Services.Impl.Base;
@@ -14,6 +15,13 @@ namespace Services.Impl
         public CursoService(ICursoRepository CursoRepository) : base(CursoRepository)
         {
             this.CursoRepository = CursoRepository;
+        }
+
+        public override BaseDTO<Curso> GetById(int id)
+        {
+            var curso = new CursoDTO();
+
+            return curso;
         }
 
         public IEnumerable<CursoDTO> ListarCursos()

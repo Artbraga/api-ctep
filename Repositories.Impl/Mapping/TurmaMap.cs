@@ -44,10 +44,6 @@ namespace Repositories.Impl.Mapping
                 .HasColumnName("data_fim")
                 .HasColumnType("datetime");
 
-            builder.Property(r => r.AnoInicio)
-                .HasColumnName("ano_inicio")
-                .IsRequired();
-
             builder.Property(r => r.CursoId)
                 .HasColumnName("id_curso");
 

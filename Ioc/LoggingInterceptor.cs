@@ -41,7 +41,13 @@ namespace Ioc
             }
             else
             {
-                _log.LogInformation("Método {0} finalizado com o resultado {1}", new object[] { GetMethodFullName(input), JsonConvert.SerializeObject(result.ReturnValue) });
+                _log.LogInformation("Método {0} finalizado com o resultado {1}", new object[] { GetMethodFullName(input), JsonConvert.SerializeObject(
+                    result.ReturnValue, Formatting.None, 
+                    new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    }) 
+                });
             }
 
             return result;

@@ -17,15 +17,39 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<TurmaDTO> ListarTurmas()
-        {
-            return TurmaService.ListarTurmas();
-        }
-
-        [HttpGet]
         public IEnumerable<TurmaDTO> ListarTurmasDeUmCurso(int cursoId)
         {
             return TurmaService.ListarTurmasDeUmCurso(cursoId);
+        }
+        
+        [HttpGet]
+        public IEnumerable<TurmaDTO> ListarTurmasAtivas()
+        {
+            return TurmaService.ListarTurmasAtivas();
+        }
+
+        [HttpGet]
+        public string GerarCodigoDaTurma(int cursoId, int anoTurma)
+        {
+            return TurmaService.GerarCodigoDaTurma(cursoId, anoTurma);
+        }
+
+        [HttpGet]
+        public TurmaDTO GetById(int id)
+        {
+            return (TurmaDTO)TurmaService.GetById(id);
+        }
+
+        [HttpPost]
+        public TurmaDTO Salvar(TurmaDTO turma)
+        {
+            return TurmaService.SalvarTurma(turma);
+        }
+
+        [HttpDelete]
+        public bool Deletar(int id)
+        {
+            return TurmaService.Delete(id);
         }
     }
 }
