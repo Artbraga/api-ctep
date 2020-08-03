@@ -25,8 +25,17 @@ namespace CTEP.Repositories.Impl.Context
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new AlunoMap());
             modelBuilder.ApplyConfiguration(new CursoMap());
+            modelBuilder.ApplyConfiguration(new DisciplinaMap());
+            modelBuilder.ApplyConfiguration(new ProfessorMap());
+            modelBuilder.ApplyConfiguration(new RegistroAlunoMap());
+            modelBuilder.ApplyConfiguration(new RegistroTurmaMap());
+            modelBuilder.ApplyConfiguration(new TipoStatusAlunoMap());
+            modelBuilder.ApplyConfiguration(new TipoStatusTurmaMap());
+            modelBuilder.ApplyConfiguration(new TurmaAlunoMap());
             modelBuilder.ApplyConfiguration(new TurmaMap());
+            modelBuilder.ApplyConfiguration(new TurmaProfessorMap());
             modelBuilder.ApplyConfiguration(new UsuarioMap());
         }
 

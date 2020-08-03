@@ -22,7 +22,7 @@ namespace Services.Impl.Services
             var curso = cursoRepository.GetById(cursoId);
             var trecho = $"{curso.Sigla}{anoMatricula % 100}";
             var numero = alunoRepository.BuscarCodigoParaMatricula(trecho);
-            return $"{trecho}{numero}";
+            return $"{trecho}{(numero + 1).ToString("D3")}";
         }
     }
 }
