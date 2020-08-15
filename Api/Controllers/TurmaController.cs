@@ -33,6 +33,12 @@ namespace Api.Controllers
         {
             return TurmaService.GerarCodigoDaTurma(cursoId, anoTurma);
         }
+        
+        [HttpGet]
+        public IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId)
+        {
+            return TurmaService.BuscarTurmasPorCodigoECurso(codigo, cursoId);
+        }
 
         [HttpGet]
         public TurmaDTO GetById(int id)

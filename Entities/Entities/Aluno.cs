@@ -9,6 +9,8 @@ namespace Entities.Entities
         public string Nome { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
+        public string OrgaoEmissor { get; set; }
+        public char Sexo { get; set; }
         public string NomePai { get; set; }
         public string NomeMae { get; set; }
         public string Endereco { get; set; }
@@ -19,8 +21,8 @@ namespace Entities.Entities
         public string Telefone { get; set; }
         public string Celular { get; set; }
         public string Email { get; set; }
-        public int AnoMatricula { get; set; }
         public string CursoAnterior { get; set; }
+        public bool NotaFiscal { get; set; }
         public DateTime DataMatricula { get; set; }
         public DateTime? DataValidade{ get; set; }
         public DateTime DataNascimento{ get; set; }

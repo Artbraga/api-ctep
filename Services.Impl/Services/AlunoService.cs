@@ -1,9 +1,16 @@
 ﻿using Entities.Base;
+using Entities.DTOs;
 using Entities.Entities;
-using Repositories.Base;
+using Entities.Enums;
+using Entities.Exceptions;
+using Entities.Filters;
+using MySql.Data.MySqlClient;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Services.Impl.Services
 {
@@ -11,11 +18,15 @@ namespace Services.Impl.Services
     {
         private readonly IAlunoRepository alunoRepository;
         private readonly ICursoRepository cursoRepository;
+        private readonly ITurmaAlunoRepository turmaAlunoRepository;
         public AlunoService(IAlunoRepository alunoRepository, 
-            ICursoRepository cursoRepository) : base(alunoRepository)
+                            ICursoRepository cursoRepository,
+                            ITurmaAlunoRepository turmaAlunoRepository) 
+        : base(alunoRepository)
         {
             this.alunoRepository = alunoRepository;
             this.cursoRepository = cursoRepository;
+            this.turmaAlunoRepository = turmaAlunoRepository;
         }
 
         public string GerarNumeroDeMatricula(int cursoId, int anoMatricula)
@@ -26,9 +37,88 @@ namespace Services.Impl.Services
             return $"{trecho}{(numero + 1).ToString("D3")}";
         }
 
+        public AlunoDTO SalvarAluno(AlunoDTO alunoDto)
+        {
+            var transaction = this.alunoRepository.GetTransaction();
+            try
+            {
+                Aluno aluno;
+                if (alunoDto.Id.HasValue)
+                {
+                    aluno = alunoRepository.GetById(alunoDto.Id.Value);
+                    aluno.Nome = alunoDto.Nome;
+                    aluno.RG = alunoDto.RG;
+                    aluno.OrgaoEmissor = alunoDto.OrgaoEmissor;
+                    aluno.Sexo = alunoDto.Sexo;
+                    aluno.NomePai = alunoDto.NomePai;
+                    aluno.NomeMae = alunoDto.NomeMae;
+                    aluno.Endereco = alunoDto.Endereco;
+                    aluno.CEP = alunoDto.CEP;
+                    aluno.Bairro = alunoDto.Bairro;
+                    aluno.Cidade = alunoDto.Cidade;
+                    aluno.Complemento = alunoDto.Complemento;
+                    aluno.DataMatricula = alunoDto.DataMatricula;
+                    aluno.DataNascimento = alunoDto.DataNascimento;
+                    aluno.DataValidade = alunoDto.DataValidade;
+                    aluno.Telefone = alunoDto.Telefone;
+                    aluno.Celular = alunoDto.Celular;
+                    aluno.Email = alunoDto.Email;
+                    aluno.CursoAnterior = alunoDto.CursoAnterior;
+                    aluno.NotaFiscal = alunoDto.NotaFiscal;
+                }
+                else
+                {
+                    aluno = alunoDto.ToEntity();
+                    aluno.TipoStatusAlunoId = (int)TipoStatusAlunoEnum.Ativo;
+                    aluno.TurmasAluno = new List<TurmaAluno>();
+                    alunoRepository.Add(aluno);
+                }
+                alunoRepository.SaveChanges();
+
+                #region Relacionamento turma
+                turmaAlunoRepository.BulkDelete(aluno.TurmasAluno);
+
+                var turmasAluno = alunoDto.TurmasAluno.Select(x =>
+                {
+                    var turmaAluno = x.ToEntity();
+                    turmaAluno.Id = 0;
+                    turmaAluno.AlunoId = aluno.Id;
+                    turmaAluno.TurmaId = x.Turma.Id.Value;
+                    return turmaAluno;
+                });
+
+                turmaAlunoRepository.BulkAdd(turmasAluno);
+                turmaAlunoRepository.SaveChanges();
+                #endregion
+
+                transaction.Commit();
+                transaction.Dispose();
+
+                return new AlunoDTO(alunoRepository.GetById(aluno.Id));
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+                if (ex.InnerException.Message.Contains("cpf_UNIQUE"))
+                {
+                    throw new BusinessException("Já existe um aluno com o CPF cadastrado.");
+                }
+                throw new BusinessException("Erro desconhecido ao salvar aluno.");
+            }
+        }
+
         public override BaseDTO<Aluno> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var aluno = this.alunoRepository.GetById(id);
+
+            return new AlunoDTO(aluno);
+        }
+
+        public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
+        {
+            IEnumerable<Aluno> alunos = alunoRepository.FiltrarAlunos(filter);
+            return alunos.Select(x => new AlunoDTO(x));
         }
     }
 }

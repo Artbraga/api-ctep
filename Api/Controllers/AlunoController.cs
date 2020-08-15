@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entities.DTOs;
+using Entities.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -22,5 +23,22 @@ namespace Api.Controllers
             return AlunoService.GerarNumeroDeMatricula(cursoId, anoMatricula);
         }
 
+        [HttpPost]
+        public AlunoDTO Salvar(AlunoDTO aluno)
+        {
+            return AlunoService.SalvarAluno(aluno);
+        }
+
+        [HttpGet]
+        public AlunoDTO GetById(int id)
+        {
+            return (AlunoDTO)AlunoService.GetById(id);
+        }
+
+        [HttpPost]
+        public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
+        {
+            return AlunoService.FiltrarAlunos(filter);
+        }
     }
 }

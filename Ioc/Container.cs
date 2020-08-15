@@ -9,6 +9,7 @@ using System.Reflection;
 using Unity;
 using Unity.Interception.ContainerIntegration;
 using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
+using Microsoft.AspNetCore.Http;
 
 namespace Ioc
 {
@@ -17,18 +18,13 @@ namespace Ioc
         private static readonly string[] NotRegisterRepositoryList = new string[] { typeof(BaseRepository<BaseEntity>).Name };
         private static readonly string[] NotRegisterBusinessList = new string[] { typeof(BaseService<BaseEntity>).Name };
 
-        public static void RegisterDbContext(this IUnityContainer container)
-        {
-            container.RegisterType<DbContext, CtepContext>();
-        }
-
         public static void RegisterRepositories(this IUnityContainer container)
         {
             var repositoriesTypesToRegister = Assembly.GetAssembly(typeof(CtepContext)).GetExportedTypes().Where(type => !type.IsInterface && type.Name.EndsWith("Repository") && !NotRegisterRepositoryList.Contains(type.Name));
 
             foreach (var type in repositoriesTypesToRegister)
             {
-                var interfaceTypeToRegisterFor = type.GetInterfaces().FirstOrDefault(thisInterface => thisInterface.Name.Contains(type.Name)) ?? type;
+                var interfaceTypeToRegisterFor = type.GetInterfaces().FirstOrDefault(thisInterface => thisInterface.Name.Equals($"I{type.Name}")) ?? type;
                 container.RegisterType(interfaceTypeToRegisterFor, type,
                     new Interceptor<InterfaceInterceptor>(),
                     new InterceptionBehavior<LoggingInterceptor>());
@@ -41,7 +37,7 @@ namespace Ioc
 
             foreach (var type in businessTypesToRegister)
             {
-                var interfaceTypeToRegisterFor = type.GetInterfaces().FirstOrDefault(thisInterface => thisInterface.Name.Contains(type.Name)) ?? type;
+                var interfaceTypeToRegisterFor = type.GetInterfaces().FirstOrDefault(thisInterface => thisInterface.Name.Equals($"I{type.Name}")) ?? type;
                 container.RegisterType(interfaceTypeToRegisterFor, type,
                     new Interceptor<InterfaceInterceptor>(),
                     new InterceptionBehavior<LoggingInterceptor>());

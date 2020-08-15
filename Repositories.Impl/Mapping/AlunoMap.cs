@@ -35,6 +35,18 @@ namespace Repositories.Impl.Mapping
                 .HasColumnName("rg")
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
+            
+            builder
+                .Property(u => u.OrgaoEmissor)
+                .HasColumnName("orgao_emissor")
+                .HasColumnType("varchar")
+                .HasMaxLength(10);
+
+            builder
+               .Property(u => u.Sexo)
+               .HasColumnName("sexo")
+               .HasColumnType("char")
+               .HasMaxLength(1);
 
             builder
                 .Property(u => u.Endereco)
@@ -99,11 +111,6 @@ namespace Repositories.Impl.Mapping
                 .HasMaxLength(50);
 
             builder
-                .Property(u => u.AnoMatricula)
-                .HasColumnName("ANO_MATRICULA")
-                .HasColumnType("int");
-
-            builder
                .Property(u => u.DataMatricula)
                .HasColumnName("data_matricula")
                .HasColumnType("date")
@@ -125,6 +132,11 @@ namespace Repositories.Impl.Mapping
                 .HasColumnName("curso_anterior")
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
+
+            builder
+                .Property(u => u.NotaFiscal)
+                .HasColumnName("nota_fiscal")
+                .HasColumnType("bit");
 
             builder.Property(r => r.TipoStatusAlunoId)
                 .HasColumnName("id_tpstatus_aluno");

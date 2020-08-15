@@ -8,13 +8,10 @@ namespace Services.Services
     public interface ITurmaService : IBaseService<Turma>
     {
         IEnumerable<TurmaDTO> ListarTurmas();
-
         IEnumerable<TurmaDTO> ListarTurmasDeUmCurso(int cursoId);
-
         string GerarCodigoDaTurma(int cursoId, int anoTurma);
-
         TurmaDTO SalvarTurma(TurmaDTO turma);
-
         IEnumerable<TurmaDTO> ListarTurmasAtivas();
+        IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId);
     }
 }

@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System.Net;
 using System.Reflection;
 using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using CTEP.Repositories.Impl.Context;
+using Microsoft.AspNetCore.Http;
 
 namespace ctep
 {
@@ -37,6 +40,7 @@ namespace ctep
                 options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddLogging(config =>
             {
@@ -50,7 +54,8 @@ namespace ctep
         {
             container.AddNewExtension<Interception>();
             container.AddExtension(new Diagnostic());
-            container.RegisterDbContext();
+            IHttpContextAccessor httpContextAccessor = container.Resolve<IHttpContextAccessor>();
+            container.RegisterType<DbContext, CtepContext>(new PerRequestLifetimeManager(httpContextAccessor));
             container.RegisterRepositories();
             container.RegisterBusiness();
             container.AddExtension(new Diagnostic());

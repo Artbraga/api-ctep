@@ -1,9 +1,6 @@
-﻿using CTEP.Repositories.Impl.Context;
-using Entities;
+﻿using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Repositories.Base;
 using System;
 using System.Collections.Generic;
@@ -24,31 +21,23 @@ namespace Repositories.Impl.Base
 
         public bool Add(TEntity entity)
         {
-            try
+            EntitySet.Add(entity);
+            return true;
+        }
+
+        public bool BulkAdd(IEnumerable<TEntity> entities)
+        {
+            foreach (var e in entities)
             {
-                EntitySet.Add(entity);
-                //_log.LogDebug($"Objeto adicionado com sucesso! {JsonConvert.SerializeObject(entity)}");
-                return true;
+                Add(e);
             }
-            catch (Exception e)
-            {
-               // _log.LogError(e.StackTrace);
-                return false;
-            }
+            return true;
         }
 
         public bool Update(TEntity entity)
         {
-            try
-            {
-                EntitySet.Update(entity);
-                return true;
-            }
-            catch (Exception e)
-            {
-               // _log.LogError(e.StackTrace);
-                return false;
-            }
+            EntitySet.Update(entity);
+            return true;
         }
 
         public bool Delete(int id)
@@ -56,22 +45,24 @@ namespace Repositories.Impl.Base
             var obj = GetById(id);
             if (obj != null)
             {
-                try
-                {
-                    EntitySet.Remove(obj);
-                    SaveChanges();
-                    return true;
-                }
-                catch (Exception e)
-                {
-                    //_log.LogError(e.StackTrace);
-                    return false;
-                }
+                EntitySet.Remove(obj);
+                SaveChanges();
             }
             return true;
         }
 
-        public TEntity GetById(int id)
+        public bool BulkDelete(IEnumerable<TEntity> entities)
+        {
+            
+            foreach (var e in entities)
+            {
+                Delete(e.Id);
+            }
+           
+            return true;
+        }
+
+        public virtual TEntity GetById(int id)
         {
             return EntitySet.FirstOrDefault(x => x.Id.Equals(id));
         }

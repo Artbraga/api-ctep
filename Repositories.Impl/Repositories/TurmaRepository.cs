@@ -17,7 +17,7 @@ namespace Repositories.Impl.Repositories
 
         public IEnumerable<Turma> ListarTurmasDeUmCurso(int cursoId)
         {
-            var query = EntitySet.Where(x => x.CursoId == cursoId);
+            var query = Query().Where(x => x.CursoId == cursoId);
 
             return query.ToList();
         }
@@ -40,14 +40,28 @@ namespace Repositories.Impl.Repositories
             return query.ToList();
         }
 
-        public Turma GetById(int id)
+        public override Turma GetById(int id)
         {
             var query = Query()
                 .Include(x => x.Curso)
                 .Include(x => x.TipoStatusTurma)
                 .Include(x => x.Registros);
 
-            return query.First(x => x.Id == id);
+            return query.Where(x => x.Id == id).Take(1).FirstOrDefault();
+        }
+
+        public IEnumerable<Turma> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId)
+        {
+            var query = Query()
+                .Include(x => x.Curso)
+                .AsQueryable();
+            query = query.Where(x => x.Codigo.Contains(codigo));
+            if (cursoId.HasValue)
+            {
+                query = query.Where(x => x.CursoId == cursoId);
+            }
+
+            return query.ToList();
         }
     }
 }

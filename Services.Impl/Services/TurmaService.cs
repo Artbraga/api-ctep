@@ -88,5 +88,11 @@ namespace Services.Impl
 
             return new TurmaDTO(turma);
         }
+
+        public IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId)
+        {
+            var turmas = turmaRepository.BuscarTurmasPorCodigoECurso(codigo, cursoId);
+            return turmas.Select(x => new TurmaDTO(x));
+        }
     }
 }

@@ -1,15 +1,10 @@
 USE ctep;
 
-INSERT INTO tb_tpstatus_turma (nome) VALUES
-    ('Em Andamento'), ('Concluída');
+INSERT INTO tb_tpstatus_turma (id_tpstatus_turma, nome) VALUES
+    (1, 'Em Andamento'), (2, 'Concluída');
 
-INSERT INTO tb_tpstatus_aluno (nome) VALUES
-    ('Ativo'), ('Concluído'), ('Trancado'), ('Abandono');
-
-INSERT INTO PROFESSOR (NOME, CPF, ENDERECO) VALUES
-  ('Isabel Souza', '70835792021', 'Rua ABC'),
-  ('Rosemary Moutinho', '46754158069', 'Rua 123'),
-  ('Marcia Barreiros', '34273182068', 'Rua teste');
+INSERT INTO tb_tpstatus_aluno (id_tpstatus_aluno, nome) VALUES
+    (1, 'Ativo'), (2, 'Concluído'), (3, 'Trancado'), (4, 'Abandono');
 
 INSERT INTO tb_usuario (nome, login, senha, telefone) VALUES
   ('Administrador', 'admin', MD5('admin'), NULL),
@@ -18,6 +13,19 @@ INSERT INTO tb_usuario (nome, login, senha, telefone) VALUES
 INSERT INTO tb_curso (nome, sigla, sigla_turma, flg_especializacao, id_curso_vinculado) VALUES 
 	('Técnico de Enfermagem', 'ENF', 'TENF', FALSE, NULL), 
 	('Especialização em Instrumentação Cirúrgica', 'EIC', 'ETIC', TRUE, 1);
+
+INSERT INTO tb_turma (codigo, dias_semana, hora_inicio, hora_fim, data_inicio, data_fim, id_curso, id_tpstatus_turma) VALUES
+  ('ETIC2001', 'Sábados', '08:00', '12:00', '2020-01-01', NULL, 2, 1),
+  ('TENF2001', 'Terças e Quintas', '18:00', '21:00', '2020-03-12', '2022-05-21', 1, 1),
+  ('ETIC2002', 'Quartas', '13:00', '17:00', '2020-02-23', '2020-11-01', 2, 1),
+  ('ETIC2003', 'Quintas', '09:00', '13:00', '2020-04-21', NULL, 2,2);
+
+
+
+INSERT INTO PROFESSOR (NOME, CPF, ENDERECO) VALUES
+  ('Isabel Souza', '70835792021', 'Rua ABC'),
+  ('Rosemary Moutinho', '46754158069', 'Rua 123'),
+  ('Marcia Barreiros', '34273182068', 'Rua teste');
 
 INSERT INTO ALUNO (MATRICULA, NOME, CPF, ENDERECO, CEP, ANO_MATRICULA, DATA_MATRICULA, CURSO_ID, NOTA_FISCAL, STATUS) VALUES
   ('EIC17001', 'Arthur Bastos Braga Coelho', '12480014789', 'Rua Embaixador Ramón Carcano 95', '20210030', 17,'2017-12-10', 2, 0, 1),
@@ -73,13 +81,6 @@ INSERT INTO ALUNO (MATRICULA, NOME, CPF, ENDERECO, CEP, ANO_MATRICULA, DATA_MATR
   ('ENF17025', 'Bebecca Passos Lyra', '38282297003', 'Rua Testemunha de Jeojusto 10', '32475653', 17, '2017-03-17', 1, 0, 1),
   ('ENF17026', 'Ruth Gomes Pereira', '83298834009', 'Praia de Marajós 999', '92874823', 17, '2017-03-24', 1, 0, 1),
   ('ENF17027', 'Gabrielli Moreira Cruz', '99212748058', 'Rua Amaral Peixoto 34', '23465320', 17, '2017-01-15', 1, 0, 1);
-
-INSERT INTO tb_turma (codigo, dias_semana, hora_inicio, hora_fim, data_inicio, data_fim, ano_inicio, id_curso, id_tpstatus_turma) VALUES
-  ('ETIC2001', 'Sábados', '08:00', '12:00', '2020-01-01', NULL, 17, 2, 1),
-  ('TENF2001', 'Terças e Quintas', '18:00', '21:00', '2020-03-12', '2022-05-21', 17, 1, 1),
-  ('ETIC2002', 'Quartas', '13:00', '17:00', '2020-02-23', '2020-11-01', 17, 2, 3),
-  ('ETIC2003', 'Quintas', '09:00', '13:00', '2020-04-21', NULL, 17, 2,2)
-;
 
 INSERT INTO DISCIPLINA (NOME, CURSO_ID) VALUES
   ('Anatomia', 1),
