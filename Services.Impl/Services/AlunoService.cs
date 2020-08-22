@@ -75,22 +75,6 @@ namespace Services.Impl.Services
                 }
                 alunoRepository.SaveChanges();
 
-                #region Relacionamento turma
-                turmaAlunoRepository.BulkDelete(aluno.TurmasAluno);
-
-                var turmasAluno = alunoDto.TurmasAluno.Select(x =>
-                {
-                    var turmaAluno = x.ToEntity();
-                    turmaAluno.Id = 0;
-                    turmaAluno.AlunoId = aluno.Id;
-                    turmaAluno.TurmaId = x.Turma.Id.Value;
-                    return turmaAluno;
-                });
-
-                turmaAlunoRepository.BulkAdd(turmasAluno);
-                turmaAlunoRepository.SaveChanges();
-                #endregion
-
                 transaction.Commit();
                 transaction.Dispose();
 
@@ -106,6 +90,23 @@ namespace Services.Impl.Services
                 }
                 throw new BusinessException("Erro desconhecido ao salvar aluno.");
             }
+        }
+
+        public bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO)
+        {
+            var turmasSalvas = turmaAlunoRepository.ListarTurmasDeUmAluno(turmaAlunoDTO.AlunoId);
+            if (turmasSalvas.Any(x => x.Turma.CursoId == turmaAlunoDTO.Turma.Curso.Id))
+            {
+                throw new BusinessException("O aluno já está vinculado a uma turma desse curso.");
+            }
+            var turmaAluno = turmaAlunoDTO.ToEntity();
+            turmaAluno.Id = 0;
+            turmaAluno.AlunoId = turmaAlunoDTO.AlunoId;
+            turmaAluno.TurmaId = turmaAlunoDTO.Turma.Id.Value;
+
+            turmaAlunoRepository.Add(turmaAluno);
+            turmaAlunoRepository.SaveChanges();
+            return true;
         }
 
         public override BaseDTO<Aluno> GetById(int id)

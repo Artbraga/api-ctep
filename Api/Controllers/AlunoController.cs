@@ -28,6 +28,12 @@ namespace Api.Controllers
         {
             return AlunoService.SalvarAluno(aluno);
         }
+        
+        [HttpPost]
+        public bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO)
+        {
+            return AlunoService.VincularAlunoTurma(turmaAlunoDTO);
+        }
 
         [HttpGet]
         public AlunoDTO GetById(int id)

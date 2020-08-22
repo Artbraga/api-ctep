@@ -9,6 +9,7 @@ namespace Entities.DTOs
         public string Matricula { get; set; }
         public DateTime? DataConclusao { get; set; }
         public string CodigoConlusaoSistec { get; set; }
+        public int AlunoId { get; set; }
         public TurmaDTO Turma { get; set; }
 
         public TurmaAlunoDTO()
@@ -31,7 +32,8 @@ namespace Entities.DTOs
                 Id = this.Id.HasValue ? this.Id.Value : 0,
                 Matricula = this.Matricula,
                 DataConclusao = this.DataConclusao,
-                CodigoConlusaoSistec = this.CodigoConlusaoSistec
+                CodigoConlusaoSistec = this.CodigoConlusaoSistec,
+                AlunoId = this.AlunoId
             };
         }
     }

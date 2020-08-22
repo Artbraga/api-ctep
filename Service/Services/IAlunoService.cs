@@ -10,6 +10,7 @@ namespace Services.Services
     {
         string GerarNumeroDeMatricula(int cursoId, int anoMatricula);
         AlunoDTO SalvarAluno(AlunoDTO alunoDto);
+        bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO);
         IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter);
     }
 }
