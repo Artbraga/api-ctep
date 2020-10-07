@@ -9,5 +9,7 @@ namespace Entities.Util
         public const string DateTimeFormat = "dd/MM/yyyy HH:mm:ss";
         public const string DateFormat = "dd/MM/yyyy";
         public const string TimeFormatHourMinute = "h\\:mm";
+
+        public const string NomeArquivoFotoPerfil = "Perfil.png";
     }
 }
