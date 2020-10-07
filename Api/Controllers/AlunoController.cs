@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Entities.DTOs;
 using Entities.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +29,23 @@ namespace Api.Controllers
         {
             return AlunoService.SalvarAluno(aluno);
         }
-        
+
+        [HttpPost, DisableRequestSizeLimit]
+        public bool SalvarImagemAluno()
+        {
+            var idAluno = int.Parse(Request.Form["idAluno"]);
+            byte[] imagem;
+            using (var ms = new MemoryStream())
+            {
+                Request.Form.Files[0].CopyTo(ms);
+
+                imagem = ms.ToArray();
+            }
+            var retorno = AlunoService.SalvarImagemAluno(idAluno, imagem);
+            return retorno;
+        }
+
+
         [HttpPost]
         public bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO)
         {

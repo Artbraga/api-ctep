@@ -12,5 +12,6 @@ namespace Services.Services
         AlunoDTO SalvarAluno(AlunoDTO alunoDto);
         bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO);
         IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter);
+        bool SalvarImagemAluno(int idAluno, byte[] imagem);
     }
 }

@@ -4,12 +4,15 @@ using Entities.Entities;
 using Entities.Enums;
 using Entities.Exceptions;
 using Entities.Filters;
+using Entities.Util;
+using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace Services.Impl.Services
@@ -19,14 +22,17 @@ namespace Services.Impl.Services
         private readonly IAlunoRepository alunoRepository;
         private readonly ICursoRepository cursoRepository;
         private readonly ITurmaAlunoRepository turmaAlunoRepository;
+        private readonly IConfiguration configuration;
         public AlunoService(IAlunoRepository alunoRepository, 
                             ICursoRepository cursoRepository,
-                            ITurmaAlunoRepository turmaAlunoRepository) 
+                            ITurmaAlunoRepository turmaAlunoRepository,
+                            IConfiguration configuration) 
         : base(alunoRepository)
         {
             this.alunoRepository = alunoRepository;
             this.cursoRepository = cursoRepository;
             this.turmaAlunoRepository = turmaAlunoRepository;
+            this.configuration = configuration;
         }
 
         public string GerarNumeroDeMatricula(int cursoId, int anoMatricula)
@@ -120,6 +126,31 @@ namespace Services.Impl.Services
         {
             IEnumerable<Aluno> alunos = alunoRepository.FiltrarAlunos(filter);
             return alunos.Select(x => new AlunoDTO(x));
+        }
+
+        public bool SalvarImagemAluno(int idAluno, byte[] imagem)
+        {
+            Aluno aluno = alunoRepository.GetById(idAluno);
+            string cpf = aluno.CPF.Replace(".", "").Replace("-", "");
+            return SalvarArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil, imagem);
+        }
+
+        private bool SalvarArquivo(string cpf, string nomeArquivo, byte[] arquivo)
+        {
+            try
+            {
+                string folder = configuration.GetSection("AssetsFolder").Value;
+                string path = Path.Combine(folder, cpf);
+                Directory.CreateDirectory(path);
+                path = Path.Combine(path, nomeArquivo);
+                File.WriteAllBytes(path, arquivo);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
     }
 }
