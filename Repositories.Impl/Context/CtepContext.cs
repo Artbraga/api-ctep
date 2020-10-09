@@ -18,7 +18,8 @@ namespace CTEP.Repositories.Impl.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(_connectionString);
+            optionsBuilder.UseMySQL(_connectionString)
+                .UseLazyLoadingProxies();
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)

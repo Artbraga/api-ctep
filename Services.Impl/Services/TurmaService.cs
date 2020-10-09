@@ -55,6 +55,7 @@ namespace Services.Impl
                     turma.HoraFim = TimeSpan.Parse(turmaDto.HoraFim, CultureInfo.InvariantCulture);
                     turma.DataInicio = turmaDto.DataInicio;
                     turma.DataFim = turmaDto.DataFim;
+                    turma.Curso = null;
                 }
                 else
                 {
