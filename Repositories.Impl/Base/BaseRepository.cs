@@ -53,7 +53,6 @@ namespace Repositories.Impl.Base
 
         public bool BulkDelete(IEnumerable<TEntity> entities)
         {
-            
             foreach (var e in entities)
             {
                 Delete(e.Id);
@@ -76,6 +75,7 @@ namespace Repositories.Impl.Base
         {
             return this._context.SaveChanges();
         }
+
         public IDbContextTransaction GetTransaction()
         {
             return this._context.Database.BeginTransaction();

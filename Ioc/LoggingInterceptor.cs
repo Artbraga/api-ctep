@@ -31,7 +31,12 @@ namespace Ioc
                 else
                     argumentsToLog.Add(arg);
             }
-            _log.LogInformation("Método {0} invocado com os parâmetros {1}", new object[] { GetMethodFullName(input), JsonConvert.SerializeObject(argumentsToLog) });
+            _log.LogInformation("Método {0} invocado com os parâmetros {1}", new object[] { GetMethodFullName(input), JsonConvert.SerializeObject(argumentsToLog, Formatting.None,
+                new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                })
+            });
 
             var result = getNext()(input, getNext);
 

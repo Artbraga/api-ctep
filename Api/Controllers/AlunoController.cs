@@ -45,7 +45,6 @@ namespace Api.Controllers
             return retorno;
         }
 
-
         [HttpPost]
         public bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO)
         {
@@ -56,6 +55,19 @@ namespace Api.Controllers
         public AlunoDTO GetById(int id)
         {
             return (AlunoDTO)AlunoService.GetById(id);
+        }
+
+        public IActionResult BuscarImagemAluno(int id)
+        {
+            var bytes = AlunoService.BuscarImagemAluno(id);
+            if(bytes != null)
+            {
+                return File(bytes, "image/jpeg");
+            }
+            else
+            {
+                return Ok();
+            }
         }
 
         [HttpPost]

@@ -55,19 +55,18 @@ namespace Services.Impl
                     turma.HoraFim = TimeSpan.Parse(turmaDto.HoraFim, CultureInfo.InvariantCulture);
                     turma.DataInicio = turmaDto.DataInicio;
                     turma.DataFim = turmaDto.DataFim;
-                    turma.Curso = null;
                 }
                 else
                 {
                     turma = turmaDto.ToEntity();
                     turma.TipoStatusTurmaId = (int)TipoStatusTurmaEnum.EmAndamento;
+                    turmaRepository.Add(turma);
                 }
-                turmaRepository.Add(turma);
                 turmaRepository.SaveChanges();
                 transaction.Commit();
                 transaction.Dispose();
 
-                return new TurmaDTO(turmaRepository.GetById(turma.Id));
+                return (TurmaDTO)GetById(turma.Id);
             }
             catch(Exception e)
             {

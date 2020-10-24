@@ -135,6 +135,15 @@ namespace Services.Impl.Services
             return SalvarArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil, imagem);
         }
 
+
+        public byte[] BuscarImagemAluno(int idAluno)
+        {
+            Aluno aluno = alunoRepository.GetById(idAluno);
+            string cpf = aluno.CPF.Replace(".", "").Replace("-", "");
+            return BuscarArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil);
+        }
+
+        #region Métodos Privados
         private bool SalvarArquivo(string cpf, string nomeArquivo, byte[] arquivo)
         {
             try
@@ -152,5 +161,21 @@ namespace Services.Impl.Services
                 return false;
             }
         }
+
+        private byte[] BuscarArquivo(string cpf, string nomeArquivo)
+        {
+            try
+            {
+                string folder = configuration.GetSection("AssetsFolder").Value;
+                string path = Path.Combine(folder, cpf);
+                path = Path.Combine(path, nomeArquivo);
+                return File.ReadAllBytes(path);
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }

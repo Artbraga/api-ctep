@@ -13,5 +13,6 @@ namespace Services.Services
         bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO);
         IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter);
         bool SalvarImagemAluno(int idAluno, byte[] imagem);
+        byte[] BuscarImagemAluno(int idAluno);
     }
 }
