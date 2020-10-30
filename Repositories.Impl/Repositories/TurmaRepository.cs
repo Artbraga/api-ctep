@@ -1,5 +1,6 @@
 ﻿using Entities.Entities;
 using Entities.Enums;
+using Entities.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Repositories.Impl.Base;
@@ -34,6 +35,7 @@ namespace Repositories.Impl.Repositories
         {
             var query = Query()
                 .Include(x => x.Curso)
+                .Include(x => x.TipoStatusTurma)
                 .AsQueryable();
             query = query.Where(x => x.TipoStatusTurmaId == (int)TipoStatusTurmaEnum.EmAndamento);
 
@@ -59,6 +61,32 @@ namespace Repositories.Impl.Repositories
             if (cursoId.HasValue)
             {
                 query = query.Where(x => x.CursoId == cursoId);
+            }
+
+            return query.ToList();
+        }
+
+        public IEnumerable<Turma> FiltrarTurmas(TurmaFilter filter)
+        {
+            var query = Query()
+                .Include(x => x.Curso)
+                .Include(x => x.TipoStatusTurma)
+               .AsQueryable();
+            if (!string.IsNullOrEmpty(filter.Codigo))
+            {
+                query = query.Where(x => x.Codigo.Contains(filter.Codigo));
+            }
+            if (filter.CursoId.HasValue)
+            {
+                query = query.Where(x => x.CursoId == filter.CursoId);
+            }
+            if (filter.AnoInicio.HasValue)
+            {
+                query = query.Where(x => x.DataInicio.Year == filter.AnoInicio.Value.Year);
+            }
+            if (!filter.Concluidas)
+            {
+                query = query.Where(x => x.TipoStatusTurmaId == (int)TipoStatusTurmaEnum.EmAndamento);
             }
 
             return query.ToList();

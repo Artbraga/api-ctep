@@ -2,6 +2,7 @@
 using Entities.DTOs;
 using Entities.Entities;
 using Entities.Enums;
+using Entities.Filters;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Services;
@@ -92,6 +93,12 @@ namespace Services.Impl
         public IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId)
         {
             var turmas = turmaRepository.BuscarTurmasPorCodigoECurso(codigo, cursoId);
+            return turmas.Select(x => new TurmaDTO(x));
+        }
+
+        public IEnumerable<TurmaDTO> FiltrarTurmas(TurmaFilter filter)
+        {
+            IEnumerable<Turma> turmas = turmaRepository.FiltrarTurmas(filter);
             return turmas.Select(x => new TurmaDTO(x));
         }
     }

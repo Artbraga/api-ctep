@@ -1,5 +1,6 @@
 ﻿using Entities.DTOs;
 using Entities.Entities;
+using Entities.Filters;
 using Services.Base;
 using System.Collections.Generic;
 
@@ -13,5 +14,6 @@ namespace Services.Services
         TurmaDTO SalvarTurma(TurmaDTO turma);
         IEnumerable<TurmaDTO> ListarTurmasAtivas();
         IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId);
+        IEnumerable<TurmaDTO> FiltrarTurmas(TurmaFilter filter);
     }
 }

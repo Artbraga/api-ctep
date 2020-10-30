@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entities.DTOs;
+using Entities.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -56,6 +57,12 @@ namespace Api.Controllers
         public bool Deletar(int id)
         {
             return TurmaService.Delete(id);
+        }
+
+        [HttpPost]
+        public IEnumerable<TurmaDTO> FiltrarTurmas(TurmaFilter filter)
+        {
+            return TurmaService.FiltrarTurmas(filter);
         }
     }
 }

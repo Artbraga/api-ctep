@@ -1,4 +1,5 @@
 ﻿using Entities.Entities;
+using Entities.Filters;
 using Repositories.Base;
 using System.Collections.Generic;
 
@@ -10,5 +11,6 @@ namespace Repositories.Repositories
         int BuscarCodigoDaTurma(string trechoCodigo);
         IEnumerable<Turma> ListarTurmasAtivas();
         IEnumerable<Turma> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId);
+        IEnumerable<Turma> FiltrarTurmas(TurmaFilter filter);
     }
 }

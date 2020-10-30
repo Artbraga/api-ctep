@@ -36,6 +36,7 @@ namespace Entities.DTOs
             this.DataFim = entity.DataFim;
             this.Curso = entity.Curso == null ? null : new CursoDTO(entity.Curso);
             this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroTurmaDTO(x));
+            this.Status = entity.TipoStatusTurma.Nome;
         }
 
         public override Turma ToEntity()
