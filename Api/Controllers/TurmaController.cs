@@ -64,5 +64,17 @@ namespace Api.Controllers
         {
             return TurmaService.FiltrarTurmas(filter);
         }
+
+        [HttpPost]
+        public bool AdicionarRegistro(RegistroTurmaDTO registro)
+        {
+            return TurmaService.AdicionarRegistro(registro);
+        }
+
+        [HttpDelete]
+        public bool ExcluirRegistro(int id)
+        {
+            return TurmaService.ExcluirRegistro(id);
+        }
     }
 }

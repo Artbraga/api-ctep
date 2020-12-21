@@ -8,6 +8,7 @@ namespace Entities.DTOs
     {
         public DateTime Data { get; set; }
         public string Registro { get; set; }
+        public int TurmaId { get; set; }
 
         public RegistroTurmaDTO()
         {
@@ -16,6 +17,7 @@ namespace Entities.DTOs
         public RegistroTurmaDTO(RegistroTurma entity) : base(entity)
         {
             this.Id = entity.Id;
+            this.TurmaId = entity.TurmaId;
             this.Data = entity.Data;
             this.Registro = entity.Registro;
         }
@@ -25,6 +27,7 @@ namespace Entities.DTOs
             return new RegistroTurma
             {
                 Id = this.Id.HasValue ? this.Id.Value : 0,
+                TurmaId = this.TurmaId,
                 Data = this.Data,
                 Registro = this.Registro
             };

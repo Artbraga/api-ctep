@@ -15,5 +15,7 @@ namespace Services.Services
         IEnumerable<TurmaDTO> ListarTurmasAtivas();
         IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId);
         IEnumerable<TurmaDTO> FiltrarTurmas(TurmaFilter filter);
+        bool AdicionarRegistro(RegistroTurmaDTO registro);
+        bool ExcluirRegistro(int id);
     }
 }

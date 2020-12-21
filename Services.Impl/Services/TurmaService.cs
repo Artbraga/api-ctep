@@ -17,10 +17,14 @@ namespace Services.Impl
     {
         private readonly ITurmaRepository turmaRepository;
         private readonly ICursoRepository cursoRepository;
-        public TurmaService(ITurmaRepository TurmaRepository, ICursoRepository CursoRepository) : base(TurmaRepository)
+        private readonly IRegistroTurmaRepository registroTurmaRepository;
+        public TurmaService(ITurmaRepository TurmaRepository, 
+            ICursoRepository CursoRepository, 
+            IRegistroTurmaRepository RegistroTurmaRepository) : base(TurmaRepository)
         {
             this.turmaRepository = TurmaRepository;
             this.cursoRepository = CursoRepository;
+            this.registroTurmaRepository = RegistroTurmaRepository;
         }
 
         public IEnumerable<TurmaDTO> ListarTurmas()
@@ -101,5 +105,35 @@ namespace Services.Impl
             IEnumerable<Turma> turmas = turmaRepository.FiltrarTurmas(filter);
             return turmas.Select(x => new TurmaDTO(x));
         }
+
+        #region Registro Turma
+        public bool AdicionarRegistro(RegistroTurmaDTO registro)
+        {
+            var transaction = this.registroTurmaRepository.GetTransaction();
+            try
+            {
+                var reg = registro.ToEntity();
+                registroTurmaRepository.Add(reg);
+                registroTurmaRepository.SaveChanges();
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        public bool ExcluirRegistro(int id)
+        {
+            registroTurmaRepository.Delete(id);
+            return true;
+        }
+        #endregion
     }
 }
