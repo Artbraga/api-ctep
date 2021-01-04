@@ -11,7 +11,7 @@ namespace CTEP.Repositories.Impl.Context
     {
         private readonly string _connectionString;
 
-        public CtepContext(DbContextOptions<CtepContext> options, IConfiguration configuration) : base(options)
+        public CtepContext(IConfiguration configuration) : base()
         {
             _connectionString = configuration.GetSection("CtepContext:ConnectionString").Value;
         }

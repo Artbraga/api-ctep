@@ -1,6 +1,5 @@
 ﻿using CTEP.Repositories.Impl.Context;
 using Entities;
-using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
 using Services.Impl.Base;
 using System;
@@ -9,7 +8,6 @@ using System.Reflection;
 using Unity;
 using Unity.Interception.ContainerIntegration;
 using Unity.Interception.Interceptors.InstanceInterceptors.InterfaceInterception;
-using Microsoft.AspNetCore.Http;
 
 namespace Ioc
 {

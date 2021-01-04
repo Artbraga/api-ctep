@@ -133,11 +133,6 @@ namespace Repositories.Impl.Mapping
                 .HasColumnType("varchar")
                 .HasMaxLength(20);
 
-            builder
-                .Property(u => u.NotaFiscal)
-                .HasColumnName("nota_fiscal")
-                .HasColumnType("bit");
-
             builder.Property(r => r.TipoStatusAlunoId)
                 .HasColumnName("id_tpstatus_aluno");
 

@@ -47,7 +47,7 @@ namespace Repositories.Impl.Repositories
                 query = query.Where(x => filter.SituacaoId.Contains(x.TipoStatusAlunoId));
             }
 
-            return query;
+            return query.ToList();
         }
 
         public override Aluno GetById(int id)

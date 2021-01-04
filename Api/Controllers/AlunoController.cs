@@ -9,7 +9,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class AlunoController : ControllerBase
+    public class AlunoController : Controller
     {
         private readonly IAlunoService AlunoService;
 
@@ -18,7 +18,7 @@ namespace Api.Controllers
             this.AlunoService = AlunoService;
         }
 
-        [HttpGet]
+        [HttpGet("{cursoId:int}/{anoMatricula:int}")]
         public string GerarNumeroDeMatricula(int cursoId, int anoMatricula)
         {
             return AlunoService.GerarNumeroDeMatricula(cursoId, anoMatricula);
@@ -51,12 +51,13 @@ namespace Api.Controllers
             return AlunoService.VincularAlunoTurma(turmaAlunoDTO);
         }
 
-        [HttpGet]
+        [HttpGet("{id:int}")]
         public AlunoDTO GetById(int id)
         {
             return (AlunoDTO)AlunoService.GetById(id);
         }
 
+        [HttpGet("{id:int}")]
         public IActionResult BuscarImagemAluno(int id)
         {
             var bytes = AlunoService.BuscarImagemAluno(id);

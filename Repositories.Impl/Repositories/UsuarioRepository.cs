@@ -1,6 +1,5 @@
 ﻿using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Repositories.Impl.Base;
 using Repositories.Repositories;
 using System.Linq;

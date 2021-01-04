@@ -25,7 +25,6 @@ namespace Entities.DTOs
         public string Celular { get; set; }
         public string Email { get; set; }
         public string CursoAnterior { get; set; }
-        public bool NotaFiscal { get; set; }
         public DateTime DataMatricula { get; set; }
         public DateTime? DataValidade { get; set; }
         public DateTime DataNascimento { get; set; }
@@ -59,7 +58,6 @@ namespace Entities.DTOs
             this.Celular = entity.Celular;
             this.Email = entity.Email;
             this.CursoAnterior = entity.CursoAnterior;
-            this.NotaFiscal = entity.NotaFiscal;
             this.TipoStatusAluno = entity.TipoStatusAluno.Nome;
             this.TurmasAluno = entity.TurmasAluno == null ? null : entity.TurmasAluno.Select(x => new TurmaAlunoDTO(x));
         }
@@ -88,7 +86,6 @@ namespace Entities.DTOs
                 Celular = this.Celular,
                 Email = this.Email,
                 CursoAnterior = this.CursoAnterior,
-                NotaFiscal = this.NotaFiscal,
             };
         }
     }

@@ -1,9 +1,9 @@
-﻿namespace Ioc
-{
-    using Microsoft.AspNetCore.Http;
-    using System;
-    using Unity.Lifetime;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using Unity.Lifetime;
 
+namespace Ioc
+{
     /// <summary>
     /// Classe de gerenciamento do tempo de vida das requisições.
     /// </summary>

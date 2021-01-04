@@ -54,6 +54,7 @@ namespace Services.Impl.Services
                     aluno = alunoRepository.GetById(alunoDto.Id.Value);
                     aluno.Nome = alunoDto.Nome;
                     aluno.RG = alunoDto.RG;
+                    aluno.CPF = alunoDto.CPF;
                     aluno.OrgaoEmissor = alunoDto.OrgaoEmissor;
                     aluno.Sexo = alunoDto.Sexo;
                     aluno.NomePai = alunoDto.NomePai;
@@ -70,7 +71,6 @@ namespace Services.Impl.Services
                     aluno.Celular = alunoDto.Celular;
                     aluno.Email = alunoDto.Email;
                     aluno.CursoAnterior = alunoDto.CursoAnterior;
-                    aluno.NotaFiscal = alunoDto.NotaFiscal;
                 }
                 else
                 {
@@ -125,7 +125,8 @@ namespace Services.Impl.Services
         public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             IEnumerable<Aluno> alunos = alunoRepository.FiltrarAlunos(filter);
-            return alunos.Select(x => new AlunoDTO(x));
+            var retorno = alunos.Select(x => new AlunoDTO(x));
+            return retorno;
         }
 
         public bool SalvarImagemAluno(int idAluno, byte[] imagem)

@@ -8,7 +8,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class TurmaController : ControllerBase
+    public class TurmaController : Controller
     {
         private readonly ITurmaService TurmaService;
 
@@ -17,7 +17,7 @@ namespace Api.Controllers
             this.TurmaService = TurmaService;
         }
 
-        [HttpGet]
+        [HttpGet("{cursoId:int}")]
         public IEnumerable<TurmaDTO> ListarTurmasDeUmCurso(int cursoId)
         {
             return TurmaService.ListarTurmasDeUmCurso(cursoId);
@@ -29,19 +29,19 @@ namespace Api.Controllers
             return TurmaService.ListarTurmasAtivas();
         }
 
-        [HttpGet]
+        [HttpGet("{cursoId}/{anoTurma}")]
         public string GerarCodigoDaTurma(int cursoId, int anoTurma)
         {
             return TurmaService.GerarCodigoDaTurma(cursoId, anoTurma);
         }
-        
-        [HttpGet]
+
+        [HttpGet("{codigo}/{cursoId?}")]
         public IEnumerable<TurmaDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId)
         {
             return TurmaService.BuscarTurmasPorCodigoECurso(codigo, cursoId);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public TurmaDTO GetById(int id)
         {
             return (TurmaDTO)TurmaService.GetById(id);
@@ -53,7 +53,7 @@ namespace Api.Controllers
             return TurmaService.SalvarTurma(turma);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public bool Deletar(int id)
         {
             return TurmaService.Delete(id);
@@ -71,7 +71,7 @@ namespace Api.Controllers
             return TurmaService.AdicionarRegistro(registro);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id:int}")]
         public bool ExcluirRegistro(int id)
         {
             return TurmaService.ExcluirRegistro(id);

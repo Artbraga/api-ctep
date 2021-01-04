@@ -2,7 +2,6 @@
 using Entities.Enums;
 using Entities.Filters;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Repositories.Impl.Base;
 using Repositories.Repositories;
 using System.Collections.Generic;

@@ -22,7 +22,6 @@ namespace Entities.Entities
         public string Celular { get; set; }
         public string Email { get; set; }
         public string CursoAnterior { get; set; }
-        public bool NotaFiscal { get; set; }
         public DateTime DataMatricula { get; set; }
         public DateTime? DataValidade{ get; set; }
         public DateTime DataNascimento{ get; set; }

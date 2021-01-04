@@ -7,7 +7,7 @@ namespace Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CursoController : ControllerBase
+    public class CursoController : Controller
     {
         private readonly ICursoService CursoService;
 
