@@ -59,7 +59,7 @@ namespace Repositories.Impl.Mapping
                 .Property(u => u.CEP)
                 .HasColumnName("cep")
                 .HasColumnType("varchar")
-                .HasMaxLength(8)
+                .HasMaxLength(11)
                 .IsRequired();
 
             builder
@@ -84,7 +84,7 @@ namespace Repositories.Impl.Mapping
                 .Property(u => u.Email)
                 .HasColumnName("email")
                 .HasColumnType("varchar")
-                .HasMaxLength(20);
+                .HasMaxLength(50);
 
             builder
                 .Property(u => u.Telefone)
@@ -131,7 +131,7 @@ namespace Repositories.Impl.Mapping
                 .Property(u => u.CursoAnterior)
                 .HasColumnName("curso_anterior")
                 .HasColumnType("varchar")
-                .HasMaxLength(20);
+                .HasMaxLength(50);
 
             builder.Property(r => r.TipoStatusAlunoId)
                 .HasColumnName("id_tpstatus_aluno");
