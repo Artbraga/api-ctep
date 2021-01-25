@@ -15,8 +15,7 @@ using Microsoft.AspNetCore.Http;
 using log4net;
 using System.IO;
 using log4net.Config;
-using Microsoft.AspNetCore.Mvc;
-using Unity.Lifetime;
+using Ioc.Filters;
 
 namespace ctep
 {
@@ -41,6 +40,8 @@ namespace ctep
                 });
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddHealthChecks();
+
+            services.AddControllers(options => options.Filters.Add(new HttpResponseExceptionFilter()));
 
             services.AddMvc()
             .AddControllersAsServices();

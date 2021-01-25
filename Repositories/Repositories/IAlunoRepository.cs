@@ -7,7 +7,8 @@ namespace Repositories.Repositories
 {
     public interface IAlunoRepository : IBaseRepository<Aluno>
     {
-        int BuscarCodigoParaMatricula(string trechoMatricula);
+        int BuscarNumeroDeMatriculasPorTrecho(string trechoMatricula);
         IEnumerable<Aluno> FiltrarAlunos(AlunoFilter filter);
+        bool ExisteMatricula(string matricula);
     }
 }

@@ -39,8 +39,16 @@ namespace Services.Impl.Services
         {
             var curso = cursoRepository.GetById(cursoId);
             var trecho = $"{curso.Sigla}{anoMatricula % 100}";
-            var numero = alunoRepository.BuscarCodigoParaMatricula(trecho);
-            return $"{trecho}{(numero + 1).ToString("D3")}";
+            var numero = alunoRepository.BuscarNumeroDeMatriculasPorTrecho(trecho);
+            string codigo;
+            do
+            {
+                numero += 1;
+                codigo = $"{trecho}{numero.ToString("D3")}";
+            } while (alunoRepository.ExisteMatricula(codigo));
+
+            return codigo;
+
         }
 
         public AlunoDTO SalvarAluno(AlunoDTO alunoDto)
@@ -104,6 +112,10 @@ namespace Services.Impl.Services
             if (turmasSalvas.Any(x => x.Turma.CursoId == turmaAlunoDTO.Turma.Curso.Id))
             {
                 throw new BusinessException("O aluno já está vinculado a uma turma desse curso.");
+            }
+            if (alunoRepository.ExisteMatricula(turmaAlunoDTO.Matricula))
+            {
+                throw new BusinessException("Já existe um aluno com a matrícula informada.");
             }
             var turmaAluno = turmaAlunoDTO.ToEntity();
             turmaAluno.Id = 0;

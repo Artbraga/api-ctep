@@ -16,12 +16,19 @@ namespace Repositories.Impl.Repositories
         {
         }
 
-        public int BuscarCodigoParaMatricula(string trechoMatricula)
+        public int BuscarNumeroDeMatriculasPorTrecho(string trechoMatricula)
         {
             var query = Query().Include(x => x.TurmasAluno).AsQueryable();
             query = query.Where(x => x.TurmasAluno.Any(y => y.Matricula.StartsWith(trechoMatricula)));
-
             return query.Count();
+        }
+
+        public bool ExisteMatricula(string matricula)
+        {
+            var query = Query().Include(x => x.TurmasAluno).AsQueryable();
+            query = query.Where(x => x.TurmasAluno.Any(t => t.Matricula == matricula));
+
+            return query.Any();
         }
 
         public IEnumerable<Aluno> FiltrarAlunos(AlunoFilter filter)
