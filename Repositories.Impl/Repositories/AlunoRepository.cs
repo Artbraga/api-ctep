@@ -33,7 +33,7 @@ namespace Repositories.Impl.Repositories
 
         public IEnumerable<Aluno> FiltrarAlunos(AlunoFilter filter)
         {
-            var query = Include();
+            var query = IncludeTabela();
             if (!string.IsNullOrEmpty(filter.Nome)) {
                 query = query.Where(x => x.Nome.Contains(filter.Nome));
             }
@@ -59,16 +59,27 @@ namespace Repositories.Impl.Repositories
 
         public override Aluno GetById(int id)
         {
-            var query = Include();
+            var query = IncludeCompleto();
 
             return query.FirstOrDefault(x => x.Id == id);
         }
 
-        private IQueryable<Aluno> Include()
+        private IQueryable<Aluno> IncludeTabela()
         {
             var query = Query();
             query = query
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
+                .Include(x => x.TipoStatusAluno)
+                .AsQueryable();
+            return query;
+        }
+
+        private IQueryable<Aluno> IncludeCompleto()
+        {
+            var query = Query();
+            query = query
+                .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
+                .Include(x => x.Registros)
                 .Include(x => x.TipoStatusAluno)
                 .AsQueryable();
             return query;

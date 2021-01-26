@@ -1,7 +1,7 @@
 ﻿using Entities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
+
 namespace Ioc.Filters
 {
     public class HttpResponseExceptionFilter : IActionFilter, IOrderedFilter

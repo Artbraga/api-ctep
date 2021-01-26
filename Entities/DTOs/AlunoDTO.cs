@@ -29,6 +29,7 @@ namespace Entities.DTOs
         public DateTime? DataValidade { get; set; }
         public DateTime DataNascimento { get; set; }
         public string TipoStatusAluno { get; set; }
+        public IEnumerable<RegistroAlunoDTO> Registros { get; set; }
 
         public IEnumerable<TurmaAlunoDTO> TurmasAluno { get; set; }
 
@@ -60,6 +61,7 @@ namespace Entities.DTOs
             this.CursoAnterior = entity.CursoAnterior;
             this.TipoStatusAluno = entity.TipoStatusAluno.Nome;
             this.TurmasAluno = entity.TurmasAluno == null ? null : entity.TurmasAluno.Select(x => new TurmaAlunoDTO(x));
+            this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroAlunoDTO(x)).OrderBy(x => x.Data);
         }
 
         public override Aluno ToEntity()

@@ -34,12 +34,15 @@ namespace Api.Controllers
         public bool SalvarImagemAluno()
         {
             var idAluno = int.Parse(Request.Form["idAluno"]);
-            byte[] imagem;
+            byte[] imagem = null;
             using (var ms = new MemoryStream())
             {
-                Request.Form.Files[0].CopyTo(ms);
+                if (Request.Form.Files.Count > 0)
+                {
+                    Request.Form.Files[0].CopyTo(ms);
 
-                imagem = ms.ToArray();
+                    imagem = ms.ToArray();
+                }
             }
             var retorno = AlunoService.SalvarImagemAluno(idAluno, imagem);
             return retorno;
@@ -55,6 +58,24 @@ namespace Api.Controllers
         public AlunoDTO GetById(int id)
         {
             return (AlunoDTO)AlunoService.GetById(id);
+        }
+
+        [HttpDelete("{id:int}")]
+        public bool Deletar(int id)
+        {
+            return AlunoService.ExcluirAluno(id);
+        }
+
+        [HttpPost]
+        public bool AdicionarRegistro(RegistroAlunoDTO registro)
+        {
+            return AlunoService.AdicionarRegistro(registro);
+        }
+
+        [HttpDelete("{id:int}")]
+        public bool ExcluirRegistro(int id)
+        {
+            return AlunoService.ExcluirRegistro(id);
         }
 
         [HttpGet("{id:int}")]

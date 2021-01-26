@@ -20,16 +20,19 @@ namespace Services.Impl.Services
     public class AlunoService : BaseService<Aluno>, IAlunoService
     {
         private readonly IAlunoRepository alunoRepository;
+        private readonly IRegistroAlunoRepository registroAlunoRepository;
         private readonly ICursoRepository cursoRepository;
         private readonly ITurmaAlunoRepository turmaAlunoRepository;
         private readonly IConfiguration configuration;
-        public AlunoService(IAlunoRepository alunoRepository, 
+        public AlunoService(IAlunoRepository alunoRepository,
+                            IRegistroAlunoRepository registroAlunoRepository,
                             ICursoRepository cursoRepository,
                             ITurmaAlunoRepository turmaAlunoRepository,
                             IConfiguration configuration) 
         : base(alunoRepository)
         {
             this.alunoRepository = alunoRepository;
+            this.registroAlunoRepository = registroAlunoRepository;
             this.cursoRepository = cursoRepository;
             this.turmaAlunoRepository = turmaAlunoRepository;
             this.configuration = configuration;
@@ -48,7 +51,6 @@ namespace Services.Impl.Services
             } while (alunoRepository.ExisteMatricula(codigo));
 
             return codigo;
-
         }
 
         public AlunoDTO SalvarAluno(AlunoDTO alunoDto)
@@ -124,6 +126,13 @@ namespace Services.Impl.Services
 
             turmaAlunoRepository.Add(turmaAluno);
             turmaAlunoRepository.SaveChanges();
+
+            AdicionarRegistro(new RegistroAlunoDTO 
+            { 
+                AlunoId = turmaAluno.AlunoId,
+                Data = DateTime.Today,
+                Registro = $"Aluno registrado na turma {turmaAlunoDTO.Turma.Codigo}."
+            });
             return true;
         }
 
@@ -134,6 +143,22 @@ namespace Services.Impl.Services
             return new AlunoDTO(aluno);
         }
 
+        public bool ExcluirAluno(int id)
+        {
+            var aluno = this.alunoRepository.GetById(id);
+            if (aluno.TurmasAluno.Any())
+            {
+                throw new BusinessException("Não é possível excluir um aluno vinculado em uma turma.");
+            }
+            //aluno.Registros.ToList().ForEach(r =>
+            //{
+            //    ExcluirRegistro(r.Id);
+            //});
+            alunoRepository.Delete(id);
+            return true;
+        }
+
+
         public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             IEnumerable<Aluno> alunos = alunoRepository.FiltrarAlunos(filter);
@@ -141,11 +166,50 @@ namespace Services.Impl.Services
             return retorno;
         }
 
+        #region Registro Aluno
+        public bool AdicionarRegistro(RegistroAlunoDTO registro)
+        {
+            var transaction = this.registroAlunoRepository.GetTransaction();
+            try
+            {
+                var reg = registro.ToEntity();
+                registroAlunoRepository.Add(reg);
+                registroAlunoRepository.SaveChanges();
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        public bool ExcluirRegistro(int id)
+        {
+            registroAlunoRepository.Delete(id);
+            return true;
+        }
+
+        #endregion
+
+        #region Arquivos
         public bool SalvarImagemAluno(int idAluno, byte[] imagem)
         {
             Aluno aluno = alunoRepository.GetById(idAluno);
             string cpf = aluno.CPF.Replace(".", "").Replace("-", "");
-            return SalvarArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil, imagem);
+            if (imagem != null && imagem.Length > 0)
+            {
+                return SalvarArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil, imagem);
+            }
+            else
+            {
+                return ExcluirArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil);
+            }
         }
 
 
@@ -155,6 +219,7 @@ namespace Services.Impl.Services
             string cpf = aluno.CPF.Replace(".", "").Replace("-", "");
             return BuscarArquivo(cpf, ApplicationConstants.NomeArquivoFotoPerfil);
         }
+        #endregion
 
         #region Métodos Privados
         private bool SalvarArquivo(string cpf, string nomeArquivo, byte[] arquivo)
@@ -188,6 +253,26 @@ namespace Services.Impl.Services
             {
                 return null;
             }
+        }
+
+        private bool ExcluirArquivo(string cpf, string nomeArquivo)
+        {
+            try
+            {
+                string folder = configuration.GetSection("AssetsFolder").Value;
+                string path = Path.Combine(folder, cpf);
+                path = Path.Combine(path, nomeArquivo);
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
         }
         #endregion
     }

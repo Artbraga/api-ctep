@@ -4,30 +4,30 @@ using System;
 
 namespace Entities.DTOs
 {
-    public class RegistroAlunoDTO : BaseDTO<RegistroAluno>
+    public class RegistroTurmaDTO : BaseDTO<RegistroTurma>
     {
         public DateTime Data { get; set; }
         public string Registro { get; set; }
-        public int AlunoId { get; set; }
+        public int TurmaId { get; set; }
 
-        public RegistroAlunoDTO()
+        public RegistroTurmaDTO()
         {
         }
 
-        public RegistroAlunoDTO(RegistroAluno entity) : base(entity)
+        public RegistroTurmaDTO(RegistroTurma entity) : base(entity)
         {
             this.Id = entity.Id;
-            this.AlunoId = entity.AlunoId;
+            this.TurmaId = entity.TurmaId;
             this.Data = entity.Data;
             this.Registro = entity.Registro;
         }
 
-        public override RegistroAluno ToEntity()
+        public override RegistroTurma ToEntity()
         {
-            return new RegistroAluno
+            return new RegistroTurma
             {
                 Id = this.Id.HasValue ? this.Id.Value : 0,
-                AlunoId = this.AlunoId,
+                TurmaId = this.TurmaId,
                 Data = this.Data,
                 Registro = this.Registro
             };
