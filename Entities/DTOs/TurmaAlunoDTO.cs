@@ -10,6 +10,7 @@ namespace Entities.DTOs
         public DateTime? DataConclusao { get; set; }
         public string CodigoConlusaoSistec { get; set; }
         public int AlunoId { get; set; }
+        public string TipoStatusAluno { get; set; }
         public TurmaDTO Turma { get; set; }
 
         public TurmaAlunoDTO()
@@ -22,6 +23,7 @@ namespace Entities.DTOs
             this.Matricula = entity.Matricula;
             this.DataConclusao = entity.DataConclusao;
             this.CodigoConlusaoSistec = entity.CodigoConlusaoSistec;
+            this.TipoStatusAluno = entity.TipoStatusAluno.Nome;
             this.Turma = new TurmaDTO(entity.Turma);
         }
 

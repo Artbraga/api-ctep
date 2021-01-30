@@ -51,7 +51,7 @@ namespace Repositories.Impl.Repositories
             }
             if (filter.SituacaoId != null && filter.SituacaoId.Any())
             {
-                query = query.Where(x => filter.SituacaoId.Contains(x.TipoStatusAlunoId));
+                query = query.Where(x => !x.TurmasAluno.Any() || x.TurmasAluno.Any(y => filter.SituacaoId.Contains(y.TipoStatusAlunoId)));
             }
 
             return query.ToList();
@@ -69,7 +69,7 @@ namespace Repositories.Impl.Repositories
             var query = Query();
             query = query
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
-                .Include(x => x.TipoStatusAluno)
+                .Include(x => x.TurmasAluno).ThenInclude(x => x.TipoStatusAluno)
                 .AsQueryable();
             return query;
         }
@@ -79,8 +79,8 @@ namespace Repositories.Impl.Repositories
             var query = Query();
             query = query
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
+                .Include(x => x.TurmasAluno).ThenInclude(x => x.TipoStatusAluno)
                 .Include(x => x.Registros)
-                .Include(x => x.TipoStatusAluno)
                 .AsQueryable();
             return query;
         }

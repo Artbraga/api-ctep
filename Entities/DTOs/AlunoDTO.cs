@@ -1,5 +1,7 @@
 ﻿using Entities.Base;
 using Entities.Entities;
+using Entities.Enums;
+using Entities.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,22 @@ namespace Entities.DTOs
         public DateTime DataMatricula { get; set; }
         public DateTime? DataValidade { get; set; }
         public DateTime DataNascimento { get; set; }
-        public string TipoStatusAluno { get; set; }
+        public string TipoStatusAluno { get
+            {
+                if (!this.TurmasAluno.Any()) return "Não Vinculado";
+                else
+                {
+                    if (this.TurmasAluno.Distinct().Count() == 1) return this.TurmasAluno.First().TipoStatusAluno;
+                    else
+                    {
+                        if (this.TurmasAluno.Any(x => x.TipoStatusAluno == TipoStatusAlunoEnum.Ativo.GetDescription())) return TipoStatusAlunoEnum.Ativo.GetDescription();
+                        else if (this.TurmasAluno.Any(x => x.TipoStatusAluno == TipoStatusAlunoEnum.Concluido.GetDescription())) return TipoStatusAlunoEnum.Concluido.GetDescription();
+                        else if (this.TurmasAluno.Any(x => x.TipoStatusAluno == TipoStatusAlunoEnum.Trancado.GetDescription())) return TipoStatusAlunoEnum.Trancado.GetDescription();
+                        else return TipoStatusAlunoEnum.Abandono.GetDescription();
+                    }
+                }
+            } 
+        }
         public IEnumerable<RegistroAlunoDTO> Registros { get; set; }
 
         public IEnumerable<TurmaAlunoDTO> TurmasAluno { get; set; }
@@ -59,10 +76,11 @@ namespace Entities.DTOs
             this.Celular = entity.Celular;
             this.Email = entity.Email;
             this.CursoAnterior = entity.CursoAnterior;
-            this.TipoStatusAluno = entity.TipoStatusAluno.Nome;
             this.TurmasAluno = entity.TurmasAluno == null ? null : entity.TurmasAluno.Select(x => new TurmaAlunoDTO(x));
             this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroAlunoDTO(x)).OrderBy(x => x.Data);
         }
+
+        
 
         public override Aluno ToEntity()
         {

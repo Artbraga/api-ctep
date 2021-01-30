@@ -132,13 +132,6 @@ namespace Repositories.Impl.Mapping
                 .HasColumnName("curso_anterior")
                 .HasColumnType("varchar")
                 .HasMaxLength(50);
-
-            builder.Property(r => r.TipoStatusAlunoId)
-                .HasColumnName("id_tpstatus_aluno");
-
-            builder.HasOne(r => r.TipoStatusAluno)
-                 .WithMany(t => t.Alunos)
-                 .HasForeignKey(r => r.TipoStatusAlunoId);
         }
     }
 }

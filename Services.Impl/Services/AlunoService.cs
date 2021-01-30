@@ -85,7 +85,6 @@ namespace Services.Impl.Services
                 else
                 {
                     aluno = alunoDto.ToEntity();
-                    aluno.TipoStatusAlunoId = (int)TipoStatusAlunoEnum.Ativo;
                     aluno.TurmasAluno = new List<TurmaAluno>();
                     alunoRepository.Add(aluno);
                 }
@@ -123,6 +122,7 @@ namespace Services.Impl.Services
             turmaAluno.Id = 0;
             turmaAluno.AlunoId = turmaAlunoDTO.AlunoId;
             turmaAluno.TurmaId = turmaAlunoDTO.Turma.Id.Value;
+            turmaAluno.TipoStatusAlunoId = (int)TipoStatusAlunoEnum.Ativo;
 
             turmaAlunoRepository.Add(turmaAluno);
             turmaAlunoRepository.SaveChanges();
@@ -150,10 +150,6 @@ namespace Services.Impl.Services
             {
                 throw new BusinessException("Não é possível excluir um aluno vinculado em uma turma.");
             }
-            //aluno.Registros.ToList().ForEach(r =>
-            //{
-            //    ExcluirRegistro(r.Id);
-            //});
             alunoRepository.Delete(id);
             return true;
         }

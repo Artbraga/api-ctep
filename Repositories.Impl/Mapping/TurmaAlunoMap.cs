@@ -39,6 +39,9 @@ namespace Repositories.Impl.Mapping
             builder
                 .Property(u => u.TurmaId)
                 .HasColumnName("id_turma");
+           
+            builder.Property(r => r.TipoStatusAlunoId)
+                .HasColumnName("id_tpstatus_aluno");
 
             builder.HasOne(t => t.Turma)
                 .WithMany(c => c.TurmasAluno)
@@ -47,6 +50,10 @@ namespace Repositories.Impl.Mapping
             builder.HasOne(t => t.Aluno)
                 .WithMany(c => c.TurmasAluno)
                 .HasForeignKey(t => t.AlunoId);
+            
+            builder.HasOne(r => r.TipoStatusAluno)
+                 .WithMany(t => t.TurmasAluno)
+                 .HasForeignKey(r => r.TipoStatusAlunoId);
         }
     }
 }

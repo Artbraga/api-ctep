@@ -25,8 +25,6 @@ namespace Entities.Entities
         public DateTime DataMatricula { get; set; }
         public DateTime? DataValidade{ get; set; }
         public DateTime DataNascimento{ get; set; }
-        public int TipoStatusAlunoId { get; set; }
-        public virtual TipoStatusAluno TipoStatusAluno { get; set; }
         public virtual IEnumerable<TurmaAluno> TurmasAluno { get; set; }
         public virtual IEnumerable<RegistroAluno> Registros { get; set; }
     }

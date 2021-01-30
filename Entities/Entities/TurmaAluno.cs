@@ -13,5 +13,7 @@ namespace Entities.Entities
         public int TurmaId { get; set; }
         public virtual Aluno Aluno { get; set; }
         public virtual Turma Turma { get; set; }
+        public int TipoStatusAlunoId { get; set; }
+        public virtual TipoStatusAluno TipoStatusAluno { get; set; }
     }
 }
