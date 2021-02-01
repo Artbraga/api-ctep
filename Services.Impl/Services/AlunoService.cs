@@ -109,30 +109,53 @@ namespace Services.Impl.Services
 
         public bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO)
         {
-            var turmasSalvas = turmaAlunoRepository.ListarTurmasDeUmAluno(turmaAlunoDTO.AlunoId);
-            if (turmasSalvas.Any(x => x.Turma.CursoId == turmaAlunoDTO.Turma.Curso.Id))
+            // Vincular
+            if (!turmaAlunoDTO.Id.HasValue)
             {
-                throw new BusinessException("O aluno já está vinculado a uma turma desse curso.");
+                var turmasSalvas = turmaAlunoRepository.ListarTurmasDeUmAluno(turmaAlunoDTO.AlunoId);
+                if (turmasSalvas.Any(x => x.Turma.CursoId == turmaAlunoDTO.Turma.Curso.Id))
+                {
+                    throw new BusinessException("O aluno já está vinculado a uma turma desse curso.");
+                }
+                if (alunoRepository.ExisteMatricula(turmaAlunoDTO.Matricula))
+                {
+                    throw new BusinessException("Já existe um aluno com a matrícula informada.");
+                }
+                var turmaAluno = turmaAlunoDTO.ToEntity();
+                turmaAluno.Id = 0;
+                turmaAluno.AlunoId = turmaAlunoDTO.AlunoId;
+                turmaAluno.TurmaId = turmaAlunoDTO.Turma.Id.Value;
+                turmaAluno.TipoStatusAlunoId = (int)TipoStatusAlunoEnum.Ativo;
+
+                turmaAlunoRepository.Add(turmaAluno);
+                turmaAlunoRepository.SaveChanges();
+
+                AdicionarRegistro(new RegistroAlunoDTO
+                {
+                    AlunoId = turmaAluno.AlunoId,
+                    Data = DateTime.Today,
+                    Registro = $"Aluno registrado na turma {turmaAlunoDTO.Turma.Codigo}."
+                });
             }
-            if (alunoRepository.ExisteMatricula(turmaAlunoDTO.Matricula))
+            // Transferir
+            else
             {
-                throw new BusinessException("Já existe um aluno com a matrícula informada.");
+                var turmasSalvas = turmaAlunoRepository.ListarTurmasDeUmAluno(turmaAlunoDTO.AlunoId);
+                var turmaAluno = turmasSalvas.First(x => x.Id == turmaAlunoDTO.Id.Value);
+                var mensagem = $"Aluno transferido da turma {turmaAluno.Turma.Codigo} para a turma {turmaAlunoDTO.Turma.Codigo}.";
+                turmaAluno.TurmaId = turmaAlunoDTO.Turma.Id.Value;
+                //turmaAluno.Turma = null;
+                //turmaAlunoRepository.Update(turmaAluno);
+                turmaAlunoRepository.SaveChanges();
+
+                AdicionarRegistro(new RegistroAlunoDTO
+                {
+                    AlunoId = turmaAluno.AlunoId,
+                    Data = DateTime.Today,
+                    Registro = mensagem
+                });
+
             }
-            var turmaAluno = turmaAlunoDTO.ToEntity();
-            turmaAluno.Id = 0;
-            turmaAluno.AlunoId = turmaAlunoDTO.AlunoId;
-            turmaAluno.TurmaId = turmaAlunoDTO.Turma.Id.Value;
-            turmaAluno.TipoStatusAlunoId = (int)TipoStatusAlunoEnum.Ativo;
-
-            turmaAlunoRepository.Add(turmaAluno);
-            turmaAlunoRepository.SaveChanges();
-
-            AdicionarRegistro(new RegistroAlunoDTO 
-            { 
-                AlunoId = turmaAluno.AlunoId,
-                Data = DateTime.Today,
-                Registro = $"Aluno registrado na turma {turmaAlunoDTO.Turma.Codigo}."
-            });
             return true;
         }
 
