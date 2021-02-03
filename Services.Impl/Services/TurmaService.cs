@@ -2,6 +2,7 @@
 using Entities.DTOs;
 using Entities.Entities;
 using Entities.Enums;
+using Entities.Exceptions;
 using Entities.Filters;
 using Repositories.Repositories;
 using Services.Impl.Base;
@@ -42,11 +43,24 @@ namespace Services.Impl
             var curso = cursoRepository.GetById(cursoId);
             var trecho = $"{curso.SiglaTurma}{anoTurma % 100}";
             var numero = turmaRepository.BuscarCodigoDaTurma(trecho);
-            return $"{trecho}{(numero + 1).ToString("D2")}";
+            string codigo;
+            do
+            {
+                numero += 1;
+                codigo = $"{trecho}{numero.ToString("D3")}";
+            } while (turmaRepository.ExisteCodigo(codigo));
+
+
+            return codigo;
         }
 
         public TurmaDTO SalvarTurma(TurmaDTO turmaDto)
         {
+            if (turmaRepository.ExisteCodigo(turmaDto.Codigo))
+            {
+                throw new BusinessException("Já existe uma turma com o código informado.");
+            }
+
             var transaction = this.turmaRepository.GetTransaction();
             try
             {

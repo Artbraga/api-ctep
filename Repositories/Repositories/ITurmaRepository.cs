@@ -9,6 +9,7 @@ namespace Repositories.Repositories
     {
         IEnumerable<Turma> ListarTurmasDeUmCurso(int cursoId);
         int BuscarCodigoDaTurma(string trechoCodigo);
+        bool ExisteCodigo(string codigo);
         IEnumerable<Turma> ListarTurmasAtivas();
         IEnumerable<Turma> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId);
         IEnumerable<Turma> FiltrarTurmas(TurmaFilter filter);

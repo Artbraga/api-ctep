@@ -144,8 +144,6 @@ namespace Services.Impl.Services
                 var turmaAluno = turmasSalvas.First(x => x.Id == turmaAlunoDTO.Id.Value);
                 var mensagem = $"Aluno transferido da turma {turmaAluno.Turma.Codigo} para a turma {turmaAlunoDTO.Turma.Codigo}.";
                 turmaAluno.TurmaId = turmaAlunoDTO.Turma.Id.Value;
-                //turmaAluno.Turma = null;
-                //turmaAlunoRepository.Update(turmaAluno);
                 turmaAlunoRepository.SaveChanges();
 
                 AdicionarRegistro(new RegistroAlunoDTO

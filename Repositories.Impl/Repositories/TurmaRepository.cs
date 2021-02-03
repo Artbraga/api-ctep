@@ -30,6 +30,15 @@ namespace Repositories.Impl.Repositories
             return query.Count();
         }
 
+        public bool ExisteCodigo(string codigo)
+        {
+            var query = Query();
+            query = query.Where(x => x.Codigo == codigo);
+
+            return query.Any();
+        }
+
+
         public IEnumerable<Turma> ListarTurmasAtivas()
         {
             var query = Query()
