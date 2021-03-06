@@ -96,6 +96,12 @@ namespace Api.Controllers
         public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             return AlunoService.FiltrarAlunos(filter);
+        } 
+        
+        [HttpPost]
+        public byte[] BaixarPesquisa(AlunoFilter filter)
+        {
+            return AlunoService.ExportarPesquisa(filter);
         }
     }
 }

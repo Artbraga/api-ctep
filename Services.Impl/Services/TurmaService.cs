@@ -47,7 +47,7 @@ namespace Services.Impl
             do
             {
                 numero += 1;
-                codigo = $"{trecho}{numero.ToString("D3")}";
+                codigo = $"{trecho}{numero.ToString("D2")}";
             } while (turmaRepository.ExisteCodigo(codigo));
 
 

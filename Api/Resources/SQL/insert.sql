@@ -12,7 +12,8 @@ INSERT INTO tb_usuario (nome, login, senha, telefone) VALUES
 
 INSERT INTO tb_curso (nome, sigla, sigla_turma, flg_especializacao, id_curso_vinculado) VALUES 
 	('Técnico de Enfermagem', 'ENF', 'TENF', FALSE, NULL), 
-	('Especialização em Instrumentação Cirúrgica', 'EIC', 'ETIC', TRUE, 1);
+	('Especialização em Instrumentação Cirúrgica', 'EIC', 'ETIC', TRUE, 1),
+	('Profissionalizante em Estética', 'EST', 'PEST', FALSE, NULL);
 
 INSERT INTO tb_turma (codigo, dias_semana, hora_inicio, hora_fim, data_inicio, data_fim, id_curso, id_tpstatus_turma) VALUES
   ('ETIC2001', 'Sábados', '08:00', '12:00', '2020-01-01', NULL, 2, 1),

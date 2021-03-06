@@ -74,6 +74,7 @@ namespace ctep
 
             app.UseRouting();
             app.UseEndpoints(endpoints => endpoints.MapControllers());
+            RegistrarAspose();
             log.Info("Configure - ok");
         }
 
@@ -82,5 +83,15 @@ namespace ctep
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));
         }
+
+        private static void RegistrarAspose()
+        {
+            var licenceTotalPath = @"Licenses/Aspose.Total.lic";
+            var asposeCellsLicense = new Aspose.Cells.License();
+            var asposeWordLicense = new Aspose.Words.License();
+            asposeCellsLicense.SetLicense(licenceTotalPath);
+            asposeWordLicense.SetLicense(licenceTotalPath);
+        }
+
     }
 }
