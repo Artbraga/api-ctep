@@ -1,10 +1,12 @@
-﻿using Entities.Base;
+﻿using Aspose.Cells;
+using Entities.Base;
 using Entities.DTOs;
 using Entities.Entities;
 using Entities.Enums;
 using Entities.Exceptions;
 using Entities.Filters;
 using Entities.Util;
+using log4net;
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using Repositories.Repositories;
@@ -24,6 +26,9 @@ namespace Services.Impl.Services
         private readonly ICursoRepository cursoRepository;
         private readonly ITurmaAlunoRepository turmaAlunoRepository;
         private readonly IConfiguration configuration;
+
+        private static readonly ILog log = LogManager.GetLogger(typeof(AlunoService));
+
         public AlunoService(IAlunoRepository alunoRepository,
                             IRegistroAlunoRepository registroAlunoRepository,
                             ICursoRepository cursoRepository,
@@ -182,6 +187,93 @@ namespace Services.Impl.Services
             var retorno = alunos.Select(x => new AlunoDTO(x));
             return retorno;
         }
+
+        public byte[] ExportarPesquisa(AlunoFilter filter)
+        {
+            var alunos = FiltrarAlunos(filter).ToList();
+            #region Criação da tabela
+            Workbook conteudoExcel = new Workbook
+            {
+                FileName = "exportação.xlsx"
+            };
+            conteudoExcel.Worksheets.RemoveAt(0);
+            Worksheet sheet = conteudoExcel.Worksheets.Add("Alunos");
+            string[] propertyNames =
+            {
+                /* 00 */ "Nome",
+                /* 01 */ "CPF",
+                /* 02 */ "Telefone",
+                /* 03 */ "Celular",
+                /* 04 */ "Matrículas",
+                /* 05 */ "Turmas",
+                /* 06 */ "Validade",
+                /* 07 */ "Situação"
+            };
+            Style styleDia = conteudoExcel.CreateStyle();
+            styleDia.Custom = "dd/mm/yyyy";
+            #endregion
+
+            #region Preenchimento da tabela
+            var contador = 1;
+            alunos.ForEach(a =>
+            {
+                try
+                {
+                    var row = sheet.Cells.Rows[contador];
+                    GravarValor(row, a.Nome, 0);
+                    GravarValor(row, a.CPF, 1);
+                    GravarValor(row, a.Telefone, 2);
+                    GravarValor(row, a.Celular, 3);
+                    GravarValor(row, string.Join(", ", a.TurmasAluno.Select(ta => ta.Matricula)), 4);
+                    GravarValor(row, string.Join(", ", a.TurmasAluno.Select(ta => ta.Turma.Codigo)), 5);
+                    GravarValor(row, a.DataValidade, 6, styleDia);
+                    GravarValor(row, a.TipoStatusAluno, 7);
+                    contador++;
+                }
+                catch (Exception e)
+                {
+                    log.Error($"Erro exportar pesquisa.", e);
+                }
+
+            });
+            sheet.ListObjects.Add(0, 0, contador - 1, propertyNames.Length - 1, true);
+            var header = sheet.Cells.Rows[0];
+            for (int i = 0; i < propertyNames.Length; i++)
+            {
+                header[i].PutValue(propertyNames[i]);
+            }
+            sheet.AutoFitColumns();
+            sheet.AutoFitRows();
+            #endregion
+
+            //descomentar para testar localmente
+            #region teste local salvar arquivo
+            //MemoryStream stream = new MemoryStream();
+            //string path = @"C:\Users\exportacao_completa.xlsx";
+            //conteudoExcel.Save(stream, SaveFormat.Xlsx);
+            //stream.Seek(0, SeekOrigin.Begin);
+            //using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
+            //{
+            //    stream.WriteTo(fs);
+            //}
+            #endregion
+
+            MemoryStream stream = new MemoryStream();
+            conteudoExcel.Save(stream, SaveFormat.Xlsx);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream.ToArray();
+
+            void GravarValor(Row row, object dado, int indice, Style style = null)
+            {
+                if (dado == null) dado = "";
+                row[indice].PutValue(dado);
+                if (style != null)
+                {
+                    row[indice].SetStyle(style);
+                }
+            }
+        }
+
 
         #region Registro Aluno
         public bool AdicionarRegistro(RegistroAlunoDTO registro)
