@@ -246,18 +246,6 @@ namespace Services.Impl.Services
             sheet.AutoFitRows();
             #endregion
 
-            //descomentar para testar localmente
-            #region teste local salvar arquivo
-            //MemoryStream stream = new MemoryStream();
-            //string path = @"C:\Users\exportacao_completa.xlsx";
-            //conteudoExcel.Save(stream, SaveFormat.Xlsx);
-            //stream.Seek(0, SeekOrigin.Begin);
-            //using (FileStream fs = new FileStream(path, FileMode.Create, FileAccess.ReadWrite))
-            //{
-            //    stream.WriteTo(fs);
-            //}
-            #endregion
-
             MemoryStream stream = new MemoryStream();
             conteudoExcel.Save(stream, SaveFormat.Xlsx);
             stream.Seek(0, SeekOrigin.Begin);

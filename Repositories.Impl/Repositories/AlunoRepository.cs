@@ -49,6 +49,10 @@ namespace Repositories.Impl.Repositories
             {
                 query = query.Where(x => x.TurmasAluno.Any(y => y.Turma.CursoId == filter.CursoId));
             }
+            if (!string.IsNullOrEmpty(filter.Matricula))
+            {
+                query = query.Where(x => x.TurmasAluno.Any(y => y.Matricula == filter.Matricula));
+            }
             if (filter.SituacaoId != null && filter.SituacaoId.Any())
             {
                 query = query.Where(x => !x.TurmasAluno.Any() || x.TurmasAluno.Any(y => filter.SituacaoId.Contains(y.TipoStatusAlunoId)));
