@@ -103,5 +103,11 @@ namespace Api.Controllers
         {
             return AlunoService.ExportarPesquisa(filter);
         }
+
+        [HttpPost]
+        public bool AlterarSituacao(MudancaSituacaoDTO mudancaSituacao)
+        {
+            return AlunoService.AlterarSituacao(mudancaSituacao);
+        }
     }
 }
