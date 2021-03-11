@@ -1,4 +1,5 @@
-﻿using Entities.DTOs;
+﻿using Entities.Base;
+using Entities.DTOs;
 using Entities.Entities;
 using Entities.Filters;
 using Services.Base;
@@ -11,7 +12,7 @@ namespace Services.Services
         string GerarNumeroDeMatricula(int cursoId, int anoMatricula);
         AlunoDTO SalvarAluno(AlunoDTO alunoDto);
         bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO);
-        IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter);
+        FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter);
         byte[] ExportarPesquisa(AlunoFilter filter);
         bool ExcluirAluno(int id);
         bool ExcluirRegistro(int id);

@@ -31,9 +31,11 @@ namespace Repositories.Impl.Repositories
             return query.Any();
         }
 
-        public IEnumerable<Aluno> FiltrarAlunos(AlunoFilter filter)
+        public IEnumerable<Aluno> FiltrarAlunos(AlunoFilter filter, bool paginar = false)
         {
             var query = IncludeTabela();
+            query = query.OrderBy(a => a.Nome);
+
             if (!string.IsNullOrEmpty(filter.Nome)) {
                 query = query.Where(x => x.Nome.Contains(filter.Nome));
             }
@@ -58,7 +60,15 @@ namespace Repositories.Impl.Repositories
                 query = query.Where(x => !x.TurmasAluno.Any() || x.TurmasAluno.Any(y => filter.SituacaoId.Contains(y.TipoStatusAlunoId)));
             }
 
-            return query.ToList();
+            if (paginar)
+            {
+                filter.Total = query.Count();
+                return PaginarResultado(query, filter).ToList();
+            }
+            else
+            {
+                return query.ToList();
+            }
         }
 
         public override Aluno GetById(int id)
@@ -72,6 +82,7 @@ namespace Repositories.Impl.Repositories
         {
             var query = Query();
             query = query
+                .Include(x => x.Registros)
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.TipoStatusAluno)
                 .AsQueryable();

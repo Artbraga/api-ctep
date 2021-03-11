@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using Entities.Base;
 using Entities.DTOs;
 using Entities.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -93,7 +94,7 @@ namespace Api.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
+        public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             return AlunoService.FiltrarAlunos(filter);
         } 

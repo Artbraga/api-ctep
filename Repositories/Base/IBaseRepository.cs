@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Filters;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 

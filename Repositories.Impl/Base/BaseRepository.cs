@@ -1,4 +1,5 @@
 ﻿using Entities;
+using Entities.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Repositories.Base;
@@ -84,6 +85,11 @@ namespace Repositories.Impl.Base
         protected IQueryable<TEntity> Query()
         {
             return EntitySet.AsQueryable();
+        }
+
+        protected IEnumerable<TEntity> PaginarResultado(IEnumerable<TEntity> entities, IPageFilter filter)
+        {
+            return entities.Skip(filter.Pagina * filter.TamanhoPagina).Take(filter.TamanhoPagina);
         }
     }
 }

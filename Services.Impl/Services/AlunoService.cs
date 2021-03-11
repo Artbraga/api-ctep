@@ -131,16 +131,30 @@ namespace Services.Impl.Services
         }
 
 
-        public IEnumerable<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
+        public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
-            IEnumerable<Aluno> alunos = alunoRepository.FiltrarAlunos(filter);
-            var retorno = alunos.Select(x => new AlunoDTO(x));
-            return retorno;
+            try
+            {
+                IEnumerable<Aluno> alunos = alunoRepository.FiltrarAlunos(filter, true);
+                var retorno = new FilterResultDTO<AlunoDTO>
+                {
+                    Total = filter.Total,
+                    Pagina = filter.Pagina,
+                    TamanhoPagina = filter.TamanhoPagina,
+                    Lista = alunos.Select(x => new AlunoDTO(x))
+                };
+                return retorno;
+            }
+            catch(Exception e)
+            {
+                log.Error("Erro ao buscar alunos.", e);
+                throw new Exception("Erro ao buscar alunos.");
+            }
         }
 
         public byte[] ExportarPesquisa(AlunoFilter filter)
         {
-            var alunos = FiltrarAlunos(filter).ToList();
+            List<AlunoDTO> alunos = alunoRepository.FiltrarAlunos(filter).Select(x => new AlunoDTO(x)).ToList();
             #region Criação da tabela
             Workbook conteudoExcel = new Workbook
             {
