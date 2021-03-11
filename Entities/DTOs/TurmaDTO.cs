@@ -35,7 +35,7 @@ namespace Entities.DTOs
             this.DataInicio = entity.DataInicio;
             this.DataFim = entity.DataFim;
             this.Curso = entity.Curso == null ? null : new CursoDTO(entity.Curso);
-            this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroTurmaDTO(x));
+            this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroTurmaDTO(x)).OrderBy(x => x.Data);
             this.Status = entity.TipoStatusTurma.Nome;
         }
 
