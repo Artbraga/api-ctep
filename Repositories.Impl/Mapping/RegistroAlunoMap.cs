@@ -14,7 +14,8 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_registro_aluno");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_registro_aluno");
+                .HasColumnName("id_registro_aluno")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.Data)
@@ -25,12 +26,13 @@ namespace Repositories.Impl.Mapping
             builder
                 .Property(u => u.Registro)
                 .HasColumnName("registro")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(5000)")
                 .HasMaxLength(5000)
                 .IsRequired();
 
             builder.Property(r => r.AlunoId)
-                .HasColumnName("id_aluno");
+                .HasColumnName("id_aluno")
+                .HasColumnType("int");
 
             builder.HasOne(r => r.Aluno)
                  .WithMany(t => t.Registros)

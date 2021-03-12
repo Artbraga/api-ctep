@@ -13,17 +13,19 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_disciplina");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_disciplina");
+                .HasColumnName("id_disciplina")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.Nome)
                 .HasColumnName("nome")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(50)")
                 .HasMaxLength(50)
                 .IsRequired();
 
             builder.Property(r => r.CursoId)
-                .HasColumnName("id_curso");
+                .HasColumnName("id_curso")
+                .HasColumnType("int");
 
             builder.HasOne(r => r.Curso)
                  .WithMany(t => t.Disciplinas)

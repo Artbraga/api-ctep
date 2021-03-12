@@ -13,27 +13,32 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_turma");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_turma");
+                .HasColumnName("id_turma")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.Codigo)
                 .HasColumnName("codigo")
+                .HasColumnType("varchar(8)")
                 .HasMaxLength(8)
                 .IsRequired();
 
             builder
                 .Property(u => u.DiasDaSemana)
                 .HasColumnName("dias_semana")
+                .HasColumnType("varchar(30)")
                 .HasMaxLength(30)
                 .IsRequired();
 
             builder
                 .Property(u => u.HoraInicio)
-                .HasColumnName("hora_inicio");
+                .HasColumnName("hora_inicio")
+                .HasColumnType("time");
 
             builder
                 .Property(u => u.HoraFim)
-                .HasColumnName("hora_fim");
+                .HasColumnName("hora_fim")
+                .HasColumnType("time");
 
             builder.Property(e => e.DataInicio)
                 .HasColumnName("data_inicio")
@@ -45,10 +50,12 @@ namespace Repositories.Impl.Mapping
                 .HasColumnType("datetime");
 
             builder.Property(r => r.CursoId)
-                .HasColumnName("id_curso");
+                .HasColumnName("id_curso")
+                .HasColumnType("int");
 
             builder.Property(r => r.TipoStatusTurmaId)
-                .HasColumnName("id_tpstatus_turma");
+                .HasColumnName("id_tpstatus_turma")
+                .HasColumnType("int");
 
             builder.HasOne(t => t.Curso)
                 .WithMany(c => c.Turmas)

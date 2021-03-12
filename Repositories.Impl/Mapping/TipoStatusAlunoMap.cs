@@ -14,12 +14,13 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_tpstatus_aluno");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_tpstatus_aluno");
+                .HasColumnName("id_tpstatus_aluno")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.Nome)
                 .HasColumnName("nome")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(20)")
                 .HasMaxLength(20)
                 .IsRequired();
         }

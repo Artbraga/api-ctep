@@ -13,15 +13,18 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_turma_professor");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_turma_professor");
+                .HasColumnName("id_turma_professor")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.ProfessorId)
-                .HasColumnName("id_professor");
+                .HasColumnName("id_professor")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.TurmaId)
-                .HasColumnName("id_turma");
+                .HasColumnName("id_turma")
+                .HasColumnType("int");
 
             builder.HasOne(t => t.Turma)
                 .WithMany(c => c.TurmasProfessor)

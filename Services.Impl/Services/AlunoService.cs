@@ -8,7 +8,6 @@ using Entities.Filters;
 using Entities.Util;
 using log4net;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Services;
