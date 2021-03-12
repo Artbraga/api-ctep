@@ -13,12 +13,13 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_turma_aluno");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_turma_aluno");
+                .HasColumnName("id_turma_aluno")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.Matricula)
                 .HasColumnName("matricula_aluno")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(8)")
                 .HasMaxLength(8)
                 .IsRequired();
 
@@ -30,18 +31,22 @@ namespace Repositories.Impl.Mapping
             builder
                 .Property(u => u.CodigoConlusaoSistec)
                 .HasColumnName("codigo_conclusaosistec")
-                .HasColumnType("varchar");
+                .HasColumnType("varchar(30)")
+                .HasMaxLength(30);
 
             builder
                 .Property(u => u.AlunoId)
-                .HasColumnName("id_aluno");
+                .HasColumnName("id_aluno")
+                .HasColumnType("int");
 
             builder
                 .Property(u => u.TurmaId)
-                .HasColumnName("id_turma");
+                .HasColumnName("id_turma")
+                .HasColumnType("int");
            
             builder.Property(r => r.TipoStatusAlunoId)
-                .HasColumnName("id_tpstatus_aluno");
+                .HasColumnName("id_tpstatus_aluno")
+                .HasColumnType("int");
 
             builder.HasOne(t => t.Turma)
                 .WithMany(c => c.TurmasAluno)

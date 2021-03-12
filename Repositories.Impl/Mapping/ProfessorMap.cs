@@ -13,76 +13,77 @@ namespace Repositories.Impl.Mapping
             builder.ToTable("tb_professor");
 
             builder.Property(r => r.Id)
-                .HasColumnName("id_professor");
+                .HasColumnName("id_professor")
+                .HasColumnType("int");
 
             builder
                .Property(u => u.Nome)
                .HasColumnName("nome")
-               .HasColumnType("varchar")
+               .HasColumnType("varchar(50)")
                .HasMaxLength(50)
                .IsRequired();
 
             builder
                 .Property(u => u.CPF)
                 .HasColumnName("cpf")
-                .HasColumnType("varchar")
-                .HasMaxLength(12)
+                .HasColumnType("varchar(14)")
+                .HasMaxLength(14)
                 .IsRequired();
 
             builder
                 .Property(u => u.RG)
                 .HasColumnName("rg")
-                .HasColumnType("varchar")
-                .HasMaxLength(15);
+                .HasColumnType("varchar(20)")
+                .HasMaxLength(20);
 
             builder
                 .Property(u => u.Endereco)
                 .HasColumnName("endereco")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(100)")
                 .HasMaxLength(100)
                 .IsRequired();
 
             builder
                 .Property(u => u.CEP)
                 .HasColumnName("cep")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(8)")
                 .HasMaxLength(8)
                 .IsRequired();
 
             builder
                 .Property(u => u.Complemento)
                 .HasColumnName("complemento")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(20)")
                 .HasMaxLength(20);
 
             builder
                 .Property(u => u.Bairro)
                 .HasColumnName("bairro")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(20)")
                 .HasMaxLength(20);
 
             builder
                 .Property(u => u.Cidade)
                 .HasColumnName("cidade")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(20)")
                 .HasMaxLength(20);
 
             builder
                 .Property(u => u.Email)
                 .HasColumnName("email")
-                .HasColumnType("varchar")
-                .HasMaxLength(20);
+                .HasColumnType("varchar(40)")
+                .HasMaxLength(40);
 
             builder
                 .Property(u => u.Telefone)
                 .HasColumnName("telefone")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(12)")
                 .HasMaxLength(12);
 
             builder
                 .Property(u => u.Celular)
                 .HasColumnName("celular")
-                .HasColumnType("varchar")
+                .HasColumnType("varchar(12)")
                 .HasMaxLength(12);
 
         }

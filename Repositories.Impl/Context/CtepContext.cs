@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Data.SqlClient;
-using MySql.Data.MySqlClient;
 using Repositories.Impl.Mapping;
+using log4net;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace CTEP.Repositories.Impl.Context
 {
     public class CtepContext : DbContext
     {
         private readonly string _connectionString;
+        private static readonly ILog log = LogManager.GetLogger(typeof(CtepContext));
 
         public CtepContext(IConfiguration configuration) : base()
         {
@@ -18,8 +18,12 @@ namespace CTEP.Repositories.Impl.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySQL(_connectionString)
-                .UseLazyLoadingProxies();
+            optionsBuilder
+                .LogTo(log.Debug)
+                .UseMySql(_connectionString, new MySqlServerVersion(new System.Version(5, 6, 49)), mySqlOptions => mySqlOptions.CharSetBehavior(CharSetBehavior.NeverAppend))
+                .UseLazyLoadingProxies()
+                .EnableSensitiveDataLogging()
+                .EnableDetailedErrors();
         }
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
