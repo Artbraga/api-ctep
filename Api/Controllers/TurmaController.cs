@@ -48,6 +48,13 @@ namespace Api.Controllers
         }
 
         [HttpPost]
+        public bool FinalizarTurma(TurmaDTO turma)
+        {
+            return TurmaService.FinalizarTurma(turma);
+        }
+
+
+        [HttpPost]
         public TurmaDTO Salvar(TurmaDTO turma)
         {
             return TurmaService.SalvarTurma(turma);
