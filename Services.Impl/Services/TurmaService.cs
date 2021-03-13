@@ -4,6 +4,7 @@ using Entities.Entities;
 using Entities.Enums;
 using Entities.Exceptions;
 using Entities.Filters;
+using log4net;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Services;
@@ -19,6 +20,8 @@ namespace Services.Impl
         private readonly ITurmaRepository turmaRepository;
         private readonly ICursoRepository cursoRepository;
         private readonly IRegistroTurmaRepository registroTurmaRepository;
+        private static readonly ILog log = LogManager.GetLogger(typeof(TurmaService));
+
         public TurmaService(ITurmaRepository TurmaRepository, 
             ICursoRepository CursoRepository, 
             IRegistroTurmaRepository RegistroTurmaRepository) : base(TurmaRepository)
@@ -56,27 +59,20 @@ namespace Services.Impl
 
         public TurmaDTO SalvarTurma(TurmaDTO turmaDto)
         {
-            if (turmaRepository.ExisteCodigo(turmaDto.Codigo))
-            {
-                throw new BusinessException("Já existe uma turma com o código informado.");
-            }
-
             var transaction = this.turmaRepository.GetTransaction();
             try
             {
                 Turma turma;
                 if (turmaDto.Id.HasValue)
                 {
-                    turma = turmaRepository.GetById(turmaDto.Id.Value);
-                    turma.Codigo = turmaDto.Codigo;
-                    turma.DiasDaSemana = turmaDto.DiasDaSemana;
-                    turma.HoraInicio = TimeSpan.Parse(turmaDto.HoraInicio, CultureInfo.InvariantCulture);
-                    turma.HoraFim = TimeSpan.Parse(turmaDto.HoraFim, CultureInfo.InvariantCulture);
-                    turma.DataInicio = turmaDto.DataInicio;
-                    turma.DataFim = turmaDto.DataFim;
+                    turma = EditarTurma(turmaDto);
                 }
                 else
                 {
+                    if (turmaRepository.ExisteCodigo(turmaDto.Codigo))
+                    {
+                        throw new BusinessException("Já existe uma turma com o código informado.");
+                    }
                     turma = turmaDto.ToEntity();
                     turma.TipoStatusTurmaId = (int)TipoStatusTurmaEnum.EmAndamento;
                     turmaRepository.Add(turma);
@@ -91,8 +87,31 @@ namespace Services.Impl
             {
                 transaction.Rollback();
                 transaction.Dispose();
+                log.Error("Erro ao salvar turma.", e);
                 throw;
             }
+        }
+
+        public bool FinalizarTurma(TurmaDTO turmaDto)
+        {
+            var transaction = this.turmaRepository.GetTransaction();
+            try
+            {
+                Turma turma = EditarTurma(turmaDto);
+                turma.TipoStatusTurmaId = (int)TipoStatusTurmaEnum.Concluida;
+                turmaRepository.SaveChanges();
+                transaction.Commit();
+                transaction.Dispose();
+                return true;
+            }
+            catch (Exception e)
+            {
+                transaction.Rollback();
+                transaction.Dispose();
+                log.Error("Erro ao filanizar turma.", e);
+                throw;
+            }
+
         }
 
         public IEnumerable<TurmaDTO> ListarTurmasAtivas()
@@ -147,6 +166,20 @@ namespace Services.Impl
         {
             registroTurmaRepository.Delete(id);
             return true;
+        }
+        #endregion
+
+        #region Métodos Privados
+        private Turma EditarTurma(TurmaDTO turmaDto)
+        {
+            Turma turma = turmaRepository.GetById(turmaDto.Id.Value);
+            turma.Codigo = turmaDto.Codigo;
+            turma.DiasDaSemana = turmaDto.DiasDaSemana;
+            turma.HoraInicio = TimeSpan.Parse(turmaDto.HoraInicio, CultureInfo.InvariantCulture);
+            turma.HoraFim = TimeSpan.Parse(turmaDto.HoraFim, CultureInfo.InvariantCulture);
+            turma.DataInicio = turmaDto.DataInicio;
+            turma.DataFim = turmaDto.DataFim;
+            return turma;
         }
         #endregion
     }

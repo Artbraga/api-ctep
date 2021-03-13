@@ -107,6 +107,7 @@ namespace Services.Impl.Services
                 {
                     throw new BusinessException("Já existe um aluno com o CPF cadastrado.");
                 }
+                log.Error("Erro ao salvar aluno.", ex);
                 throw new BusinessException("Erro desconhecido ao salvar aluno.");
             }
         }
