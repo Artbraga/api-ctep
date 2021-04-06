@@ -9,7 +9,7 @@ namespace Entities.Enums
     {
         [Description("Ativo")]
         Ativo = 1,
-        [Description("Concluido")]
+        [Description("Concluído")]
         Concluido = 2,
         [Description("Trancado")]
         Trancado = 3,

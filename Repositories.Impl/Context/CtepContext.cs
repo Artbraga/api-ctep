@@ -14,6 +14,7 @@ namespace CTEP.Repositories.Impl.Context
         public CtepContext(IConfiguration configuration) : base()
         {
             _connectionString = configuration.GetSection("CtepContext:ConnectionString").Value;
+            log.Debug(_connectionString);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

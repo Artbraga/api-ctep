@@ -30,8 +30,8 @@ namespace Entities.DTOs
             this.Id = entity.Id;
             this.Codigo = entity.Codigo;
             this.DiasDaSemana = entity.DiasDaSemana;
-            this.HoraFim = entity.HoraFim.ToString();
-            this.HoraInicio = entity.HoraInicio.ToString();
+            this.HoraFim = entity.HoraFim.HasValue ? entity.HoraFim.Value.ToString(ApplicationConstants.TimeFormatHourMinute) : null;
+            this.HoraInicio = entity.HoraInicio.HasValue ? entity.HoraInicio.Value.ToString(ApplicationConstants.TimeFormatHourMinute) : null;
             this.DataInicio = entity.DataInicio;
             this.DataFim = entity.DataFim;
             this.Curso = entity.Curso == null ? null : new CursoDTO(entity.Curso);
