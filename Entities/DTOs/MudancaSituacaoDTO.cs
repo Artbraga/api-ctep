@@ -11,5 +11,6 @@ namespace Entities.DTOs
         public int SituacaoId { get; set; }
         public string Registro { get; set; }
         public string CodigoSistec { get; set; }
+        public DateTime? DataConclusao { get; set; }
     }
 }

@@ -283,7 +283,11 @@ namespace Services.Impl.Services
             var aluno = alunoRepository.GetById(mudancaSituacao.AlunoId);
             var turmaAluno = aluno.TurmasAluno.First(t => t.TurmaId == mudancaSituacao.TurmaId);
             turmaAluno.TipoStatusAlunoId = mudancaSituacao.SituacaoId;
-            turmaAluno.CodigoConlusaoSistec = mudancaSituacao.CodigoSistec;
+            if (mudancaSituacao.SituacaoId == (int)TipoStatusAlunoEnum.Concluido)
+            {
+                turmaAluno.DataConclusao = mudancaSituacao.DataConclusao;
+                turmaAluno.CodigoConlusaoSistec = mudancaSituacao.CodigoSistec;
+            }
             alunoRepository.SaveChanges();
             if (!string.IsNullOrEmpty(mudancaSituacao.Registro))
             {
