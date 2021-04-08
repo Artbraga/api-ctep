@@ -53,7 +53,6 @@ namespace ctep
         {
             container.AddNewExtension<Interception>();
             IHttpContextAccessor httpContextAccessor = container.Resolve<IHttpContextAccessor>();
-            //container.RegisterInstance<DbContext>(new , new SingletonLifetimeManager());
             container.RegisterFactory<DbContext>((c) => new CtepContext(Configuration));
             container.RegisterRepositories();
             container.RegisterBusiness();
@@ -61,7 +60,7 @@ namespace ctep
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
 
@@ -78,7 +77,7 @@ namespace ctep
             log.Info("Configure - ok");
         }
 
-        public void RegisterLogger()
+        private void RegisterLogger()
         {
             var logRepository = LogManager.GetRepository(Assembly.GetEntryAssembly());
             XmlConfigurator.Configure(logRepository, new FileInfo("log4net.config"));

@@ -7,18 +7,19 @@ namespace Api.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class CursoController : Controller
+    public class DisciplinaController : Controller
     {
-        private readonly ICursoService CursoService;
+        private readonly IDisciplinaService DisciplinaService;
 
-        public CursoController(ICursoService CursoService)
+        public DisciplinaController(IDisciplinaService DisciplinaService)
         {
-            this.CursoService = CursoService;
+            this.DisciplinaService = DisciplinaService;
         }
 
-        public IEnumerable<CursoDTO> ListarCursos()
+        [HttpGet("{cursoId}")]
+        public IEnumerable<DisciplinaDTO> GetById(int cursoId)
         {
-            return CursoService.ListarCursos();
+            return DisciplinaService.ListarDisciplinasDeUmCurso(cursoId);
         }
     }
 }
