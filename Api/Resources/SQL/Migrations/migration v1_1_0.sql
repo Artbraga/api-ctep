@@ -25,3 +25,5 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_nota_aluno` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+ALTER TABLE tb_disciplina MODIFY COLUMN nome varchar(100);

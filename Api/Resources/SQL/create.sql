@@ -285,7 +285,7 @@ DROP TABLE IF EXISTS `ctep01`.`tb_disciplina` ;
 
 CREATE TABLE IF NOT EXISTS `ctep01`.`tb_disciplina` (
   `id_disciplina` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(50) NOT NULL,
+  `nome` VARCHAR(100) NOT NULL,
   `id_curso` INT NOT NULL,
   PRIMARY KEY (`id_disciplina`),
   INDEX `fk_DISCIPLINA_CURSO1_idx` (`id_curso` ASC) VISIBLE,

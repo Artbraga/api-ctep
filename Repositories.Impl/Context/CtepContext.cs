@@ -34,6 +34,7 @@ namespace CTEP.Repositories.Impl.Context
             modelBuilder.ApplyConfiguration(new AlunoMap());
             modelBuilder.ApplyConfiguration(new CursoMap());
             modelBuilder.ApplyConfiguration(new DisciplinaMap());
+            modelBuilder.ApplyConfiguration(new NotaAlunoMap());
             modelBuilder.ApplyConfiguration(new ProfessorMap());
             modelBuilder.ApplyConfiguration(new RegistroAlunoMap());
             modelBuilder.ApplyConfiguration(new RegistroTurmaMap());
@@ -44,6 +45,5 @@ namespace CTEP.Repositories.Impl.Context
             modelBuilder.ApplyConfiguration(new TurmaProfessorMap());
             modelBuilder.ApplyConfiguration(new UsuarioMap());
         }
-
     }
 }
