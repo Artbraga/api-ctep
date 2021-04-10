@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
 using Repositories.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Repositories.Impl.Repositories
 {
@@ -12,6 +11,14 @@ namespace Repositories.Impl.Repositories
     {
         public NotaAlunoRepository(DbContext context) : base(context)
         {
+        }
+
+        public IEnumerable<NotaAluno> ListarNotasDeUmAluno(int alunoId)
+        {
+            var query = Query();
+            query = query.Where(x => x.AlunoId == alunoId);
+
+            return query.ToList();
         }
     }
 }

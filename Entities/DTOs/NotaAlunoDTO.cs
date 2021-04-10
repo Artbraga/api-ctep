@@ -15,7 +15,7 @@ namespace Entities.DTOs
         public NotaAlunoDTO(NotaAluno entity) : base(entity)
         {
             this.Id = entity.Id;
-            this.ValorNota = string.Format("{0:0,0}", entity.ValorNota);
+            this.ValorNota = entity.ValorNota.ToString("0.0");
             this.AlunoId = entity.AlunoId;
             this.DisciplinaId = entity.DisciplinaId;
             this.ProfessorId = entity.ProfessorId;
