@@ -18,5 +18,6 @@ namespace Entities.Entities
         public string Email { get; set; }
 
         public virtual IEnumerable<TurmaProfessor> TurmasProfessor { get; set; }
+        public virtual IEnumerable<NotaAluno> NotasAluno { get; set; }
     }
 }
