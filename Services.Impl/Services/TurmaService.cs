@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 
-namespace Services.Impl
+namespace Services.Impl.Services
 {
     public class TurmaService : BaseService<Turma>, ITurmaService
     {

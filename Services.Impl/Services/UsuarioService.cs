@@ -9,7 +9,7 @@ using Services.Services;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Services.Impl
+namespace Services.Impl.Services
 {
     public class UsuarioService : BaseService<Usuario>, IUsuarioService
     {
