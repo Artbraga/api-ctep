@@ -17,9 +17,9 @@ namespace Repositories.Impl.Repositories
 
         public IEnumerable<Turma> ListarTurmasDeUmCurso(int cursoId)
         {
-            var query = Query().Where(x => x.CursoId == cursoId);
+            var query = Query().Where(x => x.CursoId == cursoId && x.TipoStatusTurmaId == (int)TipoStatusTurmaEnum.EmAndamento);
 
-            return query.ToList();
+            return query.OrderBy(x => x.Codigo).ToList();
         }
 
         public int BuscarCodigoDaTurma(string trechoCodigo)
