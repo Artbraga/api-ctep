@@ -1,6 +1,8 @@
 ﻿using Entities.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System;
 
 namespace Repositories.Impl.Mapping
 {
@@ -85,6 +87,18 @@ namespace Repositories.Impl.Mapping
                 .HasColumnName("celular")
                 .HasColumnType("varchar(12)")
                 .HasMaxLength(12);
+
+            builder
+               .Property(u => u.Formacao)
+               .HasColumnName("formacao")
+               .HasColumnType("varchar(30)")
+               .HasMaxLength(30);
+
+            builder
+                .Property(u => u.FlagExclusao)
+                .HasColumnName("flg_exclusao")
+                .HasDefaultValue(false)
+                .HasConversion(new BoolToZeroOneConverter<Int16>());
 
         }
     }
