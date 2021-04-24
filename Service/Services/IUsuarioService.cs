@@ -7,6 +7,7 @@ namespace Services.Services
 {
     public interface IUsuarioService : IBaseService<Usuario>
     {
+        UsuarioDTO SalvarUsuario(UsuarioDTO usuario);
         IEnumerable<UsuarioDTO> ListarUsuarios();
         UsuarioDTO BuscarUsuarioPorLoginESenha(UsuarioDTO usuario);
 

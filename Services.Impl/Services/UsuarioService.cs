@@ -2,10 +2,12 @@
 using Entities.DTOs;
 using Entities.Entities;
 using Entities.Exceptions;
+using log4net;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Impl.Util;
 using Services.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,6 +17,8 @@ namespace Services.Impl.Services
     {
         private readonly IUsuarioRepository usuarioRepository;
         private readonly IPerfilRepository perfilRepository;
+        private static readonly ILog log = LogManager.GetLogger(typeof(AlunoService));
+       
         public UsuarioService(IUsuarioRepository usuarioRepository, IPerfilRepository perfilRepository) : base(usuarioRepository)
         {
             this.usuarioRepository = usuarioRepository;
@@ -24,6 +28,53 @@ namespace Services.Impl.Services
         public IEnumerable<UsuarioDTO> ListarUsuarios()
         {
             return usuarioRepository.All().Select(x => new UsuarioDTO(x));
+        }
+
+        public UsuarioDTO SalvarUsuario(UsuarioDTO usuario)
+        {
+            var transaction = this.usuarioRepository.GetTransaction();
+            try
+            {
+                Usuario usr;
+                if (usuario.Id.HasValue)
+                {
+                    usr = usuarioRepository.GetById(usuario.Id.Value);
+                    if (usr.Login != usuario.Login)
+                    {
+                        if (usuarioRepository.VerificaLoginUnico(usuario.Login))
+                        {
+                            throw new BusinessException("Já existe um usuário com o login informado.");
+                        }
+                        usr.Login = usuario.Login;
+                    }
+                    usr.Nome = usuario.Nome;
+                    if (!string.IsNullOrEmpty(usuario.Senha))
+                    {
+                        usr.Senha = MD5Helper.GetMd5Hash(usuario.Senha);
+                    }
+                }
+                else
+                {
+                    if (usuarioRepository.VerificaLoginUnico(usuario.Login))
+                    {
+                        throw new BusinessException("Já existe um usuário com o login informado.");
+                    }
+                    usr = usuario.ToEntity();
+                    usuarioRepository.Add(usr);
+                }
+
+                usuarioRepository.SaveChanges();
+
+                transaction.Commit();
+                transaction.Dispose();
+
+                return new UsuarioDTO(usuarioRepository.GetById(usr.Id));
+            }
+            catch (Exception e)
+            {
+                log.Error("Erro ao salvar usuário.", e);
+                throw new BusinessException("Erro desconhecido ao salvar usuário.");
+            }
         }
 
         public UsuarioDTO BuscarUsuarioPorLoginESenha(UsuarioDTO usuario)
@@ -43,7 +94,7 @@ namespace Services.Impl.Services
 
         public IEnumerable<PerfilDTO> ListarPerfis()
         {
-            var perfis = perfilRepository.All();
+            var perfis = perfilRepository.All().ToList();
             return perfis.Select(x => new PerfilDTO(x));
         }
 

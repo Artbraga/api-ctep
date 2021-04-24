@@ -2,9 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
 using Repositories.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace Repositories.Impl.Repositories
 {
@@ -21,7 +20,7 @@ namespace Repositories.Impl.Repositories
                         .Include(x => x.PerfisPermissao).ThenInclude(y => y.Permissao);
             
 
-            return query;
+            return query.ToList();
         }
     }
 }

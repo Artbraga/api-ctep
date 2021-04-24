@@ -28,6 +28,12 @@ namespace Repositories.Impl.Repositories
             return query.FirstOrDefault(x => x.Id == id);
         }
 
+        public bool VerificaLoginUnico(string login)
+        {
+            var query = Query();
+            return query.Any(x => x.Login.ToLower().Equals(login.ToLower()));
+        }
+
         private IQueryable<Usuario> IncludeCompleto()
         {
             var query = Query();

@@ -33,6 +33,12 @@ namespace Api.Controllers
             return (UsuarioDTO)usuarioService.GetById(id);
         }
 
+        [HttpPost]
+        public UsuarioDTO Salvar(UsuarioDTO aluno)
+        {
+            return usuarioService.sa(aluno);
+        }
+
         [HttpGet]
         public IEnumerable<PerfilDTO> ListarPerfis()
         {
