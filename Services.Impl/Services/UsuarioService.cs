@@ -14,9 +14,11 @@ namespace Services.Impl.Services
     public class UsuarioService : BaseService<Usuario>, IUsuarioService
     {
         private readonly IUsuarioRepository usuarioRepository;
-        public UsuarioService(IUsuarioRepository usuarioRepository) : base(usuarioRepository)
+        private readonly IPerfilRepository perfilRepository;
+        public UsuarioService(IUsuarioRepository usuarioRepository, IPerfilRepository perfilRepository) : base(usuarioRepository)
         {
             this.usuarioRepository = usuarioRepository;
+            this.perfilRepository = perfilRepository;
         }
 
         public IEnumerable<UsuarioDTO> ListarUsuarios()
@@ -37,6 +39,18 @@ namespace Services.Impl.Services
         public override BaseDTO<Usuario> GetById(int id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<PerfilDTO> ListarPerfis()
+        {
+            var perfis = perfilRepository.All();
+            return perfis.Select(x => new PerfilDTO(x));
+        }
+
+        public IEnumerable<PerfilDTO> BuscarPerfisComUsuarios()
+        {
+            var perfis = perfilRepository.BuscarPerfisComUsuarios();
+            return perfis.Select(x => new PerfilDTO(x));
         }
     }
 }

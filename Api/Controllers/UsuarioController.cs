@@ -26,5 +26,23 @@ namespace Api.Controllers
         {
             return usuarioService.BuscarUsuarioPorLoginESenha(usuario);
         }
+
+        [HttpGet("{id:int}")]
+        public UsuarioDTO GetById(int id)
+        {
+            return (UsuarioDTO)usuarioService.GetById(id);
+        }
+
+        [HttpGet]
+        public IEnumerable<PerfilDTO> ListarPerfis()
+        {
+            return usuarioService.ListarPerfis();
+        }
+
+        [HttpGet]
+        public IEnumerable<PerfilDTO> BuscarPerfisComUsuarios()
+        {
+            return usuarioService.BuscarPerfisComUsuarios();
+        }
     }
 }

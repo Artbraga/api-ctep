@@ -28,5 +28,6 @@ namespace Entities.Entities
         public virtual IEnumerable<TurmaAluno> TurmasAluno { get; set; }
         public virtual IEnumerable<NotaAluno> NotasAluno { get; set; }
         public virtual IEnumerable<RegistroAluno> Registros { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

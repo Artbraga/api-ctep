@@ -9,5 +9,8 @@ namespace Services.Services
     {
         IEnumerable<UsuarioDTO> ListarUsuarios();
         UsuarioDTO BuscarUsuarioPorLoginESenha(UsuarioDTO usuario);
+
+        IEnumerable<PerfilDTO> ListarPerfis();
+        IEnumerable<PerfilDTO> BuscarPerfisComUsuarios();
     }
 }
