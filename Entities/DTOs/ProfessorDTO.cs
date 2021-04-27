@@ -59,7 +59,9 @@ namespace Entities.DTOs
                 CEP = this.CEP,
                 Telefone = this.Telefone,
                 Celular = this.Celular,
-                Email = this.Email
+                Email = this.Email,
+                Formacao = this.Formacao,
+                FlagExclusao = this.FlagExclusao
             };
         }
     }

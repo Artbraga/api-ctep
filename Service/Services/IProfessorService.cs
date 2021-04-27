@@ -9,5 +9,7 @@ namespace Services.Services
     {
         IEnumerable<ProfessorDTO> ListarProfessores();
         IEnumerable<ProfessorDTO> ListarProfessoresAtivos();
+        bool ExcluirProfessor(int id);
+        ProfessorDTO SalvarProfessor(ProfessorDTO professor);
     }
 }

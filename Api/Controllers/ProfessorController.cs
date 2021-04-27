@@ -17,10 +17,10 @@ namespace Api.Controllers
             this.professorService = professorService;
         }
 
-        [HttpGet("{codigo}/{cursoId?}")]
-        public IEnumerable<ProfessorDTO> BuscarTurmasPorCodigoECurso(string codigo, int? cursoId)
+        [HttpGet()]
+        public IEnumerable<ProfessorDTO> ListarProfessores()
         {
-            return professorService.ListarProfessores(codigo, cursoId);
+            return professorService.ListarProfessores();
         }
 
         [HttpGet("{id}")]
@@ -29,5 +29,16 @@ namespace Api.Controllers
             return (ProfessorDTO)professorService.GetById(id);
         }
 
+        [HttpDelete("{id:int}")]
+        public bool Deletar(int id)
+        {
+            return professorService.ExcluirProfessor(id);
+        }
+
+        [HttpPost]
+        public ProfessorDTO Salvar(ProfessorDTO professor)
+        {
+            return professorService.SalvarProfessor(professor);
+        }
     }
 }
