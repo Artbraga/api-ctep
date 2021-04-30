@@ -20,15 +20,18 @@ namespace Services.Impl.Services
         private readonly ITurmaRepository turmaRepository;
         private readonly ICursoRepository cursoRepository;
         private readonly IRegistroTurmaRepository registroTurmaRepository;
+        private readonly ITurmaProfessorRepository turmaProfessorRepository;
         private static readonly ILog log = LogManager.GetLogger(typeof(TurmaService));
 
         public TurmaService(ITurmaRepository TurmaRepository, 
             ICursoRepository CursoRepository, 
-            IRegistroTurmaRepository RegistroTurmaRepository) : base(TurmaRepository)
+            IRegistroTurmaRepository RegistroTurmaRepository,
+            ITurmaProfessorRepository TurmaProfessorRepository) : base(TurmaRepository)
         {
             this.turmaRepository = TurmaRepository;
             this.cursoRepository = CursoRepository;
             this.registroTurmaRepository = RegistroTurmaRepository;
+            this.turmaProfessorRepository = TurmaProfessorRepository;
         }
 
         public IEnumerable<TurmaDTO> ListarTurmas()
@@ -139,7 +142,7 @@ namespace Services.Impl.Services
             return turmas.Select(x => new TurmaDTO(x));
         }
 
-        #region Registro Turma
+        #region RegistroTurma
         public bool AdicionarRegistro(RegistroTurmaDTO registro)
         {
             var transaction = this.registroTurmaRepository.GetTransaction();
@@ -166,6 +169,47 @@ namespace Services.Impl.Services
         {
             registroTurmaRepository.Delete(id);
             return true;
+        }
+        #endregion
+
+        #region TurmaProfessor
+        public bool AdicionarProfessor(TurmaProfessorDTO turmaProfessor)
+        {
+            var transaction = this.turmaProfessorRepository.GetTransaction();
+            try
+            {
+                var turma = this.turmaRepository.GetById(turmaProfessor.TurmaId);
+                if (turma.TurmasProfessor.Any(x => x.ProfessorId == turmaProfessor.Professor.Id))
+                {
+                    throw new BusinessException("O professor já está vinculado na turma.");
+                }
+                var tp = turmaProfessor.ToEntity();
+                turmaProfessorRepository.Add(tp);
+                turmaProfessorRepository.SaveChanges();
+                transaction.Commit();
+                return true;
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+            finally
+            {
+                transaction.Dispose();
+            }
+        }
+
+        public bool ExcluirProfessor(int id)
+        {
+            turmaProfessorRepository.Delete(id);
+            return true;
+        }
+
+        public IEnumerable<TurmaProfessorDTO> BuscarProfessoresDeUmaTurma(int turmaId)
+        {
+            IEnumerable<TurmaProfessor> turmas = turmaProfessorRepository.BuscarProfessoresDeUmaTurma(turmaId);
+            return turmas.Select(x => new TurmaProfessorDTO(x));
         }
         #endregion
 
