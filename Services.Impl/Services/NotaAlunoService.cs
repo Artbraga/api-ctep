@@ -4,14 +4,12 @@ using Entities.Entities;
 using Entities.Exceptions;
 using log4net;
 using Newtonsoft.Json;
-using Repositories.Base;
 using Repositories.Repositories;
 using Services.Impl.Base;
 using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Services.Impl.Services
 {
