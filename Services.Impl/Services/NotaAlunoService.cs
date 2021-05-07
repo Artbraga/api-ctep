@@ -44,6 +44,7 @@ namespace Services.Impl.Services
                     if (!string.IsNullOrEmpty(nota.ValorNota))
                     {
                         var n = nota.ToEntity();
+                        n.ValorNota = float.Parse(nota.ValorNota.Replace('.', ','));
                         notaAlunoRepository.Add(n);
                     }
                 }
