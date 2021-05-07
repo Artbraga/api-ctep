@@ -5,7 +5,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema ctep01
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_aluno` (
   `curso_anterior` VARCHAR(50) NULL,
   `nota_fiscal` TINYINT NULL,
   PRIMARY KEY (`id_aluno`),
-  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE)
+  UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC))
 ENGINE = InnoDB;
 
 
@@ -63,6 +63,8 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_professor` (
   `email` VARCHAR(40) NULL,
   `telefone` VARCHAR(12) NULL,
   `celular` VARCHAR(12) NULL,
+  `formacao` VARCHAR(30) NULL,
+  `flag_exclusao` BIT NULL,
   PRIMARY KEY (`id_professor`))
 ENGINE = InnoDB;
 
@@ -122,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_curso` (
   `flg_especializacao` TINYINT(1) NOT NULL DEFAULT 0,
   `id_curso_vinculado` INT NULL,
   PRIMARY KEY (`id_curso`),
-  INDEX `fk_CURSO_CURSO1_idx` (`id_curso_vinculado` ASC) VISIBLE,
+  INDEX `fk_CURSO_CURSO1_idx` (`id_curso_vinculado` ASC),
   CONSTRAINT `fk_CURSO_CURSO1`
     FOREIGN KEY (`id_curso_vinculado`)
     REFERENCES `ctep01`.`tb_curso` (`id_curso`)
@@ -155,8 +157,8 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_turma` (
   `id_curso` INT NOT NULL,
   `id_tpstatus_turma` INT NOT NULL,
   PRIMARY KEY (`id_turma`),
-  INDEX `fk_TURMA_CURSO1_idx` (`id_curso` ASC) VISIBLE,
-  INDEX `fk_TURMA_TPSTATUS_TURMA1_idx` (`id_tpstatus_turma` ASC) VISIBLE,
+  INDEX `fk_TURMA_CURSO1_idx` (`id_curso` ASC),
+  INDEX `fk_TURMA_TPSTATUS_TURMA1_idx` (`id_tpstatus_turma` ASC),
   CONSTRAINT `fk_TURMA_CURSO1`
     FOREIGN KEY (`id_curso`)
     REFERENCES `ctep01`.`tb_curso` (`id_curso`)
@@ -192,10 +194,10 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_turma_aluno` (
   `id_turma` INT NOT NULL,
   `id_tpstatus_aluno` INT NOT NULL,
   PRIMARY KEY (`id_turma_aluno`),
-  INDEX `fk_ALUNO_has_TURMA_TURMA1_idx` (`id_turma` ASC) VISIBLE,
-  INDEX `fk_ALUNO_has_TURMA_ALUNO1_idx` (`id_aluno` ASC) VISIBLE,
-  UNIQUE INDEX `matricula_aluno_UNIQUE` (`matricula_aluno` ASC) VISIBLE,
-  INDEX `fk_tb_turma_aluno_tb_tpstatus_aluno1_idx` (`id_tpstatus_aluno` ASC) VISIBLE,
+  INDEX `fk_ALUNO_has_TURMA_TURMA1_idx` (`id_turma` ASC),
+  INDEX `fk_ALUNO_has_TURMA_ALUNO1_idx` (`id_aluno` ASC),
+  UNIQUE INDEX `matricula_aluno_UNIQUE` (`matricula_aluno` ASC),
+  INDEX `fk_tb_turma_aluno_tb_tpstatus_aluno1_idx` (`id_tpstatus_aluno` ASC),
   CONSTRAINT `fk_ALUNO_has_TURMA_ALUNO1`
     FOREIGN KEY (`id_aluno`)
     REFERENCES `ctep01`.`tb_aluno` (`id_aluno`)
@@ -223,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_registro_aluno` (
   `registro` VARCHAR(5000) NOT NULL,
   `id_aluno` INT NOT NULL,
   PRIMARY KEY (`id_registro_aluno`),
-  INDEX `fk_tb_observacaoaluno_tb_aluno1_idx` (`id_aluno` ASC) VISIBLE,
+  INDEX `fk_tb_observacaoaluno_tb_aluno1_idx` (`id_aluno` ASC),
   CONSTRAINT `fk_registroaluno_aluno`
     FOREIGN KEY (`id_aluno`)
     REFERENCES `ctep01`.`tb_aluno` (`id_aluno`)
@@ -240,7 +242,7 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_registro_turma` (
   `data` DATE NOT NULL,
   `registro` VARCHAR(5000) NOT NULL,
   `id_turma` INT NOT NULL,
-  INDEX `fk_OBSERVACAO_TURMA_TURMA1_idx` (`id_turma` ASC) VISIBLE,
+  INDEX `fk_OBSERVACAO_TURMA_TURMA1_idx` (`id_turma` ASC),
   PRIMARY KEY (`id_registro_turma`),
   CONSTRAINT `fk_registroturma_turma`
     FOREIGN KEY (`id_turma`)
@@ -258,8 +260,8 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_turma_professor` (
   `id_turma` INT NOT NULL,
   `id_professor` INT NOT NULL,
   PRIMARY KEY (`id_turma_professor`),
-  INDEX `fk_TURMA_has_PROFESSOR_PROFESSOR1_idx` (`id_professor` ASC) VISIBLE,
-  INDEX `fk_TURMA_has_PROFESSOR_TURMA1_idx` (`id_turma` ASC) VISIBLE,
+  INDEX `fk_TURMA_has_PROFESSOR_PROFESSOR1_idx` (`id_professor` ASC),
+  INDEX `fk_TURMA_has_PROFESSOR_TURMA1_idx` (`id_turma` ASC),
   CONSTRAINT `fk_TURMA_has_PROFESSOR_TURMA1`
     FOREIGN KEY (`id_turma`)
     REFERENCES `ctep01`.`tb_turma` (`id_turma`)
@@ -281,7 +283,7 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_disciplina` (
   `nome` VARCHAR(100) NOT NULL,
   `id_curso` INT NOT NULL,
   PRIMARY KEY (`id_disciplina`),
-  INDEX `fk_DISCIPLINA_CURSO1_idx` (`id_curso` ASC) VISIBLE,
+  INDEX `fk_DISCIPLINA_CURSO1_idx` (`id_curso` ASC),
   CONSTRAINT `fk_DISCIPLINA_CURSO1`
     FOREIGN KEY (`id_curso`)
     REFERENCES `ctep01`.`tb_curso` (`id_curso`)
@@ -300,9 +302,9 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_nota_aluno` (
   `id_aluno` INT NOT NULL,
   `id_professor` INT NULL,
   PRIMARY KEY (`id_nota_aluno`),
-  INDEX `fk_tb_nota_aluno_tb_disciplina1_idx` (`id_disciplina` ASC) VISIBLE,
-  INDEX `fk_tb_nota_aluno_tb_aluno1_idx` (`id_aluno` ASC) VISIBLE,
-  INDEX `fk_tb_nota_aluno_tb_professor1_idx` (`id_professor` ASC) VISIBLE,
+  INDEX `fk_tb_nota_aluno_tb_disciplina1_idx` (`id_disciplina` ASC),
+  INDEX `fk_tb_nota_aluno_tb_aluno1_idx` (`id_aluno` ASC),
+  INDEX `fk_tb_nota_aluno_tb_professor1_idx` (`id_professor` ASC),
   CONSTRAINT `fk_tb_nota_aluno_tb_disciplina1`
     FOREIGN KEY (`id_disciplina`)
     REFERENCES `ctep01`.`tb_disciplina` (`id_disciplina`)

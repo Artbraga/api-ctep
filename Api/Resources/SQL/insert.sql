@@ -14,6 +14,12 @@ INSERT INTO tb_curso (nome, sigla, sigla_turma, flg_especializacao, id_curso_vin
 	('Técnico de Enfermagem', 'ENF', 'TENF', FALSE, NULL), 
 	('Especialização em Instrumentação Cirúrgica', 'EIC', 'ETIC', TRUE, 1);
 
+INSERT INTO tb_turma (codigo, dias_semana, hora_inicio, hora_fim, data_inicio, data_fim, id_curso, id_tpstatus_turma) VALUES
+  ('ETIC2001', 'Sábados', '08:00', '12:00', '2020-01-01', NULL, 2, 1),
+  ('TENF2001', 'Terças e Quintas', '18:00', '21:00', '2020-03-12', '2022-05-21', 1, 1),
+  ('ETIC2002', 'Quartas', '13:00', '17:00', '2020-02-23', '2020-11-01', 2, 1),
+  ('ETIC2003', 'Quintas', '09:00', '13:00', '2020-04-21', NULL, 2,2);
+
 INSERT INTO tb_disciplina (nome, id_curso) VALUES
   ('Anatomia', 1),
   ('Ética', 1),
