@@ -46,8 +46,8 @@ namespace Repositories.Impl.Mapping
             builder
                 .Property(u => u.CEP)
                 .HasColumnName("cep")
-                .HasColumnType("varchar(8)")
-                .HasMaxLength(8)
+                .HasColumnType("varchar(10)")
+                .HasMaxLength(10)
                 .IsRequired();
 
             builder
