@@ -71,6 +71,8 @@ namespace Services.Impl.Services
                     aluno.CPF = alunoDto.CPF;
                     aluno.OrgaoEmissor = alunoDto.OrgaoEmissor;
                     aluno.Sexo = alunoDto.Sexo;
+                    aluno.Naturalidade = alunoDto.Naturalidade;
+                    aluno.Naturalidade = alunoDto.Naturalidade;
                     aluno.NomePai = alunoDto.NomePai;
                     aluno.NomeMae = alunoDto.NomeMae;
                     aluno.Endereco = alunoDto.Endereco;

@@ -11,6 +11,7 @@ namespace Entities.Entities
         public string RG { get; set; }
         public string OrgaoEmissor { get; set; }
         public char Sexo { get; set; }
+        public string Naturalidade { get; set; }
         public string NomePai { get; set; }
         public string NomeMae { get; set; }
         public string Endereco { get; set; }
