@@ -50,6 +50,12 @@ namespace Repositories.Impl.Mapping
                .HasMaxLength(1);
 
             builder
+               .Property(u => u.Naturalidade)
+               .HasColumnName("naturalidade")
+               .HasColumnType("varchar(50)")
+               .HasMaxLength(50);
+
+            builder
                 .Property(u => u.Endereco)
                 .HasColumnName("endereco")
                 .HasColumnType("varchar(100)")

@@ -47,7 +47,7 @@ namespace Repositories.Impl.Repositories
                 .AsQueryable();
             query = query.Where(x => x.TipoStatusTurmaId == (int)TipoStatusTurmaEnum.EmAndamento);
 
-            return query.ToList();
+            return query.OrderBy(x => x.Codigo).ToList();
         }
 
         public override Turma GetById(int id)
@@ -97,7 +97,7 @@ namespace Repositories.Impl.Repositories
                 query = query.Where(x => x.TipoStatusTurmaId == (int)TipoStatusTurmaEnum.EmAndamento);
             }
 
-            return query.ToList();
+            return query.OrderBy(x => x.Codigo).ToList();
         }
     }
 }
