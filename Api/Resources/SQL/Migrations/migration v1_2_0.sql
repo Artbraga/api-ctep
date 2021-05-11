@@ -47,3 +47,5 @@ UPDATE tb_usuario SET id_perfil = 1;
 ALTER TABLE tb_usuario ADD FOREIGN KEY (id_perfil) REFERENCES tb_perfil(id_perfil);
 ALTER TABLE tb_usuario ADD CONSTRAINT fk_tb_usuario_tb_perfil1 FOREIGN KEY (id_perfil) REFERENCES tb_perfil(id_perfil);
 ALTER TABLE tb_usuario ADD COLUMN email VARCHAR(50);
+
+ALTER TABLE tb_aluno add column naturalidade VARCHAR(50);
