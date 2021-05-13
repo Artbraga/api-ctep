@@ -16,6 +16,8 @@ namespace Entities.Entities
         public string Telefone { get; set; }
         public string Celular { get; set; }
         public string Email { get; set; }
+        public string Formacao { get; set; }
+        public bool FlagExclusao { get; set; }
 
         public virtual IEnumerable<TurmaProfessor> TurmasProfessor { get; set; }
         public virtual IEnumerable<NotaAluno> NotasAluno { get; set; }

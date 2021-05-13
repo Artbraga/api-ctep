@@ -1,0 +1,45 @@
+name: deploy
+
+on:
+  push:
+    branches: [ release ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish Api/Api.csproj --configuration Release --framework netcoreapp3.1 --output ./publish
+    - name: FTP Deploy
+      uses: SamKirkland/FTP-Deploy-Action@4.0.0
+      with:
+        # Deployment destination server & path. Formatted as protocol://domain.com:port/full/destination/path/
+        server: ${{ secrets.HOST }}
+        # FTP account username
+        username: ${{ secrets.USER }}
+        # FTP account password
+        password: ${{ secrets.PASSWORD }}
+        # The local folder to copy, defaults to root project folder
+        local-dir: ./publish/
+        server-dir: www/
+        log-level: verbose
+        exclude: .git*
+          - .git*/**
+          -  **/.git*/**
+          - node_modules/**
+          - node_modules/**/*
+          - appsettings.json
+          - web.config

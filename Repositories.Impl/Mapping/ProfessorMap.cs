@@ -46,8 +46,8 @@ namespace Repositories.Impl.Mapping
             builder
                 .Property(u => u.CEP)
                 .HasColumnName("cep")
-                .HasColumnType("varchar(8)")
-                .HasMaxLength(8)
+                .HasColumnType("varchar(10)")
+                .HasMaxLength(10)
                 .IsRequired();
 
             builder
@@ -86,6 +86,16 @@ namespace Repositories.Impl.Mapping
                 .HasColumnType("varchar(12)")
                 .HasMaxLength(12);
 
+            builder
+               .Property(u => u.Formacao)
+               .HasColumnName("formacao")
+               .HasColumnType("varchar(50)")
+               .HasMaxLength(50);
+
+            builder
+                .Property(u => u.FlagExclusao)
+                .HasColumnName("flag_exclusao")
+                .HasColumnType("boolean");
         }
     }
 }
