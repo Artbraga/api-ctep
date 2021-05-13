@@ -36,7 +36,7 @@ namespace Api.Controllers
         [HttpPost]
         public UsuarioDTO Salvar(UsuarioDTO aluno)
         {
-            return usuarioService.sa(aluno);
+            return usuarioService.SalvarUsuario(aluno);
         }
 
         [HttpGet]

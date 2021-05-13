@@ -28,6 +28,7 @@ namespace Entities.DTOs
             this.Telefone = entity.Telefone;
             this.Email = entity.Email;
             this.Perfil = new PerfilDTO(entity.Perfil);
+            this.Perfil.Usuarios = null;
             this.AlunoId = entity.AlunoId;
             this.ProfessorId = entity.ProfessorId;
             this.Permissoes = entity.Perfil.PerfisPermissao.Select(x => x.Permissao.Nome);

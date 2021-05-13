@@ -19,7 +19,7 @@ namespace Repositories.Impl.Repositories
             
             query = query.Where(x => x.Login == login && x.Senha == senha);
 
-            return query.FirstOrDefault();
+            return query.ToList().FirstOrDefault();
         }
 
         public override Usuario GetById(int id)
@@ -39,6 +39,7 @@ namespace Repositories.Impl.Repositories
             var query = Query();
             query = query
                 .Include(x => x.Perfil).ThenInclude(y => y.PerfisPermissao).ThenInclude(x => x.Permissao)
+                .Include(x => x.Perfil).ThenInclude(y => y.Usuarios.Where((z) => false))
                 .Include(x => x.Aluno)
                 .Include(x => x.Professor)
                 .AsQueryable();
