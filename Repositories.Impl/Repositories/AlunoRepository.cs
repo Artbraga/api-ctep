@@ -43,22 +43,12 @@ namespace Repositories.Impl.Repositories
             {
                 query = query.Where(x => x.CPF.Equals(filter.CPF));
             }
-            if (!string.IsNullOrEmpty(filter.CodigoTurma))
-            {
-                query = query.Where(x => x.TurmasAluno.Any(y => y.Turma.Codigo.Contains(filter.CodigoTurma)));
-            }
-            if (filter.CursoId.HasValue)
-            {
-                query = query.Where(x => x.TurmasAluno.Any(y => y.Turma.CursoId == filter.CursoId));
-            }
-            if (!string.IsNullOrEmpty(filter.Matricula))
-            {
-                query = query.Where(x => x.TurmasAluno.Any(y => y.Matricula == filter.Matricula));
-            }
-            if (filter.SituacaoId != null && filter.SituacaoId.Any())
-            {
-                query = query.Where(x => !x.TurmasAluno.Any() || x.TurmasAluno.Any(y => filter.SituacaoId.Contains(y.TipoStatusAlunoId)));
-            }
+            query = query.Where(x => x.TurmasAluno.Any(y =>
+                (string.IsNullOrEmpty(filter.CodigoTurma) || y.Turma.Codigo.Contains(filter.CodigoTurma)) &&
+                (!filter.CursoId.HasValue || y.Turma.CursoId == filter.CursoId) &&
+                (string.IsNullOrEmpty(filter.Matricula) || y.Matricula == filter.Matricula) &&
+                (filter.SituacaoId == null || !filter.SituacaoId.Any() || filter.SituacaoId.Contains(y.TipoStatusAlunoId))
+            ));
 
             if (paginar)
             {
