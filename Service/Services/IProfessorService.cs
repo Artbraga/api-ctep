@@ -1,5 +1,6 @@
 ﻿using Entities.DTOs;
 using Entities.Entities;
+using Entities.Filters;
 using Services.Base;
 using System.Collections.Generic;
 
@@ -11,5 +12,6 @@ namespace Services.Services
         IEnumerable<ProfessorDTO> ListarProfessoresAtivos();
         bool ExcluirProfessor(int id);
         ProfessorDTO SalvarProfessor(ProfessorDTO professor);
+        IEnumerable<ProfessorDTO> FiltrarProfessores(ProfessorFilter filter);
     }
 }

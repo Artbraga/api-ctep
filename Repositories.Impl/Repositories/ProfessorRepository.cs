@@ -1,5 +1,6 @@
 ﻿using Entities.DTOs;
 using Entities.Entities;
+using Entities.Filters;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
 using Repositories.Repositories;
@@ -12,6 +13,18 @@ namespace Repositories.Impl.Repositories
     {
         public ProfessorRepository(DbContext context) : base(context)
         {
+        }
+
+        public IEnumerable<Professor> FiltrarProfessores(ProfessorFilter filter)
+        {
+            var query = Query();
+            query = query.OrderBy(a => a.Nome);
+
+            if (!string.IsNullOrEmpty(filter.Nome))
+            {
+                query = query.Where(x => x.Nome.Contains(filter.Nome));
+            }
+            return query.ToList();
         }
 
         public IEnumerable<Professor> ListarProfessoresAtivos()
