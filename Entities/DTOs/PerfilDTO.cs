@@ -20,7 +20,7 @@ namespace Entities.DTOs
         {
             this.Nome = entity.Nome;
             this.Usuarios = entity.Usuarios.Select(x => new UsuarioDTO(x));
-            this.Permissoes = entity.PerfisPermissao.Select(x => x.Permissao.Nome);
+            this.Permissoes = entity.PerfisPermissao?.Select(x => x.Permissao.Nome);
         }
 
         public override Perfil ToEntity()

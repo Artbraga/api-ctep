@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
 using Repositories.Repositories;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Repositories.Impl.Repositories
@@ -26,6 +27,13 @@ namespace Repositories.Impl.Repositories
         {
             var query = IncludeCompleto();
             return query.FirstOrDefault(x => x.Id == id);
+        }
+
+        public IEnumerable<Usuario> ListarUsuarios()
+        {
+            var query = Query().Include(x => x.Perfil);
+
+            return query.ToList();
         }
 
         public bool VerificaLoginUnico(string login)

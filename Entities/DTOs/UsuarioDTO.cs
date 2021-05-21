@@ -31,7 +31,7 @@ namespace Entities.DTOs
             this.Perfil.Usuarios = null;
             this.AlunoId = entity.AlunoId;
             this.ProfessorId = entity.ProfessorId;
-            this.Permissoes = entity.Perfil.PerfisPermissao.Select(x => x.Permissao.Nome);
+            this.Permissoes = entity.Perfil.PerfisPermissao?.Select(x => x.Permissao.Nome);
             if (this.AlunoId.HasValue) this.Tipo = "aluno";
             if (this.ProfessorId.HasValue) this.Tipo = "professor";
         }

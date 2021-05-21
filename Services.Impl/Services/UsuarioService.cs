@@ -27,7 +27,7 @@ namespace Services.Impl.Services
 
         public IEnumerable<UsuarioDTO> ListarUsuarios()
         {
-            return usuarioRepository.All().Select(x => new UsuarioDTO(x));
+            return usuarioRepository.ListarUsuarios().Select(x => new UsuarioDTO(x));
         }
 
         public UsuarioDTO SalvarUsuario(UsuarioDTO usuario)
@@ -89,7 +89,8 @@ namespace Services.Impl.Services
 
         public override BaseDTO<Usuario> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var usuario = usuarioRepository.GetById(id);
+            return new UsuarioDTO(usuario);
         }
 
         public IEnumerable<PerfilDTO> ListarPerfis()
