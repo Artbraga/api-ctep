@@ -18,6 +18,7 @@ namespace Entities.DTOs
 
         public PerfilDTO(Perfil entity) : base(entity)
         {
+            this.Id = entity.Id;
             this.Nome = entity.Nome;
             this.Usuarios = entity.Usuarios.Select(x => new UsuarioDTO(x));
             this.Permissoes = entity.PerfisPermissao?.Select(x => x.Permissao.Nome);

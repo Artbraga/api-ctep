@@ -60,6 +60,7 @@ namespace Services.Impl.Services
                         throw new BusinessException("Já existe um usuário com o login informado.");
                     }
                     usr = usuario.ToEntity();
+                    usr.Senha = MD5Helper.GetMd5Hash(usuario.Senha);
                     usuarioRepository.Add(usr);
                 }
 
