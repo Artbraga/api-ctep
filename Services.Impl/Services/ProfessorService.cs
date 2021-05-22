@@ -2,6 +2,7 @@
 using Entities.DTOs;
 using Entities.Entities;
 using Entities.Exceptions;
+using Entities.Filters;
 using log4net;
 using Repositories.Repositories;
 using Services.Impl.Base;
@@ -97,6 +98,12 @@ namespace Services.Impl.Services
                 log.Error("Erro ao salvar professor.", ex);
                 throw new BusinessException("Erro desconhecido ao salvar professor.");
             }
+        }
+
+        public IEnumerable<ProfessorDTO> FiltrarProfessores(ProfessorFilter filter)
+        {
+            var professores = professorRepository.FiltrarProfessores(filter);
+            return professores.Select(x => new ProfessorDTO(x));
         }
     }
 }

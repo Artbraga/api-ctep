@@ -36,6 +36,9 @@ namespace CTEP.Repositories.Impl.Context
             modelBuilder.ApplyConfiguration(new DisciplinaMap());
             modelBuilder.ApplyConfiguration(new NotaAlunoMap());
             modelBuilder.ApplyConfiguration(new ProfessorMap());
+            modelBuilder.ApplyConfiguration(new PerfilMap());
+            modelBuilder.ApplyConfiguration(new PerfilPermissaoMap());
+            modelBuilder.ApplyConfiguration(new PermissaoMap());
             modelBuilder.ApplyConfiguration(new RegistroAlunoMap());
             modelBuilder.ApplyConfiguration(new RegistroTurmaMap());
             modelBuilder.ApplyConfiguration(new TipoStatusAlunoMap());

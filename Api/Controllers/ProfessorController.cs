@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Entities.DTOs;
+using Entities.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
 
@@ -46,5 +47,12 @@ namespace Api.Controllers
         {
             return professorService.SalvarProfessor(professor);
         }
+
+        [HttpPost]
+        public IEnumerable<ProfessorDTO> FiltrarProfessores(ProfessorFilter filter)
+        {
+            return professorService.FiltrarProfessores(filter);
+        }
+
     }
 }
