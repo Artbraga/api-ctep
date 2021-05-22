@@ -20,5 +20,6 @@ namespace Services.Services
         bool SalvarImagemAluno(int idAluno, byte[] imagem);
         byte[] BuscarImagemAluno(int idAluno);
         bool AlterarSituacao(MudancaSituacaoDTO mudancaSituacao);
+        IEnumerable<AlunoNotasDTO> BuscarAlunosENotasDeTurma(int turmaId);
     }
 }

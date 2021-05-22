@@ -110,5 +110,11 @@ namespace Api.Controllers
         {
             return AlunoService.AlterarSituacao(mudancaSituacao);
         }
+
+        [HttpGet("{turmaId:int}")]
+        public IEnumerable<AlunoNotasDTO> BuscarAlunosENotasDeTurma(int turmaId)
+        {
+            return AlunoService.BuscarAlunosENotasDeTurma(turmaId);
+        }
     }
 }

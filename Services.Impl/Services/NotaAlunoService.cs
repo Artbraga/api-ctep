@@ -29,6 +29,7 @@ namespace Services.Impl.Services
 
         public void SalvarNotas(IEnumerable<NotaAlunoDTO> notas)
         {
+            var transaction = this.notaAlunoRepository.GetTransaction();
             foreach (var nota in notas)
             {
                 log.Info($"Salvando nota: {JsonConvert.SerializeObject(nota)}");
@@ -47,7 +48,6 @@ namespace Services.Impl.Services
                     }
                 }
             }
-            var transaction = this.notaAlunoRepository.GetTransaction();
             try
             {
                 notaAlunoRepository.SaveChanges();
