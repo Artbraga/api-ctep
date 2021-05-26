@@ -13,5 +13,6 @@ namespace Services.Services
         bool ExcluirProfessor(int id);
         ProfessorDTO SalvarProfessor(ProfessorDTO professor);
         IEnumerable<ProfessorDTO> FiltrarProfessores(ProfessorFilter filter);
+        IEnumerable<ProfessorDTO> ListarProfessoresDaTurma(int turmaId);
     }
 }

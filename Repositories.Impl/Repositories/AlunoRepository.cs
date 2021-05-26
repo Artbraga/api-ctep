@@ -68,6 +68,17 @@ namespace Repositories.Impl.Repositories
             return query.FirstOrDefault(x => x.Id == id);
         }
 
+        public IEnumerable<Aluno> BuscarAlunosENotasDeTurma(int turmaId)
+        {
+            var query = Query();
+            query = query.Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
+                         .Include(x => x.NotasAluno).ThenInclude(x => x.Disciplina);
+
+            query = query.Where(x => x.TurmasAluno.Any(y => y.TurmaId == turmaId));
+
+            return query.ToList();
+        }
+
         private IQueryable<Aluno> IncludeTabela()
         {
             var query = Query();

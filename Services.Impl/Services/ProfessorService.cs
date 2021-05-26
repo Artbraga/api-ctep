@@ -42,6 +42,12 @@ namespace Services.Impl.Services
             return professores.Select(x => new ProfessorDTO(x));
         }
 
+        public IEnumerable<ProfessorDTO> ListarProfessoresDaTurma(int turmaId)
+        {
+            var professores = professorRepository.ListarProfessoresDaTurma(turmaId);
+            return professores.Select(x => new ProfessorDTO(x));
+        }
+
         public bool ExcluirProfessor(int id)
         {
             var professor = professorRepository.GetById(id);
