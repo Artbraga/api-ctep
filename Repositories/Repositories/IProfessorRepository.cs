@@ -10,5 +10,6 @@ namespace Repositories.Repositories
     {
         IEnumerable<Professor> ListarProfessoresAtivos();
         IEnumerable<Professor> FiltrarProfessores(ProfessorFilter filter);
+        IEnumerable<Professor> ListarProfessoresDaTurma(int turmaId);
     }
 }

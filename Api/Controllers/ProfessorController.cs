@@ -30,6 +30,12 @@ namespace Api.Controllers
             return professorService.ListarProfessoresAtivos();
         }
 
+        [HttpGet("{turmaId}")]
+        public IEnumerable<ProfessorDTO> ListarProfessoresDaTurma(int turmaId)
+        {
+            return professorService.ListarProfessoresDaTurma(turmaId);
+        }
+
         [HttpGet("{id}")]
         public ProfessorDTO GetById(int id)
         {

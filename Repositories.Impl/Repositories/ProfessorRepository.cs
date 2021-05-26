@@ -34,5 +34,15 @@ namespace Repositories.Impl.Repositories
 
             return query.ToList();
         }
+
+        public IEnumerable<Professor> ListarProfessoresDaTurma(int turmaId)
+        {
+            var query = Query();
+            query = query.Include(x => x.TurmasProfessor);
+
+            query = query.Where(x => x.TurmasProfessor.Any(x => x.TurmaId == turmaId));
+
+            return query.ToList();
+        }
     }
 }
