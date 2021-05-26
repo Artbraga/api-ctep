@@ -65,7 +65,7 @@ namespace Services.Impl.Services
             {
                 var turmaAluno = x.TurmasAluno.First(x => x.TurmaId == turmaId);
                 var alN = new AlunoNotasDTO();
-                alN.IdAluno = x.Id;
+                alN.AlunoId = x.Id;
                 alN.NomeAluno = x.Nome;
                 alN.Matricula = turmaAluno.Matricula;
                 alN.Notas = x.NotasAluno.Where(x => x.Disciplina.CursoId == turmaAluno.Turma.CursoId).Select(y => new NotaAlunoDTO(y));
