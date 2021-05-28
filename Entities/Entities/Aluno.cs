@@ -11,6 +11,7 @@ namespace Entities.Entities
         public string RG { get; set; }
         public string OrgaoEmissor { get; set; }
         public char Sexo { get; set; }
+        public string Naturalidade { get; set; }
         public string NomePai { get; set; }
         public string NomeMae { get; set; }
         public string Endereco { get; set; }
@@ -28,5 +29,6 @@ namespace Entities.Entities
         public virtual IEnumerable<TurmaAluno> TurmasAluno { get; set; }
         public virtual IEnumerable<NotaAluno> NotasAluno { get; set; }
         public virtual IEnumerable<RegistroAluno> Registros { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

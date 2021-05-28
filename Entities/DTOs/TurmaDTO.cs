@@ -20,6 +20,7 @@ namespace Entities.DTOs
         public DateTime? DataFim { get; set; }
         public CursoDTO Curso { get; set; }
         public IEnumerable<RegistroTurmaDTO> Registros { get; set; }
+        public IEnumerable<TurmaProfessorDTO> Professores { get; set; }
         
         public TurmaDTO()
         {
@@ -36,6 +37,7 @@ namespace Entities.DTOs
             this.DataFim = entity.DataFim;
             this.Curso = entity.Curso == null ? null : new CursoDTO(entity.Curso);
             this.Registros = entity.Registros == null ?  null : entity.Registros.Select(x => new RegistroTurmaDTO(x)).OrderBy(x => x.Data);
+            this.Professores = entity.TurmasProfessor == null ? null : entity.TurmasProfessor.Select(x => new TurmaProfessorDTO(x)).OrderBy(y => y.Professor.Nome);
             this.Status = entity.TipoStatusTurma.Nome;
         }
 

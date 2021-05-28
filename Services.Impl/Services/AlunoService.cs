@@ -57,6 +57,24 @@ namespace Services.Impl.Services
             return codigo;
         }
 
+        public IEnumerable<AlunoNotasDTO> BuscarAlunosENotasDeTurma(int turmaId)
+        {
+            var alunosNotas = new List<AlunoNotasDTO>();
+            var alunos = alunoRepository.BuscarAlunosENotasDeTurma(turmaId).ToList();
+            alunos.ForEach(x =>
+            {
+                var turmaAluno = x.TurmasAluno.First(x => x.TurmaId == turmaId);
+                var alN = new AlunoNotasDTO();
+                alN.AlunoId = x.Id;
+                alN.NomeAluno = x.Nome;
+                alN.Matricula = turmaAluno.Matricula;
+                alN.Notas = x.NotasAluno.Where(x => x.Disciplina.CursoId == turmaAluno.Turma.CursoId).Select(y => new NotaAlunoDTO(y));
+                alunosNotas.Add(alN);
+            });
+            return alunosNotas;
+        }
+
+
         public AlunoDTO SalvarAluno(AlunoDTO alunoDto)
         {
             var transaction = this.alunoRepository.GetTransaction();
@@ -71,6 +89,8 @@ namespace Services.Impl.Services
                     aluno.CPF = alunoDto.CPF;
                     aluno.OrgaoEmissor = alunoDto.OrgaoEmissor;
                     aluno.Sexo = alunoDto.Sexo;
+                    aluno.Naturalidade = alunoDto.Naturalidade;
+                    aluno.Naturalidade = alunoDto.Naturalidade;
                     aluno.NomePai = alunoDto.NomePai;
                     aluno.NomeMae = alunoDto.NomeMae;
                     aluno.Endereco = alunoDto.Endereco;

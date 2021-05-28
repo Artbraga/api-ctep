@@ -18,5 +18,8 @@ namespace Services.Services
         IEnumerable<TurmaDTO> FiltrarTurmas(TurmaFilter filter);
         bool AdicionarRegistro(RegistroTurmaDTO registro);
         bool ExcluirRegistro(int id);
+        bool AdicionarProfessor(TurmaProfessorDTO turmaProfessor);
+        bool ExcluirProfessor(int id);
+        IEnumerable<TurmaProfessorDTO> BuscarProfessoresDeUmaTurma(int turmaId);
     }
 }

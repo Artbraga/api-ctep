@@ -16,6 +16,7 @@ namespace Entities.DTOs
         public string RG { get; set; }
         public string OrgaoEmissor { get; set; }
         public char Sexo { get; set; }
+        public string Naturalidade { get; set; }
         public string NomePai { get; set; }
         public string NomeMae { get; set; }
         public string Endereco { get; set; }
@@ -62,6 +63,7 @@ namespace Entities.DTOs
             this.RG = entity.RG;
             this.OrgaoEmissor = entity.OrgaoEmissor;
             this.Sexo = entity.Sexo;
+            this.Naturalidade = entity.Naturalidade;
             this.NomePai = entity.NomePai;
             this.NomeMae = entity.NomeMae;
             this.Endereco = entity.Endereco;
@@ -92,6 +94,7 @@ namespace Entities.DTOs
                 RG = this.RG,
                 OrgaoEmissor = this.OrgaoEmissor,
                 Sexo = this.Sexo,
+                Naturalidade = this.Naturalidade,
                 NomePai = this.NomePai,
                 NomeMae = this.NomeMae,
                 Endereco = this.Endereco,

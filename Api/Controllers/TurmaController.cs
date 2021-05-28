@@ -72,6 +72,7 @@ namespace Api.Controllers
             return TurmaService.FiltrarTurmas(filter);
         }
 
+        #region RegistroTurma
         [HttpPost]
         public bool AdicionarRegistro(RegistroTurmaDTO registro)
         {
@@ -83,5 +84,26 @@ namespace Api.Controllers
         {
             return TurmaService.ExcluirRegistro(id);
         }
+        #endregion
+
+        #region TurmaProfessor
+        [HttpPost]
+        public bool AdicionarProfessor(TurmaProfessorDTO turmaProfessor)
+        {
+            return TurmaService.AdicionarProfessor(turmaProfessor);
+        }
+
+        [HttpDelete("{id:int}")]
+        public bool ExcluirProfessor(int id)
+        {
+            return TurmaService.ExcluirProfessor(id);
+        }
+
+        [HttpGet("{turmaId:int}")]
+        public IEnumerable<TurmaProfessorDTO> BuscarProfessoresDeUmaTurma(int turmaId)
+        {
+            return TurmaService.BuscarProfessoresDeUmaTurma(turmaId);
+        }
+        #endregion
     }
 }

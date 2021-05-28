@@ -6,9 +6,12 @@
         public string Login { get; set; }
         public string Senha { get; set; }
         public string Telefone { get; set; }
+        public string Email { get; set; }
         public int? AlunoId { get; set; }
         public int? ProfessorId { get; set; }
+        public int PerfilId { get; set; }
         public virtual Aluno Aluno { get; set; }
         public virtual Professor Professor { get; set; }
+        public virtual Perfil Perfil { get; set; }
     }
 }

@@ -40,6 +40,12 @@ namespace Repositories.Impl.Mapping
                 .HasColumnType("varchar(10)")
                 .HasMaxLength(10);
 
+            builder
+                .Property(u => u.Email)
+                .HasColumnName("email")
+                .HasColumnType("varchar(50)")
+                .HasMaxLength(50);
+
             builder.Property(r => r.AlunoId)
                 .HasColumnName("id_aluno")
                 .HasColumnType("int");
@@ -48,6 +54,22 @@ namespace Repositories.Impl.Mapping
                 .HasColumnName("id_professor")
                 .HasColumnType("int");
 
+            builder.Property(r => r.PerfilId)
+                .HasColumnName("id_perfil")
+                .HasColumnType("int")
+                .IsRequired();
+
+            builder.HasOne(r => r.Perfil)
+                 .WithMany(t => t.Usuarios)
+                 .HasForeignKey(r => r.PerfilId);
+
+            builder.HasOne(r => r.Aluno)
+                 .WithOne(t => t.Usuario)
+                 .HasForeignKey<Usuario>(r => r.AlunoId);
+
+            builder.HasOne(r => r.Professor)
+                 .WithOne(t => t.Usuario)
+                 .HasForeignKey<Usuario>(r => r.ProfessorId);
         }
     }
 }
