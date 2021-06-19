@@ -97,7 +97,7 @@ namespace Repositories.Impl.Repositories
         {
             var query = Query();
             query = query
-                .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
+                .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma).ThenInclude(x => x.Curso)
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.TipoStatusAluno)
                 .Include(x => x.Registros)
                 .AsQueryable();
