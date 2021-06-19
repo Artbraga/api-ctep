@@ -19,6 +19,7 @@ namespace Services.Services
         bool AdicionarRegistro(RegistroAlunoDTO registro);
         bool SalvarImagemAluno(int idAluno, byte[] imagem);
         byte[] BuscarImagemAluno(int idAluno);
+        byte[] GerarCracha(int idTurmaAluno);
         bool AlterarSituacao(MudancaSituacaoDTO mudancaSituacao);
         IEnumerable<AlunoNotasDTO> BuscarAlunosENotasDeTurma(int turmaId);
     }
