@@ -27,6 +27,8 @@ namespace Services.Impl.Services
         private readonly IRegistroAlunoRepository registroAlunoRepository;
         private readonly ICursoRepository cursoRepository;
         private readonly ITurmaAlunoRepository turmaAlunoRepository;
+        private readonly IDisciplinaRepository disciplinaRepository;
+        private readonly INotaAlunoRepository notaAlunoRepository;
         private readonly IConfiguration configuration;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(AlunoService));
@@ -35,6 +37,8 @@ namespace Services.Impl.Services
                             IRegistroAlunoRepository registroAlunoRepository,
                             ICursoRepository cursoRepository,
                             ITurmaAlunoRepository turmaAlunoRepository,
+                            IDisciplinaRepository disciplinaRepository,
+                            INotaAlunoRepository notaAlunoRepository,
                             IConfiguration configuration) 
         : base(alunoRepository)
         {
@@ -42,6 +46,8 @@ namespace Services.Impl.Services
             this.registroAlunoRepository = registroAlunoRepository;
             this.cursoRepository = cursoRepository;
             this.turmaAlunoRepository = turmaAlunoRepository;
+            this.disciplinaRepository = disciplinaRepository;
+            this.notaAlunoRepository = notaAlunoRepository;
             this.configuration = configuration;
         }
 
@@ -284,6 +290,71 @@ namespace Services.Impl.Services
             stream.Seek(0, SeekOrigin.Begin);
             return stream.ToArray();
         }
+
+        public byte[] GerarHistorico(int idTurmaAluno)
+        {
+            var turmaAluno = turmaAlunoRepository.GetById(idTurmaAluno);
+            var aluno = alunoRepository.GetById(turmaAluno.AlunoId);
+            turmaAluno = aluno.TurmasAluno.First(x => x.TurmaId == turmaAluno.TurmaId);
+            Document doc = new Document(Path.Combine(ApplicationConstants.PastaDocumentos, turmaAluno.Turma.CursoId.ToString(), ApplicationConstants.ArquivoHistorico));
+            try
+            {
+                CultureInfo culture = new CultureInfo("pt-BR");
+                DateTimeFormatInfo dtfi = culture.DateTimeFormat;
+                string mes = culture.TextInfo.ToTitleCase(dtfi.GetMonthName(DateTime.Now.Month));
+                string dataGeracao = DateTime.Now.Day.ToString("00") + " de " + mes + " de " + DateTime.Now.Year;
+
+                Dictionary<string, string> stringsToReplace = new Dictionary<string, string>()
+                {
+                    { ApplicationConstants.NomeReplace, aluno.Nome },
+                    { ApplicationConstants.DataNascimentoReplace, aluno.DataNascimento.ToString(ApplicationConstants.DateFormat) },
+                    { ApplicationConstants.RGReplace, aluno.RG },
+                    { ApplicationConstants.OrgaoEmissorReplace, aluno.OrgaoEmissor },
+                    { ApplicationConstants.CPFReplace, aluno.CPF },
+                    { ApplicationConstants.DataInicioReplace, MaxDate(aluno.DataMatricula, turmaAluno.Turma.DataInicio).ToString(ApplicationConstants.DateFormat) },
+                    { ApplicationConstants.DataTerminoReplace, turmaAluno.DataConclusao.HasValue ? turmaAluno.DataConclusao.Value.ToString(ApplicationConstants.DateFormat) : "" },
+                    { ApplicationConstants.ValidadeReplace, aluno.DataValidade.Value.ToString(ApplicationConstants.MonthYearFormat, culture) },
+                    { ApplicationConstants.DataGeracaoReplace, dataGeracao }
+                };
+                var disciplinas = disciplinaRepository.ListarDisciplinasDeUmCurso(turmaAluno.Turma.CursoId);
+                var notas = notaAlunoRepository.ListarNotasDeUmAluno(aluno.Id);
+                disciplinas.ToList().ForEach(d =>
+                {
+                    var notaReplace = ApplicationConstants.NotaReplace;
+                    notaReplace = notaReplace.Replace("%d", d.Id.ToString());
+                    var nota = notas.FirstOrDefault(x => x.DisciplinaId == d.Id);
+                    var valor = string.Empty;
+                    if (nota != null) valor = nota.ValorNota.ToString("0.0");
+                    stringsToReplace.Add(notaReplace, valor);
+                });
+                ReplaceString(doc, stringsToReplace);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Erro ao gerar histórico.", ex);
+                throw new BusinessException("Erro ao gerar histórico.");
+            }
+
+            MemoryStream stream = new MemoryStream();
+            doc.Save(stream, Aspose.Words.SaveFormat.Docx);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream.ToArray();
+        }
+
+        private DateTime MinDate(DateTime? date1, DateTime? date2)
+        {
+            if (date1.HasValue && !date2.HasValue) return date1.Value;
+            else if (!date1.HasValue && date2.HasValue) return date2.Value;
+            else return date1.Value < date2.Value ? date1.Value : date2.Value;
+        }
+
+        private DateTime MaxDate(DateTime? date1, DateTime? date2)
+        {
+            if (date1.HasValue && !date2.HasValue) return date1.Value;
+            else if (!date1.HasValue && date2.HasValue) return date2.Value;
+            else return date1.Value > date2.Value ? date1.Value : date2.Value;
+        }
+
 
         private void ReplaceString(Document doc, Dictionary<string, string> stringsToReplace)
         {

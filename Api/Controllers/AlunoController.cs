@@ -99,6 +99,13 @@ namespace Api.Controllers
             return AlunoService.GerarCracha(idTurmaAluno);
         }
 
+        [HttpGet("{idTurmaAluno:int}")]
+        public byte[] GerarHistorico(int idTurmaAluno)
+        {
+            return AlunoService.GerarHistorico(idTurmaAluno);
+        }
+
+
         [HttpPost]
         public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
