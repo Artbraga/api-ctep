@@ -172,6 +172,27 @@ namespace Services.Impl.Services
             }
         }
 
+        public FilterResultDTO<AlunoDTO> ListarAlunosPorVencimento(IPageFilter filter)
+        {
+            try
+            {
+                IEnumerable<Aluno> alunos = alunoRepository.ListarAlunosPorVencimento(filter);
+                var retorno = new FilterResultDTO<AlunoDTO>
+                {
+                    Total = filter.Total,
+                    Pagina = filter.Pagina,
+                    TamanhoPagina = filter.TamanhoPagina,
+                    Lista = alunos.Select(x => new AlunoDTO(x))
+                };
+                return retorno;
+            }
+            catch (Exception e)
+            {
+                log.Error("Erro ao buscar alunos por vencimento.", e);
+                throw new Exception("Erro ao buscar alunos por vencimento.");
+            }
+        }
+
         public byte[] ExportarPesquisa(AlunoFilter filter)
         {
             List<AlunoDTO> alunos = alunoRepository.FiltrarAlunos(filter).Select(x => new AlunoDTO(x)).ToList();

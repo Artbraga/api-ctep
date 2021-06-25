@@ -1,4 +1,5 @@
 ﻿using Entities.Entities;
+using Entities.Enums;
 using Entities.Filters;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
@@ -60,6 +61,19 @@ namespace Repositories.Impl.Repositories
                 return query.ToList();
             }
         }
+
+        public IEnumerable<Aluno> ListarAlunosPorVencimento(IPageFilter pageFilter)
+        {
+            var query = IncludeTabela();
+            query = query.OrderBy(a => a.Nome);
+
+            var dataVencimento = DateTime.Today.AddDays(-30);
+            query = query.Where(x => x.TurmasAluno.Any(y => y.TipoStatusAlunoId == (int)TipoStatusAlunoEnum.Ativo) && x.DataValidade < dataVencimento);
+
+            pageFilter.Total = query.Count();
+            return PaginarResultado(query, pageFilter).ToList();
+        }
+
 
         public override Aluno GetById(int id)
         {
