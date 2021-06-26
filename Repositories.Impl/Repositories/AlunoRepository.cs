@@ -67,7 +67,7 @@ namespace Repositories.Impl.Repositories
             var query = IncludeTabela();
             query = query.OrderBy(a => a.Nome);
 
-            var dataVencimento = DateTime.Today.AddDays(-30);
+            var dataVencimento = DateTime.Today.AddDays(60);
             query = query.Where(x => x.TurmasAluno.Any(y => y.TipoStatusAlunoId == (int)TipoStatusAlunoEnum.Ativo) && x.DataValidade < dataVencimento);
 
             pageFilter.Total = query.Count();

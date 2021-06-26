@@ -150,7 +150,6 @@ namespace Services.Impl.Services
             return true;
         }
 
-
         public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             try

@@ -13,6 +13,7 @@ namespace Services.Services
         AlunoDTO SalvarAluno(AlunoDTO alunoDto);
         bool VincularAlunoTurma(TurmaAlunoDTO turmaAlunoDTO);
         FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter);
+        FilterResultDTO<AlunoDTO> ListarAlunosPorVencimento(IPageFilter filter);
         byte[] ExportarPesquisa(AlunoFilter filter);
         bool ExcluirAluno(int id);
         bool ExcluirRegistro(int id);

@@ -97,8 +97,14 @@ namespace Api.Controllers
         public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             return AlunoService.FiltrarAlunos(filter);
-        } 
-        
+        }
+
+        [HttpPost]
+        public FilterResultDTO<AlunoDTO> ListarAlunosPorVencimento(AlunoFilter filter)
+        {
+            return AlunoService.ListarAlunosPorVencimento(filter);
+        }
+
         [HttpPost]
         public byte[] BaixarPesquisa(AlunoFilter filter)
         {
