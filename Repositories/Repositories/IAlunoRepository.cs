@@ -9,6 +9,7 @@ namespace Repositories.Repositories
     {
         int BuscarNumeroDeMatriculasPorTrecho(string trechoMatricula);
         IEnumerable<Aluno> FiltrarAlunos(AlunoFilter filter, bool paginar = false);
+        IEnumerable<Aluno> ListarAlunosPorVencimento(IPageFilter pageFilter);
         bool ExisteMatricula(string matricula);
         IEnumerable<Aluno> BuscarAlunosENotasDeTurma(int turmaId);
     }

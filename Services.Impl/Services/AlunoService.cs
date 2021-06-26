@@ -1,4 +1,6 @@
 ﻿using Aspose.Cells;
+using Aspose.Words;
+using Aspose.Words.Replacing;
 using Entities.Base;
 using Entities.DTOs;
 using Entities.Entities;
@@ -13,6 +15,7 @@ using Services.Impl.Base;
 using Services.Services;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -24,6 +27,8 @@ namespace Services.Impl.Services
         private readonly IRegistroAlunoRepository registroAlunoRepository;
         private readonly ICursoRepository cursoRepository;
         private readonly ITurmaAlunoRepository turmaAlunoRepository;
+        private readonly IDisciplinaRepository disciplinaRepository;
+        private readonly INotaAlunoRepository notaAlunoRepository;
         private readonly IConfiguration configuration;
 
         private static readonly ILog log = LogManager.GetLogger(typeof(AlunoService));
@@ -32,6 +37,8 @@ namespace Services.Impl.Services
                             IRegistroAlunoRepository registroAlunoRepository,
                             ICursoRepository cursoRepository,
                             ITurmaAlunoRepository turmaAlunoRepository,
+                            IDisciplinaRepository disciplinaRepository,
+                            INotaAlunoRepository notaAlunoRepository,
                             IConfiguration configuration) 
         : base(alunoRepository)
         {
@@ -39,6 +46,8 @@ namespace Services.Impl.Services
             this.registroAlunoRepository = registroAlunoRepository;
             this.cursoRepository = cursoRepository;
             this.turmaAlunoRepository = turmaAlunoRepository;
+            this.disciplinaRepository = disciplinaRepository;
+            this.notaAlunoRepository = notaAlunoRepository;
             this.configuration = configuration;
         }
 
@@ -73,7 +82,6 @@ namespace Services.Impl.Services
             });
             return alunosNotas;
         }
-
 
         public AlunoDTO SalvarAluno(AlunoDTO alunoDto)
         {
@@ -150,7 +158,6 @@ namespace Services.Impl.Services
             return true;
         }
 
-
         public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             try
@@ -172,6 +179,28 @@ namespace Services.Impl.Services
             }
         }
 
+        public FilterResultDTO<AlunoDTO> ListarAlunosPorVencimento(IPageFilter filter)
+        {
+            try
+            {
+                IEnumerable<Aluno> alunos = alunoRepository.ListarAlunosPorVencimento(filter);
+                var retorno = new FilterResultDTO<AlunoDTO>
+                {
+                    Total = filter.Total,
+                    Pagina = filter.Pagina,
+                    TamanhoPagina = filter.TamanhoPagina,
+                    Lista = alunos.Select(x => new AlunoDTO(x))
+                };
+                return retorno;
+            }
+            catch (Exception e)
+            {
+                log.Error("Erro ao buscar alunos por vencimento.", e);
+                throw new Exception("Erro ao buscar alunos por vencimento.");
+            }
+        }
+
+        #region Arquivos
         public byte[] ExportarPesquisa(AlunoFilter filter)
         {
             List<AlunoDTO> alunos = alunoRepository.FiltrarAlunos(filter).Select(x => new AlunoDTO(x)).ToList();
@@ -193,7 +222,7 @@ namespace Services.Impl.Services
                 /* 06 */ "Validade",
                 /* 07 */ "Situação"
             };
-            Style styleDia = conteudoExcel.CreateStyle();
+            Aspose.Cells.Style styleDia = conteudoExcel.CreateStyle();
             styleDia.Custom = "dd/mm/yyyy";
             #endregion
 
@@ -231,11 +260,11 @@ namespace Services.Impl.Services
             #endregion
 
             MemoryStream stream = new MemoryStream();
-            conteudoExcel.Save(stream, SaveFormat.Xlsx);
+            conteudoExcel.Save(stream, Aspose.Cells.SaveFormat.Xlsx);
             stream.Seek(0, SeekOrigin.Begin);
             return stream.ToArray();
 
-            void GravarValor(Row row, object dado, int indice, Style style = null)
+            void GravarValor(Row row, object dado, int indice, Aspose.Cells.Style style = null)
             {
                 if (dado == null) dado = "";
                 row[indice].PutValue(dado);
@@ -245,6 +274,123 @@ namespace Services.Impl.Services
                 }
             }
         }
+
+        public byte[] GerarCracha(int idTurmaAluno)
+        {
+            var turmaAluno = turmaAlunoRepository.GetById(idTurmaAluno);
+            var aluno = alunoRepository.GetById(turmaAluno.AlunoId);
+            Document doc = new Document(Path.Combine(ApplicationConstants.PastaDocumentos, ApplicationConstants.ArquivoCracha));
+            turmaAluno = aluno.TurmasAluno.First(x => x.TurmaId == turmaAluno.TurmaId);
+            try
+            {
+                CultureInfo culture = new CultureInfo("pt-BR");
+                DateTimeFormatInfo dtfi = culture.DateTimeFormat;
+                string mes = culture.TextInfo.ToTitleCase(dtfi.GetMonthName(DateTime.Now.Month));
+                string data = DateTime.Now.Day.ToString("00") + " de " + mes + " de " + DateTime.Now.Year;
+
+                Dictionary<string, string> stringsToReplace = new Dictionary<string, string>()
+                {
+                    { ApplicationConstants.CursoReplace, turmaAluno.Turma.Curso.Nome },
+                    { ApplicationConstants.NomeReplace, aluno.Nome },
+                    { ApplicationConstants.CPFReplace, aluno.CPF },
+                    { ApplicationConstants.MatriculaReplace, turmaAluno.Matricula },
+                    { ApplicationConstants.TurmaReplace, turmaAluno.Turma.Codigo },
+                    { ApplicationConstants.ValidadeReplace, aluno.DataValidade.Value.ToString(ApplicationConstants.MonthYearFormat, culture) },
+                    { ApplicationConstants.DataGeracaoReplace, data }
+                };
+                ReplaceString(doc, stringsToReplace);
+            }
+            catch(Exception ex)
+            {
+                log.Error("Erro ao gerar crachá.", ex);
+                throw new BusinessException("Erro ao gerar crachá.");
+            }
+
+            MemoryStream stream = new MemoryStream();
+            doc.Save(stream, Aspose.Words.SaveFormat.Pdf);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream.ToArray();
+        }
+
+        public byte[] GerarHistorico(int idTurmaAluno)
+        {
+            var turmaAluno = turmaAlunoRepository.GetById(idTurmaAluno);
+            var aluno = alunoRepository.GetById(turmaAluno.AlunoId);
+            turmaAluno = aluno.TurmasAluno.First(x => x.TurmaId == turmaAluno.TurmaId);
+            Document doc = new Document(Path.Combine(ApplicationConstants.PastaDocumentos, turmaAluno.Turma.CursoId.ToString(), ApplicationConstants.ArquivoHistorico));
+            try
+            {
+                CultureInfo culture = new CultureInfo("pt-BR");
+                DateTimeFormatInfo dtfi = culture.DateTimeFormat;
+                string mes = culture.TextInfo.ToTitleCase(dtfi.GetMonthName(DateTime.Now.Month));
+                string dataGeracao = DateTime.Now.Day.ToString("00") + " de " + mes + " de " + DateTime.Now.Year;
+
+                Dictionary<string, string> stringsToReplace = new Dictionary<string, string>()
+                {
+                    { ApplicationConstants.NomeReplace, aluno.Nome },
+                    { ApplicationConstants.DataNascimentoReplace, aluno.DataNascimento.ToString(ApplicationConstants.DateFormat) },
+                    { ApplicationConstants.RGReplace, aluno.RG },
+                    { ApplicationConstants.OrgaoEmissorReplace, aluno.OrgaoEmissor },
+                    { ApplicationConstants.CPFReplace, aluno.CPF },
+                    { ApplicationConstants.DataInicioReplace, MaxDate(aluno.DataMatricula, turmaAluno.Turma.DataInicio).ToString(ApplicationConstants.DateFormat) },
+                    { ApplicationConstants.DataTerminoReplace, turmaAluno.DataConclusao.HasValue ? turmaAluno.DataConclusao.Value.ToString(ApplicationConstants.DateFormat) : "" },
+                    { ApplicationConstants.ValidadeReplace, aluno.DataValidade.Value.ToString(ApplicationConstants.MonthYearFormat, culture) },
+                    { ApplicationConstants.DataGeracaoReplace, dataGeracao }
+                };
+                var disciplinas = disciplinaRepository.ListarDisciplinasDeUmCurso(turmaAluno.Turma.CursoId);
+                var notas = notaAlunoRepository.ListarNotasDeUmAluno(aluno.Id);
+                disciplinas.ToList().ForEach(d =>
+                {
+                    var notaReplace = ApplicationConstants.NotaReplace;
+                    notaReplace = notaReplace.Replace("%d", d.Id.ToString());
+                    var nota = notas.FirstOrDefault(x => x.DisciplinaId == d.Id);
+                    var valor = string.Empty;
+                    if (nota != null) valor = nota.ValorNota.ToString("0.0");
+                    stringsToReplace.Add(notaReplace, valor);
+                });
+                ReplaceString(doc, stringsToReplace);
+            }
+            catch (Exception ex)
+            {
+                log.Error("Erro ao gerar histórico.", ex);
+                throw new BusinessException("Erro ao gerar histórico.");
+            }
+
+            MemoryStream stream = new MemoryStream();
+            doc.Save(stream, Aspose.Words.SaveFormat.Docx);
+            stream.Seek(0, SeekOrigin.Begin);
+            return stream.ToArray();
+        }
+
+        private DateTime MinDate(DateTime? date1, DateTime? date2)
+        {
+            if (date1.HasValue && !date2.HasValue) return date1.Value;
+            else if (!date1.HasValue && date2.HasValue) return date2.Value;
+            else return date1.Value < date2.Value ? date1.Value : date2.Value;
+        }
+
+        private DateTime MaxDate(DateTime? date1, DateTime? date2)
+        {
+            if (date1.HasValue && !date2.HasValue) return date1.Value;
+            else if (!date1.HasValue && date2.HasValue) return date2.Value;
+            else return date1.Value > date2.Value ? date1.Value : date2.Value;
+        }
+
+
+        private void ReplaceString(Document doc, Dictionary<string, string> stringsToReplace)
+        {
+            var options = new FindReplaceOptions
+            {
+                MatchCase = false,
+                FindWholeWordsOnly = true,
+                Direction = FindReplaceDirection.Forward
+            };
+            foreach (KeyValuePair<string, string> entry in stringsToReplace)
+            {
+                doc.Range.Replace(entry.Key, entry.Value, options);
+            }
+        }
+        #endregion
 
         #region Turma Aluno 
 

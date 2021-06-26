@@ -1,4 +1,5 @@
 ﻿using Entities.Entities;
+using Entities.Enums;
 using Entities.Filters;
 using Microsoft.EntityFrameworkCore;
 using Repositories.Impl.Base;
@@ -64,6 +65,19 @@ namespace Repositories.Impl.Repositories
             }
         }
 
+        public IEnumerable<Aluno> ListarAlunosPorVencimento(IPageFilter pageFilter)
+        {
+            var query = IncludeTabela();
+            query = query.OrderBy(a => a.Nome);
+
+            var dataVencimento = DateTime.Today.AddDays(60);
+            query = query.Where(x => x.TurmasAluno.Any(y => y.TipoStatusAlunoId == (int)TipoStatusAlunoEnum.Ativo) && x.DataValidade < dataVencimento);
+
+            pageFilter.Total = query.Count();
+            return PaginarResultado(query, pageFilter).ToList();
+        }
+
+
         public override Aluno GetById(int id)
         {
             var query = IncludeCompleto();
@@ -97,7 +111,7 @@ namespace Repositories.Impl.Repositories
         {
             var query = Query();
             query = query
-                .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma)
+                .Include(x => x.TurmasAluno).ThenInclude(x => x.Turma).ThenInclude(x => x.Curso)
                 .Include(x => x.TurmasAluno).ThenInclude(x => x.TipoStatusAluno)
                 .Include(x => x.Registros)
                 .AsQueryable();

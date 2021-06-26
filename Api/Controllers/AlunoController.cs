@@ -93,12 +93,31 @@ namespace Api.Controllers
             }
         }
 
+        [HttpGet("{idTurmaAluno:int}")]
+        public byte[] GerarCracha(int idTurmaAluno)
+        {
+            return AlunoService.GerarCracha(idTurmaAluno);
+        }
+
+        [HttpGet("{idTurmaAluno:int}")]
+        public byte[] GerarHistorico(int idTurmaAluno)
+        {
+            return AlunoService.GerarHistorico(idTurmaAluno);
+        }
+
+
         [HttpPost]
         public FilterResultDTO<AlunoDTO> FiltrarAlunos(AlunoFilter filter)
         {
             return AlunoService.FiltrarAlunos(filter);
-        } 
-        
+        }
+
+        [HttpPost]
+        public FilterResultDTO<AlunoDTO> ListarAlunosPorVencimento(AlunoFilter filter)
+        {
+            return AlunoService.ListarAlunosPorVencimento(filter);
+        }
+
         [HttpPost]
         public byte[] BaixarPesquisa(AlunoFilter filter)
         {
