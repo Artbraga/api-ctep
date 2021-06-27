@@ -66,3 +66,10 @@ INSERT INTO tb_perfil_permissao (id_perfil, id_permissao) VALUES
   (2, 1), (2, 2), (2, 3), (2, 4), (2, 5), (2, 6), (2, 10),
   (3, 1), (3, 3), (3, 4), (3, 6), (3, 7), 
   (4, 7);
+
+INSERT INTO tb_tpstatus_boleto (id_tpstatus_boleto, nome) VALUES
+  (1, 'Em Aberto'),
+  (2, 'Baixado'),
+  (3, 'Liquidado'),
+  (4, 'Negativado'),
+  (9, 'Outro');
