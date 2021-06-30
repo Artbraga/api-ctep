@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{55E90F5F-C6AF-4D8E-B400-C079F4094CD2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssistantOperations", "AssistantOperations\AssistantOperations.csproj", "{1DCB1539-2D8F-45C1-B722-8381DE518761}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{55E90F5F-C6AF-4D8E-B400-C079F4094CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55E90F5F-C6AF-4D8E-B400-C079F4094CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55E90F5F-C6AF-4D8E-B400-C079F4094CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1DCB1539-2D8F-45C1-B722-8381DE518761}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DCB1539-2D8F-45C1-B722-8381DE518761}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DCB1539-2D8F-45C1-B722-8381DE518761}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DCB1539-2D8F-45C1-B722-8381DE518761}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

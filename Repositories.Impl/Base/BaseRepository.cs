@@ -28,10 +28,7 @@ namespace Repositories.Impl.Base
 
         public bool BulkAdd(IEnumerable<TEntity> entities)
         {
-            foreach (var e in entities)
-            {
-                Add(e);
-            }
+            EntitySet.AddRange(entities);
             return true;
         }
 

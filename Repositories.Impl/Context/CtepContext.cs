@@ -17,6 +17,12 @@ namespace CTEP.Repositories.Impl.Context
             log.Debug(_connectionString);
         }
 
+        public CtepContext(string connectionString) : base()
+        {
+            _connectionString = connectionString;
+            log.Debug(_connectionString);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder
@@ -32,6 +38,7 @@ namespace CTEP.Repositories.Impl.Context
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new AlunoMap());
+            modelBuilder.ApplyConfiguration(new BoletoMap());
             modelBuilder.ApplyConfiguration(new CursoMap());
             modelBuilder.ApplyConfiguration(new DisciplinaMap());
             modelBuilder.ApplyConfiguration(new NotaAlunoMap());
@@ -42,6 +49,7 @@ namespace CTEP.Repositories.Impl.Context
             modelBuilder.ApplyConfiguration(new RegistroAlunoMap());
             modelBuilder.ApplyConfiguration(new RegistroTurmaMap());
             modelBuilder.ApplyConfiguration(new TipoStatusAlunoMap());
+            modelBuilder.ApplyConfiguration(new TipoStatusBoletoMap());
             modelBuilder.ApplyConfiguration(new TipoStatusTurmaMap());
             modelBuilder.ApplyConfiguration(new TurmaAlunoMap());
             modelBuilder.ApplyConfiguration(new TurmaMap());
