@@ -9,5 +9,6 @@ namespace Services.Services
     public interface IBoletoService : IBaseService<Boleto>
     {
         FilterResultDTO<BoletoDTO> FiltrarBoletos(BoletoFilter filtro);
+        bool AlterarStatusBoleto(BoletoDTO boleto);
     }
 }

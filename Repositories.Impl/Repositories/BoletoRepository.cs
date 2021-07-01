@@ -18,12 +18,15 @@ namespace Repositories.Impl.Repositories
 
         public IEnumerable<Boleto> FiltrarBoletos(BoletoFilter filter, bool paginar = false)
         {
-            var query = IncludeCompleto();
-            query = query.OrderBy(a => a.Aluno.Nome).ThenBy(x => x.SeuNumero);
+            var query = Query();
 
             if (!string.IsNullOrEmpty(filter.Nome))
             {
                 query = query.Where(x => x.Aluno.Nome.Contains(filter.Nome));
+            }
+            if (!string.IsNullOrEmpty(filter.Numero))
+            {
+                query = query.Where(x => x.SeuNumero.Contains(filter.Numero));
             }
             if (filter.DataVencimentoDe.HasValue)
             {
@@ -49,13 +52,20 @@ namespace Repositories.Impl.Repositories
             }
         }
 
-        private IQueryable<Boleto> IncludeCompleto()
+        public Boleto BuscarBoletoPorNumero(string numero)
         {
             var query = Query();
+            return query.FirstOrDefault(x => x.SeuNumero == numero);
+        }
+
+        protected override IQueryable<Boleto> Query()
+        {
+            var query = base.Query();
             query = query
                 .Include(x => x.Aluno)
                 .Include(x => x.TipoStatusBoleto)
                 .AsQueryable();
+            query = query.OrderBy(a => a.Aluno.Nome).ThenBy(x => x.SeuNumero);
             return query;
         }
 

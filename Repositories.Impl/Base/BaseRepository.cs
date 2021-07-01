@@ -79,7 +79,7 @@ namespace Repositories.Impl.Base
             return this._context.Database.BeginTransaction();
         }
 
-        protected IQueryable<TEntity> Query()
+        protected virtual IQueryable<TEntity> Query()
         {
             return EntitySet.AsQueryable();
         }

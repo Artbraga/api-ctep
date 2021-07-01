@@ -23,5 +23,11 @@ namespace Api.Controllers
         {
             return boletoService.FiltrarBoletos(filter);
         }
+
+        [HttpPost]
+        public bool AlterarStatusBoleto(BoletoDTO boleto)
+        {
+            return boletoService.AlterarStatusBoleto(boleto);
+        }
     }
 }

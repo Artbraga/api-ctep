@@ -10,5 +10,6 @@ namespace Repositories.Repositories
     public interface IBoletoRepository : IBaseRepository<Boleto>
     {
         IEnumerable<Boleto> FiltrarBoletos(BoletoFilter filter, bool paginar = false);
+        Boleto BuscarBoletoPorNumero(string numero);
     }
 }

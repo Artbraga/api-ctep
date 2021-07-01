@@ -12,6 +12,7 @@ namespace Entities.Filters
         public DateTime? DataVencimentoAte { get; set; }
         public IEnumerable<int> StatusId { get; set; }
         public string Nome { get; set; }
+        public string Numero { get; set; }
         public int Pagina { get; set; }
         public int Total { get; set; }
         public int TamanhoPagina { get => this._tamanhoPagina; }
