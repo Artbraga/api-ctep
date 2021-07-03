@@ -83,3 +83,24 @@ CREATE TABLE IF NOT EXISTS `ctep01`.`tb_boleto` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `ctep01`.`tb_retorno` (
+  `id_retorno` INT NOT NULL,
+  `numero` VARCHAR(6) NOT NULL,
+  `data_referencia` DATETIME NOT NULL,
+  `data_leitura` DATETIME NOT NULL,
+  PRIMARY KEY (`id_retorno`))
+ENGINE = InnoDB;
+
+CREATE TABLE IF NOT EXISTS `ctep01`.`tb_registro_retorno` (
+  `id_retorno` INT NOT NULL,
+  `registro` VARCHAR(200) NOT NULL,
+  `tb_retorno_id_retorno` INT NOT NULL,
+  PRIMARY KEY (`id_registro_retorno`),
+  INDEX `fk_tb_registro_retorno_tb_retorno1_idx` (`tb_retorno_id_retorno` ASC),
+  CONSTRAINT `fk_tb_registro_retorno_tb_retorno1`
+    FOREIGN KEY (`tb_retorno_id_retorno`)
+    REFERENCES `ctep01`.`tb_retorno` (`id_retorno`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;

@@ -3,6 +3,7 @@ using Entities.DTOs;
 using Entities.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Services.Services;
+using System.IO;
 
 namespace Api.Controllers
 {
@@ -12,10 +13,12 @@ namespace Api.Controllers
     public class FinanceiroController : Controller
     {
         private readonly IBoletoService boletoService;
+        private readonly IRetornoService retornoService;
 
-        public FinanceiroController(IBoletoService boletoService)
+        public FinanceiroController(IBoletoService boletoService, IRetornoService retornoService)
         {
             this.boletoService = boletoService;
+            this.retornoService = retornoService;
         }
 
         [HttpPost]
@@ -28,6 +31,19 @@ namespace Api.Controllers
         public bool AlterarStatusBoleto(BoletoDTO boleto)
         {
             return boletoService.AlterarStatusBoleto(boleto);
+        }
+
+        [HttpPost, DisableRequestSizeLimit]
+        public RetornoDTO LerArquivo()
+        {
+            var ms = new MemoryStream();
+            Request.Form.Files[0].CopyTo(ms);
+            ms.Flush();
+            ms.Position = 0;
+            
+            var retorno = retornoService.LerArquivo(ms);
+            ms.Dispose();
+            return retorno;
         }
     }
 }

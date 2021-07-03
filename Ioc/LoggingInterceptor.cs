@@ -26,6 +26,8 @@ namespace Ioc
             {
                 if (arg != null && arg.GetType().Name.Contains("Func"))
                     argumentsToLog.Add("Argument is a Function");
+                else if (arg != null && arg.GetType().Name.Contains("Stream"))
+                    argumentsToLog.Add($"Argument is a Stream.");
                 else
                     argumentsToLog.Add(arg);
             }

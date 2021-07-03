@@ -47,7 +47,9 @@ namespace CTEP.Repositories.Impl.Context
             modelBuilder.ApplyConfiguration(new PerfilPermissaoMap());
             modelBuilder.ApplyConfiguration(new PermissaoMap());
             modelBuilder.ApplyConfiguration(new RegistroAlunoMap());
+            modelBuilder.ApplyConfiguration(new RegistroRetornoMap());
             modelBuilder.ApplyConfiguration(new RegistroTurmaMap());
+            modelBuilder.ApplyConfiguration(new RetornoMap());
             modelBuilder.ApplyConfiguration(new TipoStatusAlunoMap());
             modelBuilder.ApplyConfiguration(new TipoStatusBoletoMap());
             modelBuilder.ApplyConfiguration(new TipoStatusTurmaMap());
